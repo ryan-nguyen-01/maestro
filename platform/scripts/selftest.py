@@ -157,6 +157,11 @@ def check_copy_ready() -> list[str]:
             content = [f for f in child.rglob("*") if f.is_file() and f.name not in allowed] if child.is_dir() else []
             if content:  # skeleton folders holding only README/.gitkeep are part of the template
                 bad.append(f"leftover work: {child.relative_to(ROOT)} ({len(content)} files)")
+    kp = sd / "knowledge" / "project.yaml"
+    if kp.exists():
+        m0 = re.search(r"(?m)^project:\n  name: *(.*)$", kp.read_text(encoding="utf-8"))
+        if m0 and m0.group(1).split("#")[0].strip().strip('"\'') not in ("", "null", "~"):
+            bad.append(f"seed knowledge describes a concrete project ({m0.group(1).strip()}) in {kp.relative_to(ROOT)}")
     tmp_dirs = "|".join(re.escape(x) for x in ("/private" + "/tmp/", "/var" + "/folders/"))  # split: no self-match
     machine = re.compile(r"/(?:Users|home)/(?!user\b|you\b|me\b|<)[A-Za-z0-9._-]+/|" + tmp_dirs)
     for f in text_files():

@@ -7,6 +7,7 @@ agents:
   specialists: none
 commands_exclude: [evals]
 methodology_default: "risk-based-routing"
+quickstart_idea: "Nothing to copy — describe it in the chat. Maestro confirms a 5-line mini-brief (what, stack, done-when) and builds."
 
 skills:
   categories: [workflow, testing, meta-process]

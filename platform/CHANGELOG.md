@@ -37,6 +37,16 @@ Format: `## [version] - YYYY-MM-DD`
   one-user todo app because the user said "don't ask".
 - **Manifest `writable_boundary` + `optional_domains`** - documents where agents may write and which
   domains are created on first use, so pruned templates have no dangling references.
+- **Copy-ready templates** - Every template README opens with a "copy → add your information → talk"
+  quick start that says where each kind of information goes for that template (idea, documents, code,
+  identity, secrets). `selftest.py --template` (run by every variant build) fails on junk (`.agent/`,
+  `.DS_Store`, `__pycache__`), leftover runtime/session/task state, or machine-specific absolute paths;
+  builds no longer copy `.agent/` (written by user-global Claude hooks) and `.gitignore` excludes it.
+- **Neutral knowledge seed** - Templates used to ship `.maestro/knowledge/project.yaml` describing the
+  maestro framework repo itself (`name: maestro`, `workflow-framework`, `confidence: high`, flows with
+  `services: maestro`), so a fresh copy "knew" the wrong product until onboarding. Builds now reset the
+  project, profile, architecture, and deep-intelligence blocks to an empty seed, and
+  `selftest.py --template` fails if a template names a concrete project.
 - **Product workspace control plane** - Consolidated framework behavior under `.maestro/` with explicit
   config, registry, knowledge, work, design, decision, memory, history, and local runtime domains.
   Added `docs/`, `apps/`, `services/`, `packages/`, `infra/`, and `tests/` as peer product roots.

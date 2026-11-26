@@ -55,6 +55,58 @@ STRUCTURE_GROUPS: dict[str, dict] = {
 }
 
 
+# Template seed for .maestro/knowledge/project.yaml: the platform's copy describes the maestro framework
+# repo itself; a template must start knowing NOTHING about the product (onboarding fills these blocks).
+NEUTRAL_KNOWLEDGE_BLOCKS = {
+    "project": """project:
+  name: null                      # written by onboarding only after the user confirms (R-002-D09)
+  slug: null
+  repository_type: "unknown"
+  primary_languages: []
+  frameworks: []
+  package_managers: []
+  generated_at: null
+  generated_by: "template seed - needs onboarding (say: phan tich du an nay / analyze this project)"
+""",
+    "project_profile": """project_profile:
+  archetypes: []
+  confidence: "unknown"
+  evidence: []
+  source_layout:
+    service_roots: []
+    app_roots: []
+    package_roots: []
+    shared_code_roots: []
+    infra_roots: []
+    data_roots: []
+    docs_roots: []
+    generated_or_vendor_roots: []
+  critical_manifests: []
+  boundary_strategy: "unknown"
+  onboarding_scan_profile: "signature-first"
+""",
+    "architecture": """architecture:
+  summary: "Needs onboarding."
+  services: []
+  shared_libraries: []
+  databases: []
+  queues: []
+  external_integrations: []
+""",
+    "deep_project_intelligence": """deep_project_intelligence:
+  status: "empty"                 # onboarding fills assets, conventions, flows, reuse rules, anti-patterns with evidence
+""",
+}
+
+
+def neutralize_project_knowledge(path: Path) -> None:
+    """Replace product-specific top-level blocks with the neutral seed (idempotent)."""
+    text = path.read_text(encoding="utf-8")
+    for key, block in NEUTRAL_KNOWLEDGE_BLOCKS.items():
+        text = re.sub(rf"(?ms)^{key}:\n.*?(?=^\S|\Z)", block + "\n", text, count=1)
+    path.write_text(re.sub(r"\n{3,}", "\n\n", text).rstrip("\n") + "\n", encoding="utf-8")
+
+
 def parse_manifest(path: Path) -> dict:
     """Minimal parser for the variant manifest format (scalars, inline lists, profile: | block)."""
     text = path.read_text(encoding="utf-8")
@@ -64,7 +116,7 @@ def parse_manifest(path: Path) -> dict:
         m = re.search(rf"(?m)^{key}:\s*\"?([^\"\n]+)\"?\s*$", text)
         return m.group(1).strip() if m else None
 
-    for key in ("name", "display_name", "output", "purpose", "methodology_default"):
+    for key in ("name", "display_name", "output", "purpose", "methodology_default", "quickstart_idea"):
         val = scalar(key)
         if val:
             data[key] = val
@@ -389,17 +441,43 @@ def build(manifest_path: Path) -> None:
             dp.write_text(dt, encoding="utf-8")
         print(f"   commands pruned: {', '.join(m['commands_exclude'])} -> {n_cmd} commands")
 
-    # generated per-template README
+    # generated per-template README: the copy -> add your information -> talk quick start
+    sel = set(STRUCTURE_GROUPS) if m["structure"] == "full" else set(m["structure"])
+    folder = m["name"]
+    docs_dest = "`inputs/` (agents read it, never edit it; facts are cited back to the file)" if "inputs" in sel \
+        else "`docs/` — or paste the text into the chat"
+    idea = m.get("quickstart_idea") or (
+        "Nothing to copy — describe it in the chat. Maestro drafts a blueprint"
+        + (" and a clickable UI prototype" if "docs-experience" in sel else "")
+        + " and asks you to approve it before any code.")
+    rows = [("Just an idea", idea),
+            ("Documents: PRD, specs, user stories, API contracts, designs, glossary", docs_dest)]
+    if "component-roots" in sel:
+        rows.append(("Existing code", "`apps/` (web, mobile, CLI) · `services/` (backends, workers) · "
+                                      "`packages/` (shared libraries)"))
+    rows += [("Product name / identity", "Nothing — Maestro proposes it during onboarding and writes "
+                                         "`.maestro/project.yaml` only after you confirm"),
+             ("Secrets (API keys, passwords)", "Never in this folder — keep them in your local `.env`; Maestro "
+                                               "asks when a step needs one")]
+    table = "\n".join(f"| {a} | {b} |" for a, b in rows)
     (out / "README.md").write_text(
         f"# {m['display_name']}\n\n{m['purpose']}\n\n"
-        "A self-contained Maestro workspace. Copy this folder anywhere, put your source code inside\n"
-        "(`services/`, `apps/` — or register existing paths in `.maestro/registry/components.yaml`),\n"
-        "then run `claude` (or `codex`) in this folder and JUST DESCRIBE what you want in plain language\n"
-        "(\"phân tích dự án này\", \"sửa bug X\", \"tình hình?\") — no commands needed; the coordinator maps\n"
-        "intent to the right flow. Power-user shortcuts exist in COMMAND.md if you want them.\n\n"
-        "Entry points: `CLAUDE.md` (Claude) - `AGENTS.md` (Codex) - `COMMAND.md` (commands)\n"
-        "- `.maestro/INSTRUCTIONS.md` (workflow brain).\n\n"
-        "Generated from the maestro platform - do not edit framework files by hand (see VARIANT.yaml).\n",
+        "## Quick start — copy, add your information, talk\n\n"
+        f"1. **Copy** this folder anywhere and name it after your project: `cp -R {folder} ~/work/my-app`\n"
+        "2. **Add your information** — only what you have; nothing is required:\n\n"
+        "| What you have | Put it in |\n| --- | --- |\n" + table + "\n\n"
+        "3. **Run** `claude` (or `codex`) inside the folder and just talk — \"bạn là ai\", \"phân tích dự án "
+        "này\", \"build cho tôi app ...\", \"sửa bug X\", \"tình hình?\". No commands needed; shortcuts are "
+        "in COMMAND.md.\n\n"
+        "## What is in the folder\n\n"
+        "```text\n"
+        ".claude/    definitions: agents, skills, commands, settings — Maestro does not edit these while working\n"
+        ".maestro/   engine + workspace state: everything Maestro writes while working (runtime/ stays local)\n"
+        "docs/       official product documents Maestro produces (requirements, design, architecture, QC)\n"
+        "```\n\n"
+        "Entry points: `CLAUDE.md` (Claude) · `AGENTS.md` (Codex) · `COMMAND.md` (commands) · "
+        "`.maestro/INSTRUCTIONS.md` (workflow brain). Check the folder anytime: `python3 scripts/selftest.py`.\n\n"
+        "Generated from the maestro platform — do not edit framework files by hand (see VARIANT.yaml).\n",
         encoding="utf-8")
 
 
@@ -445,6 +523,9 @@ def build(manifest_path: Path) -> None:
         it2 = re.sub(r"(?m)^Product code (belongs|stays)[^\n]*$", sentence or "Product code location is registered in `.maestro/registry/components.yaml`.", it2)
         instr2.write_text(it2, encoding="utf-8")
         print(f"   roots created: {', '.join(m['roots'])}")
+
+    # knowledge seed: a template knows nothing about the product until onboarding
+    neutralize_project_knowledge(out / ".maestro" / "knowledge" / "project.yaml")
 
     # identity + defaults
     patch(out / ".maestro" / "project.yaml", [

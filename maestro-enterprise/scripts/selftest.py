@@ -6,9 +6,13 @@
            not declared optional in the manifest (pruned folders, moved folders, typos)
   hooks    the PreToolUse guard scripts block what they must and allow framework/state writes
   scripts  the health check, status dashboard, and catalog checks run cleanly
+  copy     (--template only) the folder is clean to copy as a new workspace: no junk (.agent/, .DS_Store,
+           __pycache__), no leftover state (runtime files, session memory, task folders), no absolute
+           machine paths
 
-Usage:  python3 scripts/selftest.py            # exit 1 when anything fails
-        python3 scripts/selftest.py --verbose  # list every finding
+Usage:  python3 scripts/selftest.py              # a live workspace: exit 1 when anything fails
+        python3 scripts/selftest.py --template   # a template about to be copied: adds the copy checks
+        python3 scripts/selftest.py --verbose    # list every finding
 No third-party dependencies. Safe to run anytime: it reads files and runs hooks with synthetic payloads.
 """
 from __future__ import annotations
@@ -132,11 +136,49 @@ def check_scripts() -> list[str]:
     return fails
 
 
+def check_copy_ready() -> list[str]:
+    """A template must contain nothing that belongs to one particular machine, session, or project."""
+    bad = []
+    for p in ROOT.rglob("*"):
+        rel = p.relative_to(ROOT)
+        if ".git" in rel.parts:
+            continue
+        if p.name in {".agent", "__pycache__", ".DS_Store"} or p.suffix == ".pyc":
+            bad.append(f"junk: {rel}")
+    sd = ROOT / state_dir()
+    allowed = {"README.md", ".gitkeep", "index.yaml"}
+    for sub in ("runtime", "memory/sessions"):
+        for f in (sd / sub).rglob("*") if (sd / sub).is_dir() else []:
+            if f.is_file() and f.name not in allowed and "cache" not in f.relative_to(sd).parts:
+                bad.append(f"leftover state: {f.relative_to(ROOT)}")
+    for sub in ("work/tasks", "work/bugs", "work/runs", "memory/tasks"):
+        d = sd / sub
+        for child in (d.iterdir() if d.is_dir() else []):
+            content = [f for f in child.rglob("*") if f.is_file() and f.name not in allowed] if child.is_dir() else []
+            if content:  # skeleton folders holding only README/.gitkeep are part of the template
+                bad.append(f"leftover work: {child.relative_to(ROOT)} ({len(content)} files)")
+    kp = sd / "knowledge" / "project.yaml"
+    if kp.exists():
+        m0 = re.search(r"(?m)^project:\n  name: *(.*)$", kp.read_text(encoding="utf-8"))
+        if m0 and m0.group(1).split("#")[0].strip().strip('"\'') not in ("", "null", "~"):
+            bad.append(f"seed knowledge describes a concrete project ({m0.group(1).strip()}) in {kp.relative_to(ROOT)}")
+    tmp_dirs = "|".join(re.escape(x) for x in ("/private" + "/tmp/", "/var" + "/folders/"))  # split: no self-match
+    machine = re.compile(r"/(?:Users|home)/(?!user\b|you\b|me\b|<)[A-Za-z0-9._-]+/|" + tmp_dirs)
+    for f in text_files():
+        m = machine.search(f.read_text(encoding="utf-8", errors="ignore"))
+        if m:
+            bad.append(f"machine path {m.group(0)!r} in {f.relative_to(ROOT)}")
+    return bad
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--verbose", "-v", action="store_true")
+    ap.add_argument("--template", action="store_true", help="also check the folder is clean to copy")
     args = ap.parse_args()
     results = {"links": check_links(), "paths": check_paths(), "hooks": check_hooks(), "scripts": check_scripts()}
+    if args.template:
+        results["copy"] = check_copy_ready()
     total = sum(len(v) for v in results.values())
     print(f"selftest {ROOT.name}: " + " ".join(f"{k}={len(v)}" for k, v in results.items()) +
           f" -> {'PASS' if total == 0 else 'FAIL'}")
