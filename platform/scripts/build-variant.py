@@ -26,7 +26,7 @@ VARIANTS = ROOT / "variants"
 def COPY_IGNORE(dir_: str, names: list[str]) -> set[str]:
     """copytree ignore: junk everywhere; platform-only items ONLY at the repo root (so e.g.
     .maestro/engine/templates is never confused with the top-level templates/ output dir)."""
-    ignored = {n for n in names if n in {".git", "__pycache__", ".DS_Store"} or n.endswith(".pyc")}
+    ignored = {n for n in names if n in {".git", "__pycache__", ".DS_Store", ".agent"} or n.endswith(".pyc")}
     d = Path(dir_)
     if d == ROOT:
         ignored |= {n for n in names if n == "variants" or n.startswith("maestro-")}
@@ -538,7 +538,7 @@ def build(manifest_path: Path) -> None:
     print(f"   health-check:\n{tail}\n")
     if res.returncode != 0:
         print(f"   WARNING: health-check failed for {m['name']}")
-    st = subprocess.run([sys.executable, "scripts/selftest.py"], cwd=out, capture_output=True, text=True)
+    st = subprocess.run([sys.executable, "scripts/selftest.py", "--template"], cwd=out, capture_output=True, text=True)
     print("   " + "\n   ".join(st.stdout.strip().splitlines()[:8]))
     if st.returncode != 0:
         print(f"   WARNING: selftest failed for {m['name']}")
