@@ -43,6 +43,14 @@ security:
 risks: []
 tradeoffs: []
 
+reversibility: "one-way|two-way"      # AS-07 — one-way doors need ADR + alternatives + pre-mortem
+alternatives_considered:              # AS-08 / R-028-08 — >= 2, including the simplest viable option
+  - option: ""
+    why_not: ""
+pre_mortem: []                        # R-028-07 — [{failure, mitigation_or_signal}] for one-way doors
+standards_checked: "architecture.md"  # AS checklist result recorded in reviews/architecture-<seq>.yaml
+challenges: []                        # R-028-02 shape
+
 adr:
   required: false
   title: ""

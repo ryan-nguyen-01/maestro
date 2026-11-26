@@ -1,47 +1,34 @@
-# `.maestro` Product Control Plane
+# `.maestro/` — Workspace State
 
-`.maestro/` contains the agent-readable control plane for one product workspace. Product code remains in
-peer roots such as `apps/`, `services/`, `packages/`, `infra/`, and `tests/`.
-
-## Domains
+Everything Maestro's agents write while working: product identity, configuration, registries, durable
+knowledge, work evidence, memory, history, and local runtime state. Definitions (agents, skills,
+commands, engine) live in [`.claude/`](../.claude/README.md), which Claude Code write-protects.
 
 ```text
 .maestro/
-├── INSTRUCTIONS.md       Stable harness entry point
 ├── project.yaml          Product identity, naming, and component roots
 ├── methodology.yaml      Methodology routing, overlays, and execution policy
-├── manifest.yaml         Ownership and local/shared boundaries
 ├── config/               Shared model and response configuration
-├── engine/               Canonical control plane: workflow, rules, templates, and docs
 ├── registry/             Components, agents, skills, inputs, and artifact addresses
-├── knowledge/            Durable project facts and component knowledge
+├── knowledge/            Durable project facts, component knowledge, conventions (PC-n)
 ├── work/                 Initiative, epic, task, subtask, run, bug, and verification evidence
-├── design/               Design artifact index and relationships
-├── decision/             Decision index and ADR relationships
+├── design/ decision/    Design and ADR indexes
+├── observability/       Traces, evals, reports, and audit views
 ├── memory/
-│   ├── project/          Durable reusable patterns and feedback
+│   ├── project/          Durable patterns, feedback, standard proposals
 │   ├── tasks/            Task summaries for cross-session continuation
-│   └── sessions/         Local short-term session memory
-├── observability/        Traces, evals, reports, and audit views
-├── governance/           Agent-readable governance, approvals, and risk indexes
-├── history/              Compatibility event log and timeline
-└── runtime/              Local-only active state, cache, locks, and reports
+│   └── sessions/         Local short-term session memory (git-ignored)
+├── history/              Event log and timeline
+└── runtime/              Local-only active state, telemetry, cache, session handoff (git-ignored)
 ```
 
-## Read Policy
+## Read policy
 
-Agents start with `INSTRUCTIONS.md`, then use registries and indexes to open only relevant files.
-The skill registry is the canonical address book for capabilities. The component registry is the
-canonical address book for product code.
+Agents start with `.claude/INSTRUCTIONS.md`, then use the registries and indexes here to open only the
+relevant files. The skill registry is the address book for capabilities; the component registry is the
+address book for product code.
 
-Methodology names are local overlays mapped to current production-agent patterns in
-`docs/governance/methodologies/industry-alignment.md`.
-
-The architecture is run-centric: tasks describe work, runs record attempts, checkpoints preserve
-progress, traces and evals support quality claims, and governance records ownership and approval
-boundaries. `.maestro/engine/` is the single canonical control plane for workflow, rules, templates, and docs.
-
-Shared product knowledge must not be written to `runtime/` or `memory/sessions/`. Those locations are
-ignored by Git so parallel users do not conflict over active chat state or telemetry.
-
-Do not store secrets, raw credentials, private data, or long logs anywhere under `.maestro/`.
+Shared product knowledge must not be written to `runtime/` or `memory/sessions/` — those are
+git-ignored so parallel users do not conflict over chat state or telemetry. Optional domains
+(governance, observability, design, decision) are created on first use when an overlay needs them
+(`.claude/manifest.yaml` › `optional_domains`). Never store secrets, credentials, or long logs here.

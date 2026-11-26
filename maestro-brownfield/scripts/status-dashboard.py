@@ -476,7 +476,8 @@ def nested(data: dict[str, Any], *keys: str) -> Any:
 
 def fmt(value: Any, default: str = "-") -> str:
     if value is None or value == "":
-        return default
+        # `default` is often another lookup that can itself be missing (fresh/switched session).
+        return "-" if default is None or default == "" else str(default)
     return str(value)
 
 
@@ -709,7 +710,7 @@ def render_section(section: str, snapshot: dict[str, Any], show_models: bool) ->
             f"- run={fmt(snapshot.get('active_run_id'), 'none')}",
         ]
     if section == "verification":
-        return ["Verification", "- status dashboard data loaded from .maestro knowledge, registry, and runtime domains"]
+        return ["Verification", "- status dashboard data loaded from .claude knowledge, registry, and runtime domains"]
     return []
 
 
@@ -757,29 +758,26 @@ def render_overview(snapshot: dict[str, Any]) -> str:
     ws = project.get("workspace", {}) if isinstance(project.get("workspace"), dict) else {}
     prod = project.get("product", {}) if isinstance(project.get("product"), dict) else {}
 
-    # framework structure counts
+    # framework structure counts (flat .claude/agents/, class from name/frontmatter, not folders)
     ad = ROOT / ".claude" / "agents"
-    wf = len(list((ad / "workflow").glob("*.agent.md")))
-    sp = len(list((ad / "specialists").rglob("*.agent.md")))
-    cd = len(list((ad / "coders").glob("*.agent.md")))
+    agent_texts = {p.stem.replace(".agent", ""): p.read_text(encoding="utf-8", errors="ignore") for p in ad.glob("*.agent.md")}
+    sp = sum(1 for t in agent_texts.values() if re.search(r"^category:\s*", t, re.M))
+    cd = sum(1 for name in agent_texts if name.startswith("coder-") and name != "coder-leader")
+    wf = len(agent_texts) - sp - cd
     skills = len(list((ROOT / ".claude" / "skills").rglob("SKILL.md")))
-    rules = len([p for p in (ROOT / ".maestro" / "engine" / "rules").glob("*.md") if p.name != "README.md"])
-    templates = len([p for p in (ROOT / ".maestro" / "engine" / "templates").iterdir() if p.is_file()])
+    rules = len([p for p in (ROOT / ".claude" / "engine" / "rules").glob("*.md") if p.name != "README.md"])
+    templates = len([p for p in (ROOT / ".claude" / "engine" / "templates").iterdir() if p.is_file()])
     commands = len([p for p in (ROOT / ".claude" / "commands").glob("*.md") if p.name != "README.md"])
 
-    def _docs(sub: str) -> int:
-        d = ROOT / "docs" / sub
-        return len([p for p in d.rglob("*.md") if p.name != "README.md"]) if d.exists() else 0
-
-    prototype = (ROOT / "docs" / "experience" / "wireframes" / "index.html").exists()
-    autopilot = state.get("autopilot", {}) if isinstance(state.get("autopilot"), dict) else {}
+    intake_index = load_yaml(REGISTRY / "intake.yaml")
+    intake_rows = intake_index.get("files", []) if isinstance(intake_index.get("files"), list) else []
 
     lines: list[str] = ["Maestro — Project Overview", "=" * 26, ""]
     lines += [
         "Project",
         f"- workspace: {fmt(ws.get('name'), fmt(ws.get('id')))}",
         f"- product: {fmt(prod.get('display_name'), 'not-configured')} (lifecycle={fmt(prod.get('lifecycle'))}, status={fmt(prod.get('status'))})",
-        f"- component roots: apps, services, packages, infra, tests",
+        f"- component roots: source/<component> (see .maestro/registry/components.yaml)",
         "",
         "Methodology & mode",
         f"- methodology: {fmt(methodology.get('methodology'))}",
@@ -790,8 +788,6 @@ def render_overview(snapshot: dict[str, Any]) -> str:
         "Workflow status",
         f"- state: {fmt(state.get('current_state'))}",
         f"- active task: {fmt(state.get('active_task_id'), 'none')} | run: {fmt(snapshot.get('active_run_id'), 'none')} | active runs: {len(snapshot.get('active_runs', []))}",
-        f"- autopilot: {'ON' if autopilot.get('enabled') else 'off'}"
-        + (f" (stage={fmt(autopilot.get('current_stage'))}, attempt={fmt(autopilot.get('attempt'))})" if autopilot.get('enabled') else ""),
         f"- activity: {fmt(snapshot['activity'].get('status'), 'idle')} | running agents: {fmt(snapshot['totals'].get('running_agents'), '0')}",
         f"- next action: {next_command(snapshot)}",
         "",
@@ -799,11 +795,7 @@ def render_overview(snapshot: dict[str, Any]) -> str:
         f"- project brain: {fmt(snapshot.get('project_brain_status'))}",
         f"- components detected: {fmt(snapshot.get('components_detected'))}",
         f"- active coder agents: {fmt(snapshot.get('active_coder_agents'))}",
-        "",
-        "Requirements & design (docs)",
-        f"- product docs (BRD/PRD): {_docs('product')} | requirements (US/UC/BR/NFR/RTM): {_docs('requirements')}",
-        f"- architecture docs: {_docs('architecture')} | experience/UX docs: {_docs('experience')}",
-        f"- UI prototype: {'present' if prototype else 'none'} (docs/experience/wireframes/index.html)",
+        f"- intake/ files indexed: {len(intake_rows)} (run /intake to triage new drops)",
         "",
         "Framework structure",
         f"- agents: {wf + sp + cd} ({wf} workflow + {cd} coders + {sp} specialists)",

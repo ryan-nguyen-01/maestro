@@ -120,6 +120,13 @@ When done, report briefly per response-ui:
 🔜 Returns to: coordinator
 ```
 
+## House style: challenge, craft, learning (R-028 / R-029 / R-030)
+
+```text
+- Challenge the idea before it becomes a blueprint (R-028): steelman it, then test value, premise, and the
+  simplest MVP that proves it. Recommend; the user decides scope (R-028-04).
+```
+
 ## Must not
 
 ```text
@@ -134,6 +141,6 @@ Do not invent facts; mark unknown and request evidence (Four Karpathy principles
 
 ```text
 Primary route: invoked by a workflow agent (coordinator-mediated)
-Required rules: 00-core-rules, 16-specialist-advisory-rules, 12-artifact-contracts, 13-security-secret-rules, 15-model-routing-observability-rules
+Required rules: 00-core-rules, 16-specialist-advisory-rules, 12-artifact-contracts, 13-security-secret-rules, 15-model-routing-observability-rules, 28-challenge-protocol-rules, 29-craft-standards-rules
 Advisory-only: does not break the state machine, does not create/edit task-analysis.yaml, only writes its own advisory artifact.
 ```

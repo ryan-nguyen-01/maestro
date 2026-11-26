@@ -12,7 +12,7 @@ agents:
     status: "active"
     service_id: "_infra"
     service_name: "Infrastructure (cross-cutting)"
-    agent_file: ".claude/agents/coders/coder-infra.agent.md"
+    agent_file: ".claude/agents/coder-infra.agent.md"
     scope_file: null
     approval:
       required: false
@@ -50,8 +50,8 @@ agents:
       forbidden_paths:
         - "src/**"
         - "app/**"
-        - "services/*/src/**"
-        - "services/*/app/**"
+        - "source/*/src/**"
+        - "source/*/app/**"
         - "packages/*/src/**"
         - "apps/*/src/**"
         - "db/**"
@@ -66,10 +66,10 @@ agents:
         - "**/*.pem"
         - "**/*.key"
         - ".claude/**"
-        - ".maestro/engine/**"
-        - ".maestro/**"
+        - ".claude/engine/**"
+        - ".claude/**"
         - ".codex/**"
-        - "inputs/**"
+        - "intake/**"
       requires_leader_approval:
         - "production environment changes"
         - "destructive Terraform operations (destroy, taint, force-replace)"
@@ -93,7 +93,7 @@ agents:
     status: "active"
     service_id: "_database"
     service_name: "Database (cross-cutting)"
-    agent_file: ".claude/agents/coders/coder-database.agent.md"
+    agent_file: ".claude/agents/coder-database.agent.md"
     scope_file: null
     approval:
       required: false
@@ -136,8 +136,8 @@ agents:
         - "src/components/**"
         - "app/**"
         - "frontend/**"
-        - "services/*/src/api/**"
-        - "services/*/src/controllers/**"
+        - "source/*/src/api/**"
+        - "source/*/src/controllers/**"
         - "packages/*/src/ui/**"
         - "apps/*/src/**"
         - "terraform/**"
@@ -156,10 +156,10 @@ agents:
         - "**/*.pem"
         - "**/*.key"
         - ".claude/**"
-        - ".maestro/engine/**"
-        - ".maestro/**"
+        - ".claude/engine/**"
+        - ".claude/**"
         - ".codex/**"
-        - "inputs/**"
+        - "intake/**"
       requires_leader_approval:
         - "destructive migration (drop table, drop column, truncate, irreversible data rewrite)"
         - "production data backfill or long-running migration"
@@ -182,7 +182,7 @@ agents:
     status: "active"
     service_id: "_data"
     service_name: "Data Generation (cross-cutting)"
-    agent_file: ".claude/agents/coders/coder-data.agent.md"
+    agent_file: ".claude/agents/coder-data.agent.md"
     scope_file: null
     approval:
       required: false
@@ -233,9 +233,9 @@ agents:
         - "**/*.pem"
         - "**/*.key"
         - ".claude/**"
-        - ".maestro/**"
+        - ".claude/**"
         - ".codex/**"
-        - "inputs/**"
+        - "intake/**"
       requires_leader_approval:
         - "loading data into a shared/remote/production database (local only by default)"
         - "datasets large enough to need a migration or perf-infra change"

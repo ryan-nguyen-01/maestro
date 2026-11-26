@@ -1,0 +1,32 @@
+schema_version: "1.0"
+role: "session-handoff"
+# Adapter-neutral continuation pointer. Rewritten at every phase boundary and before any
+# tool switch. Authority order: workflow-state.yaml > task artifacts > this file (R-027).
+# Local runtime data — never commit secrets, credentials, or long logs here.
+
+adapter:
+  last: "{{ADAPTER}}"                  # claude | codex | cursor | copilot | other
+  session_started_at: "{{STARTED_AT}}"
+  updated_at: "{{UPDATED_AT}}"
+
+position:
+  current_state: "{{STATE}}"           # must mirror workflow-state.yaml.current_state
+  active_task_id: null
+  active_subtask_id: null
+  active_run_id: null
+  active_checkpoint_id: null
+  execution_mode: null                 # direct | assisted | governed | autonomous
+  target_scope: null                   # framework | product_component | unknown
+
+progress:
+  last_completed_step: null            # short human sentence: what was just finished
+  last_artifact: null                  # path to the artifact that proves it
+  next_command: "/coord"
+  next_owner_agent: "coordinator"
+  blocked: false
+  blocker: null
+
+read_next: []                          # ordered, minimal file list for the incoming adapter
+
+open_questions: []                     # unresolved decisions the next session must not re-guess
+do_not_reopen: []                      # settled decisions; re-litigating them wastes the session

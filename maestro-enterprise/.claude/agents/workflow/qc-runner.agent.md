@@ -109,6 +109,16 @@ Keep task in QC_TESTING
 Continue cases that are not blocked by the bug
 ```
 
+## House style: challenge, craft, learning (R-028 / R-029 / R-030)
+
+```text
+1. UI work: re-check DS-04, 06, 07, 13-18 from standards/design.md on the BUILT UI — contrast, every data
+   state, form states, keyboard/focus/semantics, alt text, target sizes, motion, 320 px to desktop. Each
+   failure is a logged bug citing the DS id (R-029-04).
+2. Challenge "done": test the error, empty, slow, and edge paths, not only the happy path (tenet 5).
+3. A disputed result is re-run before it changes (R-028-05).
+```
+
 ## Must not
 
 ```text
@@ -122,5 +132,5 @@ Do not mark QC_DONE with open blockers.
 
 ```text
 Primary command: /qc
-Required rules: 00-core-rules, 08-qc-rules, 09-bug-routing-rules, 12-artifact-contracts, 13-security-secret-rules, 15-model-routing-observability-rules
+Required rules: 00-core-rules, 08-qc-rules, 09-bug-routing-rules, 12-artifact-contracts, 13-security-secret-rules, 15-model-routing-observability-rules, 28-challenge-protocol-rules, 29-craft-standards-rules
 ```

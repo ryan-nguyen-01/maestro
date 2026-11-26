@@ -27,11 +27,12 @@ Tool-specific entrypoints:
 name stays stable while `.maestro/project.yaml` defines the product identity and naming namespace. It defines:
 
 - 12 workflow agents (see [.claude/agents/workflow/](.claude/agents/workflow/))
-- 19 specialist advisors (advisor-only, in-pipeline) at [.claude/agents/specialists/](.claude/agents/specialists/) — see [R-016](.maestro/engine/rules/16-specialist-advisory-rules.md)
+- 20 specialist advisors (advisor-only, in-pipeline) at [.claude/agents/specialists/](.claude/agents/specialists/) — see [R-016](.maestro/engine/rules/16-specialist-advisory-rules.md)
 - 168 skills (12 workflow + 156 technical) at [.claude/skills/](.claude/skills/); discovery layer: [.maestro/engine/docs/skill-catalog.md](.maestro/engine/docs/skill-catalog.md)
-- 26 workflow rules at [.maestro/engine/rules/](.maestro/engine/rules/)
-- 59 templates at [.maestro/engine/templates/](.maestro/engine/templates/)
-- 21 slash commands at [.claude/commands/](.claude/commands/)
+- 30 workflow rules at [.maestro/engine/rules/](.maestro/engine/rules/)
+- House standards (The Maestro Way: code, design, architecture, writing, agents) at [.maestro/engine/standards/](.maestro/engine/standards/)
+- 64 templates at [.maestro/engine/templates/](.maestro/engine/templates/)
+- 22 slash commands at [.claude/commands/](.claude/commands/)
 - 3 built-in cross-cutting coders: `coder-infra`, `coder-database`, and `coder-data` at [.claude/agents/coders/](.claude/agents/coders/)
 - Deterministic hook guardrails (scope/secret/destructive) at [scripts/hooks/](scripts/hooks/) — see [R-017](.maestro/engine/rules/17-hook-enforcement-rules.md)
 - Durable memory at [.maestro/knowledge/](.maestro/knowledge/)
@@ -84,6 +85,13 @@ needed for assisted/governed work.
 11. **Run-centric operation.** A task describes intended work; a run records one execution attempt.
    Create a run under `.maestro/work/runs/` when work needs pause/resume, multiple agent attempts,
    trace/eval evidence, human approval, or replay.
+12. **The Maestro Way.** Work to the house standards in [.maestro/engine/standards/](.maestro/engine/standards/)
+   (findings cite CS/DS/AS/WS/AG ids, R-029). Challenge material problems before building — steelman,
+   evidence, better option, recommendation — let the owner decide, then commit fully; re-verify before
+   reversing a position under pushback (R-028). Priority order: safety hard-stops > mandatory gates >
+   challenges > the user's decisions > autonomy > speed; "code now / don't ask" compresses gates and
+   challenges into ONE message with options and ONE question, never skips them (R-028-11). Study unfamiliar tech first and turn every lesson into
+   a checkable prevention (R-030). Decision rights: [operating-model.md](.maestro/engine/docs/operating-model.md).
 
 ## The 12 workflow agents
 
@@ -123,7 +131,7 @@ NEW
   → MEMORY_SYNCING → DONE
 ```
 
-Current state lives in [.maestro/runtime/workflow-state.yaml](.maestro/runtime/workflow-state.yaml). Model routing lives in [.maestro/config/model-routing.yaml](.maestro/config/model-routing.yaml). Live activity/status telemetry lives in [.maestro/runtime/agent-activity.yaml](.maestro/runtime/agent-activity.yaml). Response layout modes live in [.maestro/config/response-ui.yaml](.maestro/config/response-ui.yaml). The `coordinator` writes every transition and activity update.
+Current state lives in `.maestro/runtime/workflow-state.yaml` (local, created at runtime). Model routing lives in [.maestro/config/model-routing.yaml](.maestro/config/model-routing.yaml). Live activity/status telemetry lives in `.maestro/runtime/agent-activity.yaml` (local, created at runtime). Response layout modes live in [.maestro/config/response-ui.yaml](.maestro/config/response-ui.yaml). The `coordinator` writes every transition and activity update.
 
 ## Slash commands
 

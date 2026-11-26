@@ -20,7 +20,7 @@ from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[1]
-ENGINE = ROOT / ".maestro" / "engine"
+ENGINE = ROOT / ".claude" / "engine"
 KNOWLEDGE = ROOT / ".maestro" / "knowledge"
 REGISTRY = ROOT / ".maestro" / "registry"
 CONFIG = ROOT / ".maestro" / "config"
@@ -30,18 +30,18 @@ REPORT_JSON = RUNTIME / "reports" / "architecture-health-report.json"
 REPORT_MD = RUNTIME / "reports" / "architecture-health-report.md"
 
 EXPECTED_COUNTS = {
-    "agents": 34,
-    "skills": 134,
-    "rules": 26,
-    "templates": 62,
-    "commands": 21,
+    "agents": 35,
+    "skills": 164,
+    "rules": 31,
+    "templates": 65,
+    "commands": 22,
 }
 
-# Framework-owned agents: 12 workflow + 19 specialist advisors + 3 built-in coders.
+# Framework-owned agents: 12 workflow + 20 specialist advisors + 3 built-in coders.
 # Generated service coders (coders/coder-<svc>.agent.md) are intentionally excluded so
 # this count stays stable in applied workspaces.
 BUILT_IN_CODERS = {"coder-infra", "coder-database", "coder-data"}
-EXPECTED_SPECIALIST_COUNT = 19
+EXPECTED_SPECIALIST_COUNT = 20
 SPECIALIST_CATEGORIES = {
     "architecture",
     "quality-security",
@@ -106,11 +106,11 @@ REQUIRED_PATHS = [
     "AGENTS.md",
     "CLAUDE.md",
     "COMMAND.md",
-    ".maestro/engine/workflow.md",
-    ".maestro/engine/rules/15-model-routing-observability-rules.md",
+    ".claude/engine/workflow.md",
+    ".claude/engine/rules/15-model-routing-observability-rules.md",
     ".maestro/project.yaml",
     ".maestro/methodology.yaml",
-    ".maestro/manifest.yaml",
+    ".claude/manifest.yaml",
     ".maestro/observability/index.yaml",
     ".maestro/registry/components.yaml",
     ".maestro/registry/skills.yaml",
@@ -119,27 +119,39 @@ REQUIRED_PATHS = [
     ".maestro/work/index.yaml",
     ".maestro/design/index.yaml",
     ".maestro/decision/index.yaml",
-    ".maestro/engine/templates/workflow-state.template.yaml",
-    ".maestro/engine/templates/run.template.yaml",
-    ".maestro/engine/templates/trace-summary.template.yaml",
-    ".maestro/engine/templates/eval-run.template.yaml",
-    ".maestro/engine/templates/approval-record.template.yaml",
-    ".maestro/engine/templates/audit-view.template.md",
+    ".claude/engine/templates/workflow-state.template.yaml",
+    ".claude/engine/templates/run.template.yaml",
+    ".claude/engine/templates/trace-summary.template.yaml",
+    ".claude/engine/templates/eval-run.template.yaml",
+    ".claude/engine/templates/approval-record.template.yaml",
+    ".claude/engine/templates/audit-view.template.md",
     ".maestro/config/model-routing.yaml",
-    ".maestro/engine/templates/agent-activity.template.yaml",
-    ".maestro/engine/templates/active-context.template.yaml",
+    ".claude/engine/templates/agent-activity.template.yaml",
+    ".claude/engine/templates/active-context.template.yaml",
     ".maestro/config/response-ui.yaml",
-    ".maestro/INSTRUCTIONS.md",
+    ".claude/INSTRUCTIONS.md",
     ".maestro/runtime/README.md",
     ".maestro/work/runs/index.yaml",
     "scripts/status-dashboard.py",
     "scripts/agent-activity.py",
     "scripts/agent-run.py",
     "scripts/architecture-health-check.py",
+    "scripts/selftest.py",
+    "scripts/behavior-eval.py",
     "docs/README.md",
     "deliverables/README.md",
-    ".maestro/engine/contracts/handoff.schema.yaml",
-    ".maestro/engine/contracts/result.schema.yaml",
+    ".claude/engine/contracts/handoff.schema.yaml",
+    ".claude/engine/standards/README.md",
+    ".claude/engine/standards/code.md",
+    ".claude/engine/standards/design.md",
+    ".claude/engine/standards/architecture.md",
+    ".claude/engine/standards/writing.md",
+    ".claude/engine/standards/agents.md",
+    ".claude/engine/rules/28-challenge-protocol-rules.md",
+    ".claude/engine/rules/29-craft-standards-rules.md",
+    ".claude/engine/rules/30-learning-loop-rules.md",
+    ".claude/engine/docs/operating-model.md",
+    ".claude/engine/contracts/result.schema.yaml",
 ]
 
 ENTRYPOINT_REQUIREMENTS = {
@@ -178,7 +190,7 @@ SERVICE_POLICY_DOCS = [
     "SETUP.md",
     "QUICKSTART.md",
     "GUIDELINES.md",
-    ".maestro/README.md",
+    ".claude/README.md",
 ]
 
 SECRET_PATTERNS = [
@@ -219,11 +231,29 @@ def add(findings: list[dict[str, str]], severity: str, code: str, message: str, 
     )
 
 
+AGENTS_DIR = ROOT / ".claude" / "agents"
+
+
+def agent_files() -> list[Path]:
+    """All agent definitions. The directory is flat so any harness can read it."""
+    return sorted(AGENTS_DIR.glob("*.agent.md"))
+
+
+def specialist_files() -> list[Path]:
+    """Specialists are identified by their `category:` frontmatter, not by folder."""
+    out = []
+    for path in agent_files():
+        text = path.read_text(encoding="utf-8", errors="ignore")
+        m = re.search(r"^category:\s*(.+)$", text, re.M)
+        if m and m.group(1).strip().strip('"') in SPECIALIST_CATEGORIES:
+            out.append(path)
+    return out
+
+
 def count_framework_agents() -> int:
-    agents_dir = ROOT / ".claude" / "agents"
-    workflow = len(list((agents_dir / "workflow").glob("*.agent.md")))
-    specialists = len(list((agents_dir / "specialists").rglob("*.agent.md")))
-    builtins = sum(1 for c in BUILT_IN_CODERS if (agents_dir / "coders" / f"{c}.agent.md").exists())
+    workflow = sum(1 for a in EXPECTED_WORKFLOW_AGENTS if (AGENTS_DIR / f"{a}.agent.md").exists())
+    specialists = len(specialist_files())
+    builtins = sum(1 for c in BUILT_IN_CODERS if (AGENTS_DIR / f"{c}.agent.md").exists())
     return workflow + specialists + builtins
 
 
@@ -253,13 +283,29 @@ def check_counts(findings: list[dict[str, str]]) -> dict[str, int]:
     return counts
 
 
+IMPORT_RE = re.compile(r"(?<![`\w])@([\w./-]+\.md)\b")
+
+
+def expand_imports(path: Path, depth: int = 0) -> str:
+    """Return file text with Claude Code `@path` imports inlined (max 4 hops, like the harness)."""
+    text = path.read_text(encoding="utf-8")
+    if depth >= 4:
+        return text
+    parts = [text]
+    for rel in IMPORT_RE.findall(re.sub(r"```.*?```|`[^`]*`", "", text, flags=re.S)):
+        target = (path.parent / rel).resolve()
+        if target.is_file() and ROOT in target.parents:
+            parts.append(expand_imports(target, depth + 1))
+    return "\n".join(parts)
+
+
 def check_entrypoints(findings: list[dict[str, str]]) -> None:
     for raw, fragments in ENTRYPOINT_REQUIREMENTS.items():
         path = ROOT / raw
         if not path.exists():
             add(findings, "error", "entrypoint-missing", f"Missing entrypoint {raw}", raw)
             continue
-        text = path.read_text(encoding="utf-8")
+        text = expand_imports(path)
         for fragment in fragments:
             if fragment not in text:
                 add(findings, "error", "entrypoint-drift", f"{raw} missing required fragment: {fragment}", raw)
@@ -267,7 +313,7 @@ def check_entrypoints(findings: list[dict[str, str]]) -> None:
 
 def iter_scan_files() -> list[Path]:
     suffixes = {".md", ".mdc", ".yaml", ".yml", ".json", ".toml", ".py", ".sh"}
-    ignored_dirs = {".git", "services", "__pycache__", "node_modules"}
+    ignored_dirs = {".git", "agents", "app", "evals", "__pycache__", "node_modules"}
     files: list[Path] = []
     for path in ROOT.rglob("*"):
         if any(part in ignored_dirs or part.startswith("maestro-") for part in path.parts):
@@ -694,26 +740,26 @@ def check_bug_artifact_integrity(findings: list[dict[str, str]]) -> None:
 
 def check_feedback_loop_contract(findings: list[dict[str, str]]) -> None:
     required_fragments = {
-        ".maestro/engine/templates/bug.template.yaml": [
+        ".claude/engine/templates/bug.template.yaml": [
             "prevention:",
             "root_cause:",
             "prevention_rule:",
             "regression_check:",
             "recurrence_key:",
         ],
-        ".maestro/engine/templates/dev-verification.template.yaml": [
+        ".claude/engine/templates/dev-verification.template.yaml": [
             "feedback_loop:",
             "repeated_error_detected:",
             "new_coding_error_feedback:",
             "memory_update_required:",
         ],
-        ".maestro/engine/templates/memory-update.template.yaml": [
+        ".claude/engine/templates/memory-update.template.yaml": [
             "coding-error-feedback",
             "coding_errors_captured:",
             "prevention_rules_added:",
             "regression_checks_added:",
         ],
-        ".maestro/engine/templates/agent-coder.template.md": [
+        ".claude/engine/templates/agent-coder.template.md": [
             "feedback_preflight:",
             "coding_error_feedback:",
             "known_error_patterns:",
@@ -768,11 +814,10 @@ def check_agent_activity(findings: list[dict[str, str]]) -> None:
 
 
 def check_specialists(findings: list[dict[str, str]]) -> None:
-    spec_dir = ROOT / ".claude" / "agents" / "specialists"
-    if not spec_dir.is_dir():
-        add(findings, "error", "specialists-dir-missing", "Missing .claude/agents/specialists/ directory", "specialists")
+    if not AGENTS_DIR.is_dir():
+        add(findings, "error", "agents-dir-missing", "Missing .claude/agents/ directory", "agents")
         return
-    files = sorted(spec_dir.rglob("*.agent.md"))
+    files = specialist_files()
     if len(files) != EXPECTED_SPECIALIST_COUNT:
         add(findings, "error", "specialist-count-drift", f"specialist count drift: expected {EXPECTED_SPECIALIST_COUNT}, got {len(files)}", "specialists")
 
@@ -818,9 +863,8 @@ def check_specialists(findings: list[dict[str, str]]) -> None:
         "dev-verification": "advisor",
         "qc-handoff": "advisor",
     }
-    wf_dir = ROOT / ".claude" / "agents" / "workflow"
     for agent_id, needle in wiring.items():
-        path = wf_dir / f"{agent_id}.agent.md"
+        path = AGENTS_DIR / f"{agent_id}.agent.md"
         text = path.read_text(encoding="utf-8", errors="ignore").lower() if path.is_file() else ""
         if needle.lower() not in text or "advisor" not in text:
             add(findings, "error", "specialist-wiring-missing", f"{agent_id}.agent.md does not wire specialist advisories (R-016 integration)", f"{agent_id}.agent.md")
@@ -847,38 +891,28 @@ def check_claude_hooks(findings: list[dict[str, str]]) -> None:
             add(findings, "error", "claude-hook-script-missing", f"Missing hook script scripts/hooks/{script}", f"scripts/hooks/{script}")
 
 
-def check_plugin_wrapper(findings: list[dict[str, str]]) -> None:
-    """The Claude plugin wrapper must exist, be valid JSON, and stay generated from source."""
-    plugin_dir = ROOT / ".claude-plugin"
-    for name in ("plugin.json", "hooks.json", "marketplace.json"):
-        path = plugin_dir / name
-        if not path.is_file():
-            add(findings, "error", "plugin-wrapper-missing", f"Missing .claude-plugin/{name} (run scripts/build-plugin.py)", f".claude-plugin/{name}")
+def check_claude_native(findings: list[dict[str, str]]) -> None:
+    """Claude Code native-format drift: CLAUDE.md imports AGENTS.md, agents/commands use current fields."""
+    claude_md = ROOT / "CLAUDE.md"
+    if claude_md.is_file() and not re.search(r"^@AGENTS\.md\s*$", claude_md.read_text(encoding="utf-8"), re.M):
+        add(findings, "error", "claude-md-no-agents-import", "CLAUDE.md must import the shared AGENTS.md with a line '@AGENTS.md'", "CLAUDE.md")
+    for f in sorted(AGENTS_DIR.glob("*.agent.md")):
+        fm = re.match(r"---\n(.*?)\n---\n", f.read_text(encoding="utf-8"), re.S)
+        if not fm:
+            add(findings, "error", "agent-frontmatter-missing", f"{f.name} has no YAML frontmatter (Claude Code skips it)", f.name)
             continue
-        try:
-            json.loads(path.read_text(encoding="utf-8"))
-        except Exception as exc:  # noqa: BLE001
-            add(findings, "error", "plugin-wrapper-invalid", f".claude-plugin/{name} is not valid JSON: {exc}", f".claude-plugin/{name}")
-    # Drift: wrapper must match scripts/build-plugin.py output (single source of truth).
-    try:
-        module_path = ROOT / "scripts" / "build-plugin.py"
-        spec = importlib.util.spec_from_file_location("build_plugin", module_path)
-        if spec and spec.loader:
-            module = importlib.util.module_from_spec(spec)
-            spec.loader.exec_module(module)
-            version = module.framework_version()
-            c = module.counts()
-            expected = {
-                module.PLUGIN_DIR / "plugin.json": module.dump(module.PLUGIN_DIR / "plugin.json", module.build_manifest(version, c)),
-                module.PLUGIN_DIR / "hooks.json": module.dump(module.PLUGIN_DIR / "hooks.json", module.translate_hooks()),
-                module.PLUGIN_DIR / "marketplace.json": module.dump(module.PLUGIN_DIR / "marketplace.json", module.build_marketplace(version)),
-            }
-            for path, exp in expected.items():
-                actual = path.read_text(encoding="utf-8") if path.is_file() else None
-                if actual != exp:
-                    add(findings, "error", "plugin-wrapper-drift", f"{path.relative_to(ROOT).as_posix()} out of sync; run scripts/build-plugin.py", path.name)
-    except Exception as exc:  # noqa: BLE001
-        add(findings, "error", "plugin-wrapper-check-failed", f"plugin wrapper drift check failed: {exc}", "scripts/build-plugin.py")
+        tools = re.search(r"^tools:(.*)$", fm.group(1), re.M)
+        if tools and re.search(r"\bTask\b", tools.group(1)):
+            add(findings, "error", "agent-tool-renamed", f"{f.name} lists tool 'Task'; the subagent tool is 'Agent'", f.name)
+        if not re.search(r"^model:", fm.group(1), re.M):
+            add(findings, "warning", "agent-model-missing", f"{f.name} has no model frontmatter; it will not follow model-routing.yaml", f.name)
+    cmd_dir = ROOT / ".claude" / "commands"
+    if (cmd_dir / "README.md").exists():
+        add(findings, "error", "command-readme", ".claude/commands/README.md would register as a /README command; keep the index in .claude/engine/docs/command-index.md", "README.md")
+    for f in sorted(cmd_dir.glob("*.md")):
+        text = f.read_text(encoding="utf-8")
+        if not (text.startswith("---\n") and re.search(r"^description:", text.split("\n---\n", 1)[0], re.M)):
+            add(findings, "warning", "command-description-missing", f"{f.name} has no description frontmatter for the / menu", f.name)
 
 
 def check_skill_taxonomy(findings: list[dict[str, str]]) -> None:
@@ -892,7 +926,7 @@ def check_skill_taxonomy(findings: list[dict[str, str]]) -> None:
     if total != actual:
         add(findings, "error", "skill-taxonomy-stale", f"skill-taxonomy total_skills={total} but {actual} SKILL.md found; rerun scripts/build-skill-catalog.py", "skill-taxonomy.yaml")
     if not (ENGINE / "docs" / "skill-catalog.md").is_file():
-        add(findings, "error", "skill-catalog-missing", "Missing .maestro/engine/docs/skill-catalog.md", "skill-catalog.md")
+        add(findings, "error", "skill-catalog-missing", "Missing .claude/engine/docs/skill-catalog.md", "skill-catalog.md")
 
     registry = load_yaml(REGISTRY / "skills.yaml")
     catalog = registry.get("catalog", {}) if isinstance(registry, dict) else {}
@@ -1039,6 +1073,7 @@ def run_checks() -> dict[str, Any]:
     check_agent_activity(findings)
     check_specialists(findings)
     check_claude_hooks(findings)
+    check_claude_native(findings)
     check_skill_taxonomy(findings)
     check_codex_plugin(findings)
     check_codex_prompts(findings)

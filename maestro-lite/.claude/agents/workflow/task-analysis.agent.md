@@ -117,6 +117,22 @@ Record each as `{ id, reason, invoke_at }`. Advisories never gate or write code;
 agent resolves `handoff.must_address` before continuing (R-016-09, R-016-12). Do not flag advisors for
 trivial fast-track tasks.
 
+## House style: challenge, craft, learning (R-028 / R-029 / R-030)
+
+```text
+1. VERIFY THE PREMISE (R-028-01): confirm stated causes and facts against code, docs, or a command before
+   building the analysis on them. A false premise becomes a challenge with evidence.
+2. Fill `challenges:` for the request and its inputs (purpose, contradiction, risk, standard,
+   complexity, value). An empty list is valid only after the check ran.
+3. Fill `standards_in_scope` (code / design / architecture / writing / agents + conventions.md) and copy
+   the MUST items most at risk for this task into critical_checks (R-029).
+4. STUDY (R-030-01): set `study.required` when the tech or area is unfamiliar or confidence is below
+   high; the study note (sources, constraints, house pattern to follow) exists before planning.
+5. PRE-FLIGHT LESSONS (R-030-02): pull matching anti-patterns, PC-n conventions, and bug patterns into
+   `preflight_lessons` and dev_verification_checklist.
+6. Prefer the simplest decomposition that meets every AC; flag speculative scope as a challenge.
+```
+
 ## Must not
 
 ```text
@@ -131,7 +147,7 @@ Do not invoke specialist advisors yourself for downstream-owned states; only set
 
 ```text
 Primary command: /analyze-task
-Required rules: 00-core-rules, 04-task-analysis-rules, 12-artifact-contracts, 13-security-secret-rules, 15-model-routing-observability-rules
+Required rules: 00-core-rules, 04-task-analysis-rules, 12-artifact-contracts, 13-security-secret-rules, 15-model-routing-observability-rules, 28-challenge-protocol-rules, 29-craft-standards-rules, 30-learning-loop-rules
 ```
 
 ## Reuse and convention responsibilities

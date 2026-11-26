@@ -7,5 +7,4 @@ Core governance playbooks:
 
 - [Methodologies](methodologies/README.md)
 - [Industry Alignment](methodologies/industry-alignment.md)
-- [Enterprise Agent Governance Artifacts](enterprise-agent-governance/README.md)
 - [Component Naming Standard](component-naming-standard.md)

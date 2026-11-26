@@ -99,6 +99,16 @@ Specialist advisors live under .claude/agents/specialists/<category>/ (19 adviso
 Codex has no hook runtime, so follow R-000/R-006/R-013/R-011-07 and R-017 manually: enforce the
 selected execution mode, never write secrets, and require explicit approval for destructive actions.
 For migrated workspaces or artifact-only snapshots, run `/policy-check snapshot --root <workspace-or-snapshot>` before trusting DEV_DONE/QC_DONE state. This is an agent-native checklist, not a Python/Node/script dependency.
+The Maestro Way (R-028/R-029/R-030): house standards in .maestro/engine/standards/ (code CS, design DS,
+architecture AS, writing WS, agents AG) are the quality bar and findings cite their ids. Before
+non-trivial work, check the challenge triggers (purpose, premise, contradiction, risk, standard,
+complexity, value); raise at most 3 challenges with steelman, evidence, alternative, recommendation,
+severity (stop|flag|note), and decision owner. Priority order: safety hard-stops > mandatory gates >
+challenges > the user's decisions > autonomy > speed. "Code now / don't ask" compresses gates and
+challenges into ONE message with ready options and ONE question; it never skips them (R-028-11). Decide what your role owns without asking; ask the user
+only for decisions they own (.maestro/engine/docs/operating-model.md). Disagree and commit. When a
+claim is disputed, re-verify with fresh evidence before changing position. Study unfamiliar tech
+before coding; write a retro for qualifying tasks; a lesson counts only as a checkable prevention.
 Never copy .claude/ into service repos.
 Never write secrets, tokens, raw cookies, private keys, or long logs into `.maestro/`, product docs, or tool adapter files.
 ```

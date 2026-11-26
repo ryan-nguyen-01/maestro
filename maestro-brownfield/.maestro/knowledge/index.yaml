@@ -8,7 +8,7 @@ purpose: "Small routing index so agents can decide which knowledge files to open
 
 read_policy:
   startup:
-    - ".maestro/engine/workflow.md"
+    - ".claude/engine/workflow.md"
     - ".maestro/runtime/workflow-state.yaml"
     - ".maestro/knowledge/index.yaml"
   then_read_only_if_relevant:
@@ -33,7 +33,7 @@ read_policy:
     rule: "Do not scan or read all of .claude/skills/**. Select candidates from the registry first, then open only selected SKILL.md files and direct references."
   user_inputs_root: "inputs"
   user_inputs_index: ".maestro/registry/inputs.yaml"
-  rule: "Do not open every knowledge or memory file by default. Use task intent, impacted components, and this index first. For user-provided reference docs, open .maestro/registry/inputs.yaml first, then read only relevant files under inputs/."
+  rule: "Do not open every knowledge or memory file by default. Use task intent, impacted components, and this index first. For user-provided reference docs, open .maestro/registry/intake.yaml first, then read only relevant files under intake/."
 
 context_economy:
   project_profile_source: ".maestro/knowledge/project.yaml.project_profile"
@@ -108,9 +108,9 @@ policy_context:
     transition:
       read:
         - ".maestro/runtime/workflow-state.yaml"
-        - ".maestro/engine/workflow.md"
-        - ".maestro/engine/rules/11-approval-gates.md"
-        - ".maestro/engine/rules/12-artifact-contracts.md"
+        - ".claude/engine/workflow.md"
+        - ".claude/engine/rules/11-approval-gates.md"
+        - ".claude/engine/rules/12-artifact-contracts.md"
     workspace:
       read:
         - ".maestro/runtime/workflow-state.yaml"
@@ -143,7 +143,7 @@ policy_context:
         - ".maestro/work/tasks/<task-id>/dev-verification.yaml"
         - ".maestro/work/tasks/<task-id>/qc-test-results.yaml"
       rule: "Open only artifacts required by task state and task.yaml manifest."
-  output_template: ".maestro/engine/templates/policy-check-report.template.yaml"
+  output_template: ".claude/engine/templates/policy-check-report.template.yaml"
 
 documents:
   - path: ".maestro/knowledge/project.yaml"

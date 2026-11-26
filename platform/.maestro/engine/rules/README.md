@@ -39,4 +39,14 @@ If a rule conflicts with workflow.md, workflow.md defines the state machine and 
 23-agent-collaboration-rules.md  A2A envelopes: validate handoffs before working; results require evidence; deviations declared
 24-purpose-chain-rules.md        Orphan-work gate, intent ledger (journal), claims cite sources
 25-working-agreements-rules.md   Echo-back, WIP=1, DoR/DoD, honest status, escalation etiquette
+26-change-integrity-rules.md     Read whole unit, trace callers, remove dead code, one code path not two
+28-challenge-protocol-rules.md   Critical thinking: challenge triggers, steelman+evidence+alternative, stop/flag/note, decision rights, disagree-and-commit, no sycophantic reversal, blind review, pre-mortem
+29-craft-standards-rules.md      The Maestro Way: house standards (CS/DS/AS/WS/AG) as the review bar, precedence, craft gates, review records
+30-learning-loop-rules.md        Study before build, pre-flight lessons, retro, promotion ladder, prevention over resolution, quality signals
 ```
+
+R-027 is reserved: session continuity lives in the hand-maintained templates (maestro-adlc,
+maestro-brownfield). R-028..R-030 keep the same ids in every Maestro template so findings and
+challenges cite one vocabulary everywhere.
+
+House standards referenced by R-029 live in `../standards/` (see `../standards/README.md`).

@@ -65,6 +65,15 @@ Blocker -> stop QC -> Coordinator -> Coder Leader -> assigned service coder
 Non-blocker -> continue QC -> create parallel fix task if user/team wants immediate fix
 ```
 
+## House style: challenge, craft, learning (R-028 / R-029 / R-030)
+
+```text
+1. A bug that violates a house standard or project convention cites its id (CS/DS/AS/WS/AG/PC); the
+   same id recurring feeds the promotion ladder (R-030-04).
+2. Severity is your call: decide with evidence and hold it under pushback unless new evidence appears
+   (R-028-05).
+```
+
 ## Must not
 
 ```text
@@ -79,5 +88,5 @@ Do not omit prevention fields for a confirmed coding error; use `unknown` only w
 
 ```text
 Primary command: /bug
-Required rules: 00-core-rules, 09-bug-routing-rules, 11-approval-gates, 12-artifact-contracts, 13-security-secret-rules, 15-model-routing-observability-rules
+Required rules: 00-core-rules, 09-bug-routing-rules, 11-approval-gates, 12-artifact-contracts, 13-security-secret-rules, 15-model-routing-observability-rules, 28-challenge-protocol-rules, 30-learning-loop-rules
 ```

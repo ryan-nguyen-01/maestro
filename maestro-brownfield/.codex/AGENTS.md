@@ -20,16 +20,17 @@ Use this file when Codex opens this repository.
 This repository is `maestro`, a product-development workspace with a coordinator-driven
 control plane. It may contain the product implementation directly.
 
-Product implementation lives under registered roots:
+The existing project's code lives under `source/` (one folder per service/app/package, keeping the
+repo's own internal layout):
 
 ```text
-apps/ services/ packages/ infra/ tests/
+source/
 ```
 
-Reference docs live under:
+Raw user material awaiting triage (specs, bug reports, logs, dumps) lives under:
 
 ```text
-inputs/
+intake/
 ```
 
 ## Framework Maintenance Scope
@@ -53,11 +54,40 @@ methodology:
 requires_onboarding: false   # for framework maintenance
 ```
 
-Framework maintenance includes `AGENTS.md`, `CLAUDE.md`, `COMMAND.md`, `.maestro/engine/**`, `.claude/agents/**`, `.claude/commands/**`, `.codex/**`, `scripts/**`, and root docs such as `SETUP.md`, `QUICKSTART.md`, `GUIDELINES.md`, and `CHANGELOG.md`.
+Framework maintenance includes `AGENTS.md`, `CLAUDE.md`, `COMMAND.md`, `.claude/engine/**`, `.claude/agents/**`, `.claude/commands/**`, `.codex/**`, `scripts/**`, and root docs such as `SETUP.md`, `QUICKSTART.md`, `GUIDELINES.md`, and `CHANGELOG.md`.
 
 Do not read project/component knowledge or coder registries for framework maintenance unless the
 requested change directly touches those contracts. Require onboarding only when assisted/governed
 product work depends on missing component facts.
+
+## Session Resume (FIRST ACTION of every Codex session)
+
+The previous session may have been Claude Code. Recover its position from files before processing
+the first user request — same protocol, same files, both directions. On a brownfield workspace,
+skipping this is how a session re-asks a question the user already answered (ask-don't-infer):
+
+```text
+1. .claude/engine/workflow.md                  rules of the state machine
+2. .maestro/runtime/session-handoff.yaml        last adapter, last step, next command, read_next (skip if absent)
+3. .maestro/runtime/workflow-state.yaml         AUTHORITATIVE position; on conflict it wins over the handoff
+4. Read only what read_next lists + .claude/agents/<next_owner_agent>.agent.md
+5. Announce: Resume: {state} | task {id} | last: {step} | next: {command} | prev adapter: {name}
+6. Continue from next_command — do not broad-scan the workspace.
+```
+
+Record the takeover, then rewrite the handoff at every phase boundary and before handing back:
+
+```bash
+python3 scripts/session-handoff.py --show
+python3 scripts/session-handoff.py --adapter codex --state <STATE> --next </cmd> --owner <agent> \
+    --step "<what was just finished>" --artifact <path> --read <files...>
+```
+
+Codex has no hooks and no subagent auto-discovery, so declare that in the resume banner and enforce
+R-000 / R-006 / R-013 / R-011-07 manually. Switching adapter never changes execution mode,
+verification owner, or approval gates.
+
+Full contract: `.claude/engine/docs/session-continuity.md` — rule `.claude/engine/rules/27-session-continuity-rules.md`.
 
 ## Required Entry Points
 
@@ -65,7 +95,9 @@ Read these first:
 
 ```text
 AGENTS.md
-.maestro/engine/workflow.md
+.claude/engine/docs/session-continuity.md
+.claude/engine/workflow.md
+.maestro/runtime/session-handoff.yaml
 .maestro/runtime/workflow-state.yaml
 COMMAND.md
 ```
@@ -94,13 +126,23 @@ registered component roots or .claude/skills/** by default.
 Use .maestro/config/model-routing.yaml for model profiles. In Codex, deep reasoning defaults to GPT-5.5 and coding defaults to the configured Codex coding model (`gpt-5.3-codex` by default). Switch defaults through model-routing.yaml.model_overrides; do not edit agent files or remove stable profiles to switch models.
 Use .maestro/runtime/agent-activity.yaml for /status activity and elapsed/ETA reporting. If exact ETA is unavailable, mark unknown or estimated.
 Use .maestro/config/response-ui.yaml for status, model report, review, dev, policy, and final response layout. User-requested format wins unless it hides required evidence or unknown/estimated metric labels.
-Framework maintenance may use workflow.md §6.2 lightweight fast-track instead of full task artifacts when the change is trivial and does not affect approval gates, security rules, state machine, generated coder scope, destructive commands, or services/<service-name>/ source.
-Specialist advisors live under .claude/agents/specialists/<category>/ (19 advisor-only experts). Invoke them in-pipeline per R-016 and task-analysis.yaml.advisory_required; they write only .maestro/work/tasks/<task_id>/advisories/<id>.yaml, never application code, never assign coders, never mark gates, and are never a raw-user entrypoint.
+Framework maintenance may use workflow.md §6.2 lightweight fast-track instead of full task artifacts when the change is trivial and does not affect approval gates, security rules, state machine, generated coder scope, destructive commands, or source/<service-name>/ source.
+Specialist advisors live under .claude/agents/ (17 advisor-only experts). Invoke them in-pipeline per R-016 and task-analysis.yaml.advisory_required; they write only .maestro/work/tasks/<task_id>/advisories/<id>.yaml, never application code, never assign coders, never mark gates, and are never a raw-user entrypoint.
 Codex has no hook runtime, so follow R-000/R-006/R-013/R-011-07 and R-017 manually: enforce the
 selected execution mode, never write secrets, and require explicit approval for destructive actions.
 For migrated workspaces or artifact-only snapshots, run `/policy-check snapshot --root <workspace-or-snapshot>` before trusting DEV_DONE/QC_DONE state. This is an agent-native checklist, not a Python/Node/script dependency.
+The Maestro Way (R-028/R-029/R-030): house standards in .claude/engine/standards/ (code CS, design DS,
+architecture AS, writing WS, agents AG) are the quality bar and findings cite their ids. Before
+non-trivial work, check the challenge triggers (purpose, premise, contradiction, risk, standard,
+complexity, value); raise at most 3 challenges with steelman, evidence, alternative, recommendation,
+severity (stop|flag|note), and decision owner. Priority order: safety hard-stops > mandatory gates >
+challenges > the user's decisions > autonomy > speed. "Code now / don't ask" compresses gates and
+challenges into ONE message with ready options and ONE question; it never skips them (R-028-11). Decide what your role owns without asking; ask the user
+only for decisions they own (.claude/engine/docs/operating-model.md). Disagree and commit. When a
+claim is disputed, re-verify with fresh evidence before changing position. Study unfamiliar tech
+before coding; write a retro for qualifying tasks; a lesson counts only as a checkable prevention.
 Never copy .claude/ into service repos.
-Never write secrets, tokens, raw cookies, private keys, or long logs into `.maestro/`, product docs, or tool adapter files.
+Never write secrets, tokens, raw cookies, private keys, or long logs into `.claude/`, product docs, or tool adapter files.
 ```
 
 ## Codex Sandbox Boundary
@@ -174,7 +216,7 @@ Use the Workflow Policy agent for state/artifact drift:
 /policy-check snapshot --root DATA --write-report
 ```
 
-The checker supports artifact-only snapshots and must not require Python, Node, jq, or shell helpers. If `services/` is absent, it reports `services_available: false` and validates recorded `.maestro/runtime/` evidence only.
+The checker supports artifact-only snapshots and must not require Python, Node, jq, or shell helpers. If `source/` is absent, it reports `services_available: false` and validates recorded `.maestro/runtime/` evidence only.
 
 Do not trust `DEV_DONE` unless `dev-verification.yaml` exists and has `result` or `verdict` equal to `DEV_DONE`. Do not trust `QC_DONE`/`PASS` while required QC cases are blocked/pending/not_run/failed or notes still require manual/retest evidence.
 

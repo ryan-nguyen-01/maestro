@@ -6,7 +6,7 @@ status: "active"
 purpose: "Tool-agnostic response presentation contract for Claude and Codex."
 
 source_of_truth: ".maestro/config/response-ui.yaml"
-rule_file: ".maestro/engine/rules/15-model-routing-observability-rules.md"
+rule_file: ".claude/engine/rules/15-model-routing-observability-rules.md"
 
 defaults:
   language: "vi"

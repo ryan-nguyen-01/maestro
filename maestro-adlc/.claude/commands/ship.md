@@ -1,3 +1,8 @@
+---
+description: "Autonomous build-to-done (Safe Autopilot): full pipeline, self-heal, finished product (R-019)"
+argument-hint: "[product idea or task]"
+---
+
 # /ship
 
 ## Purpose

@@ -1,0 +1,37 @@
+# Craft review record (R-029-05). One file per review gate:
+#   .maestro/work/tasks/<task-id>/reviews/<gate>-<seq>.yaml
+# Reviewer runs in a FRESH context (R-028-06): it receives the artifact, acceptance criteria, contracts,
+# and standards — not the author's reasoning.
+schema_version: "1.0"
+task_id: "{{TASK_ID}}"
+gate: "direction|architecture|design|code|qc-ui|docs|agent"
+artifact_refs: []                  # files / docs / diff range reviewed
+author: "{{AUTHOR_AGENT}}"
+reviewer: "{{REVIEWER_AGENT}}"
+fresh_context: true                # false is only valid in direct/assisted mode (R-029-06)
+standards_applied: []              # e.g. [code.md, conventions.md#PC-3]
+reviewed_at: "{{ISO8601}}"
+
+verdict: "approve|approve_with_findings|changes_required|blocked"
+verdict_reason: ""                 # one line; approve when the change clearly improves health and no MUST is open
+
+findings:                          # format per R-029-03; empty list = none found after review
+  - id: F-01
+    standard_id: "CS-14"           # or DS-xx / AS-xx / WS-xx / AG-xx / PC-n; missing id => taste, cannot block
+    level: "MUST|SHOULD|MAY"
+    location: "path/to/file.ts:88"
+    problem: ""
+    fix: ""
+    disposition: "open|fixed|justified|deferred"
+    disposition_note: ""           # required for justified/deferred
+    deferred_to: null              # task id when deferred
+
+challenges: []                     # R-028-02 shape; raise design-level concerns here, not as findings
+
+evidence:                          # commands run, checks performed by the reviewer
+  - ""
+
+summary:
+  must_open: 0
+  should_open: 0
+  first_pass_must_count: 0         # MUST findings on the FIRST review of this artifact (R-030-07)

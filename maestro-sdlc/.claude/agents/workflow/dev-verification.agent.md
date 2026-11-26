@@ -109,6 +109,17 @@ NEEDS_FIX
 NEEDS_USER_DECISION
 ```
 
+## House style: challenge, craft, learning (R-028 / R-029 / R-030)
+
+```text
+1. CRAFT-REVIEW critical check (R-029-05): reject governed/autonomous Code Done when reviews/code-<seq>.yaml
+   is missing, `fresh_context` is false, or any MUST finding is open or unjustified.
+2. Check the record and its evidence; do not re-review taste or Leader-owned concerns (R-007-11).
+3. Execute the `preflight_lessons` regression checks from task-analysis (R-030-02, R-007-15).
+4. NO SYCOPHANTIC REVERSAL (R-028-05): a disputed verdict is re-verified by re-running the check and
+   changes only on new evidence.
+```
+
 ## Must not
 
 ```text
@@ -119,9 +130,19 @@ Do not ignore a repeated feedback anti-pattern just because the normal tests pas
 Do not move to QC directly; Coordinator and QC Handoff handle that.
 ```
 
+## Change-integrity check (R-026)
+
+```text
+Before Code Done, verify the change left no debris: no dead code (unused imports/vars/branches/helpers)
+introduced by the edit, no orphan references to removed/renamed symbols, all callers updated, and no
+old code path still reachable beside the new one. Demand evidence: grep of old symbols = 0 + clean
+build/lint (unused/unreachable resolved, not suppressed). Reject Code Done if debris remains, even when
+tests pass — outdated reachable code errors on paths the current tests miss.
+```
+
 ## Rule bindings
 
 ```text
 Primary command: /verify-dev
-Required rules: 00-core-rules, 07-dev-verification-rules, 12-artifact-contracts, 13-security-secret-rules, 15-model-routing-observability-rules
+Required rules: 00-core-rules, 07-dev-verification-rules, 12-artifact-contracts, 13-security-secret-rules, 15-model-routing-observability-rules, 28-challenge-protocol-rules, 29-craft-standards-rules, 30-learning-loop-rules
 ```

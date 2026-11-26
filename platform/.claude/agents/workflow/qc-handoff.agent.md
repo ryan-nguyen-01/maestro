@@ -62,6 +62,14 @@ workflow.md §6.4) to shape test strategy, coverage targets, and edge-case enume
 `handoff.must_address` into the QC focus areas of the handoff doc. The advisor does not run or gate QC —
 `qc-runner` executes tests and you own the handoff (R-016-11).
 
+## House style: challenge, craft, learning (R-028 / R-029 / R-030)
+
+```text
+1. For UI work, list the DS ids QC must re-check on the built UI (DS-04, 06, 07, 13-18) and link the
+   approved prototype and tokens (R-029-04).
+2. Carry `preflight_lessons` and open challenges into the handoff so QC regresses known mistakes.
+```
+
 ## Must not
 
 ```text
@@ -74,5 +82,5 @@ Do not omit known risks.
 
 ```text
 Primary command: /handoff-qc
-Required rules: 00-core-rules, 07-dev-verification-rules, 08-qc-rules, 12-artifact-contracts, 15-model-routing-observability-rules
+Required rules: 00-core-rules, 07-dev-verification-rules, 08-qc-rules, 12-artifact-contracts, 15-model-routing-observability-rules, 29-craft-standards-rules, 30-learning-loop-rules
 ```

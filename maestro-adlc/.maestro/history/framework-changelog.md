@@ -1,5 +1,34 @@
 # `.claude` Changelog
 
+## 2.0.0 — Claude Code native alignment (2026-10-07)
+
+Breaking layout change plus alignment with Claude Code 2.1.28x (validated on 2.1.287):
+
+- Control plane merged from `.maestro/` into `.claude/`; agents flattened to `.claude/agents/<name>.agent.md`
+  (specialists keep `category:` frontmatter instead of subfolders).
+- `AGENTS.md` is now the single source of shared instructions (identity, ADLC profile, resume, rules,
+  flows). `CLAUDE.md` is a thin adapter: `@AGENTS.md` import + Claude-only notes. Claude Code reads
+  `AGENTS.md` natively only when no `CLAUDE.md` exists, so the import is the supported way to share it;
+  it is never loaded twice. `.claude/INSTRUCTIONS.md` keeps only the control-plane read order.
+  Auto markers became HTML comments so they no longer inject stray H1s into context.
+- Subagents: tool `Task` renamed to `Agent` (coordinator, coder-leader); every workflow agent and
+  built-in coder now carries `model` + `effort` frontmatter mirroring `model-routing.yaml`; specialists
+  gained `effort`. Agent templates updated so generated coders/specialists follow suit.
+  `model-routing.yaml.adapter_binding` documents how each adapter applies the profiles.
+- Commands: all 22 have `description` / `argument-hint` frontmatter for the `/` menu. The commands
+  index moved to `.claude/engine/docs/command-index.md` (a `README.md` in `.claude/commands/` would
+  register as `/README`). `build-codex-prompts.py` strips the frontmatter so Codex mirrors are unchanged.
+- `scope-guard.py`: classifies the project-relative path (the absolute path previously gated framework
+  files whenever the workspace lived under a dir such as `src/`), never gates `.claude/`, `.codex/`,
+  `scripts/`, `docs/`, `deliverables/`, and now gates the ADLC work roots `agents/` and `evals/` (R-017-02).
+- Health check: follows `@path` imports for entrypoint checks; new `check_claude_native` (CLAUDE.md
+  imports AGENTS.md, no `Task` tool, agent model frontmatter, command descriptions, no commands README);
+  removed the dead `.claude-plugin` wrapper check.
+- Engine rules stay in `.claude/engine/rules/` (on demand) — deliberately not `.claude/rules/`, which
+  Claude Code would auto-load every session.
+- Stale references fixed: 20 (not 19) specialists, `<category>/` paths, SETUP.md mentions, truncated
+  Plugin section, per-tool table (Claude Code does run hooks).
+
 ## Framework maintenance fast path
 
 Added explicit framework maintenance behavior so the product-development control plane can be maintained without running product-component onboarding:

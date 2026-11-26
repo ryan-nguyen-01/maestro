@@ -3,7 +3,7 @@ role: "decision-index"
 records_root: "docs/architecture/decisions"
 decisions:
   - id: "MAESTRO-ADR-001"
-    title: "Use .maestro as the single product-development control plane"
+    title: "Use .claude as the single product-development control plane"
     status: "accepted"
     path: "docs/architecture/decisions/MAESTRO-ADR-001-aw-control-plane.md"
     related_designs:

@@ -1,3 +1,8 @@
+---
+description: "Normalize an HLD, LLD, ticket, bug report, incident, or plain text into task-analysis.yaml"
+argument-hint: "[ticket, doc path, or task text]"
+---
+
 # /analyze-task
 
 ## Purpose

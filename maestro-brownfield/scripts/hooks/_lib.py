@@ -65,8 +65,21 @@ def field(payload: dict, key: str) -> str:
 
 
 def project_dir(payload: dict) -> Path:
+    """Resolve the maestro workspace root.
+
+    `cwd` is the agent session's working directory, which for a coder-leader task
+    working inside a component (e.g. source/<component>/) is NOT the repo root. Walk
+    upward looking for `.claude/` (the control-plane marker) the way git walks up
+    for `.git/`, so scope-guard resolves the same root regardless of which
+    subdirectory the session's shell happens to be in. Falls back to `cwd` itself
+    if no `.claude/` is found in any ancestor (e.g. a workspace still being scaffolded).
+    """
     cwd = payload.get("cwd") or os.environ.get("CLAUDE_PROJECT_DIR") or os.getcwd()
-    return Path(cwd)
+    start = Path(cwd)
+    for candidate in (start, *start.parents):
+        if (candidate / ".claude").is_dir():
+            return candidate
+    return start
 
 
 def rel_path(file_path: str, root: Path) -> str:

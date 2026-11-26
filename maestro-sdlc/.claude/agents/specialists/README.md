@@ -1,11 +1,16 @@
 # Specialist Advisors
 
-19 domain experts operating as **in-pipeline advisors**: invoked by a workflow agent,
+20 domain experts operating as **in-pipeline advisors**: invoked by a workflow agent,
 producing an evidence-backed advisory artifact at `.maestro/work/tasks/<task-id>/advisories/<id>.yaml`, they do **not**
 write application code, do **not** assign coders, and do **not** mark Code Done/QC Done.
 
 Contract & limits: [`.maestro/engine/rules/16-specialist-advisory-rules.md`](../../../.maestro/engine/rules/16-specialist-advisory-rules.md).
 Template: [`.maestro/engine/templates/agent-specialist.template.md`](../../../.maestro/engine/templates/agent-specialist.template.md).
+
+Specialists are the company's senior experts ([operating-model.md](../../../.maestro/engine/docs/operating-model.md)):
+their findings cite the house standards ([`.maestro/engine/standards/`](../../../.maestro/engine/standards/README.md),
+R-029-03) and their recommendations use the challenge shape (R-028-02) — steelman, evidence,
+alternative, recommendation — and are held under pushback unless new evidence appears (R-028-05).
 
 ## Quick-selection
 
@@ -13,6 +18,7 @@ Template: [`.maestro/engine/templates/agent-specialist.template.md`](../../../.m
 |--------------------|-----------|----------|-------|---------------|
 | REST/GraphQL API design, versioning, contract | `api-designer` | architecture | sonnet | task-analysis, solution-architect |
 | Schema, migration, SQL/NoSQL choice, indexing | `database-architect` | architecture | opus | task-analysis, solution-architect |
+| Eval suites: datasets, graders, thresholds, eval-gate readiness | `eval-engineer` | data-ai | opus | task-analysis, qc-handoff, solution-architect |
 | Cloud topology, IAM, networking, DR, WAF | `cloud-architect` | architecture | opus | solution-architect |
 | Event contract, messaging, saga, ordering | `event-architect` | architecture | opus | solution-architect |
 | Wireframe, component, design tokens, layout | `ui-ux-designer` | architecture | sonnet | task-analysis, coder-leader |

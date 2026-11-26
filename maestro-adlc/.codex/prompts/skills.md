@@ -8,7 +8,7 @@ You are running the maestro `/skills` workflow command inside Codex.
 Follow `.codex/AGENTS.md` (or `AGENTS.md`) routing and the framework rules. Route every
 request through the coordinator model; do not bypass approval gates, security/secret rules,
 or the task-analysis source-edit gate. If the maestro framework files
-(`.maestro/engine/`, `.maestro/registry/`, `.maestro/knowledge/`, `.maestro/work/`, `.maestro/runtime/`, `.claude/commands/skills.md`) are present, defer to them as the
+(`.claude/engine/`, `.maestro/registry/`, `.maestro/knowledge/`, `.maestro/work/`, `.maestro/runtime/`, `.claude/commands/skills.md`) are present, defer to them as the
 authoritative contract — this prompt is a portable mirror.
 
 User input for this command: $ARGUMENTS
@@ -49,7 +49,7 @@ Allowed files:
 ```text
 .claude/skills/**
 .maestro/registry/skills.yaml
-.maestro/engine/docs/external-skills.md
+.claude/engine/docs/external-skills.md
 skills-lock.json
 CHANGELOG.md
 ```
@@ -83,7 +83,7 @@ CHANGELOG.md
 ## Workflow
 
 ```text
-1. Read skills-lock.json, .maestro/registry/skills.yaml, and .maestro/engine/docs/external-skills.md.
+1. Read skills-lock.json, .maestro/registry/skills.yaml, and .claude/engine/docs/external-skills.md.
 2. Inspect only the relevant .claude/skills/<skill>/ folders.
 3. For status/audit, report findings only.
 4. For update/refresh-registry, create a proposed change summary first.

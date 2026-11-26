@@ -71,7 +71,7 @@ Include:
   - Hướng dẫn verify cho User: concrete steps user can run to verify
   - Đề xuất tiếp theo: recommendations for future work
 
-Template: .maestro/engine/templates/qc-delivery-report.template.md
+Template: .claude/engine/templates/qc-delivery-report.template.md
 Target audience: the USER (not other agents)
 ```
 

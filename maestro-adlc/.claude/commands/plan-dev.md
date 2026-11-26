@@ -1,3 +1,8 @@
+---
+description: "Create the implementation plan and service assignments for an analyzed task"
+argument-hint: "[task-id]"
+---
+
 # /plan-dev
 
 ## Purpose

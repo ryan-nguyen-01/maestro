@@ -8,7 +8,7 @@ You are running the maestro `/overview` workflow command inside Codex.
 Follow `.codex/AGENTS.md` (or `AGENTS.md`) routing and the framework rules. Route every
 request through the coordinator model; do not bypass approval gates, security/secret rules,
 or the task-analysis source-edit gate. If the maestro framework files
-(`.maestro/engine/`, `.maestro/registry/`, `.maestro/knowledge/`, `.maestro/work/`, `.maestro/runtime/`, `.claude/commands/overview.md`) are present, defer to them as the
+(`.claude/engine/`, `.maestro/registry/`, `.maestro/knowledge/`, `.maestro/work/`, `.maestro/runtime/`, `.claude/commands/overview.md`) are present, defer to them as the
 authoritative contract — this prompt is a portable mirror.
 
 User input for this command: $ARGUMENTS
@@ -21,9 +21,9 @@ User input for this command: $ARGUMENTS
 ## Purpose
 
 One command that prints the **whole project picture and current status**: identity, methodology and
-execution mode, workflow state, active task/run, autopilot, knowledge, requirements/design artifacts,
-framework structure (agents/skills/rules/templates/commands), and git state — plus the suggested next
-action. Use it to get oriented at the start of a session or to check where the project stands.
+execution mode, workflow state, active task/run, knowledge, intake triage status, framework structure
+(agents/skills/rules/templates/commands), and git state — plus the suggested next action. Use it to
+get oriented at the start of a session or to check where the project stands.
 
 `/status` is the quick runtime status; `/overview` is the full project briefing.
 
@@ -51,10 +51,9 @@ python3 scripts/status-dashboard.py --mode overview --write   # also writes the 
 ```text
 Project              workspace/product identity, component roots
 Methodology & mode   methodology, execution mode, verification owner, access mode
-Workflow status      state, active task/run, autopilot, activity, next action
-Knowledge            project-brain freshness, components, active coder agents
-Requirements & design  BA docs (BRD/PRD/US/UC/BR/NFR/RTM) and UI prototype presence
-Framework structure  agents (workflow/coders/specialists), skills, rules, templates, commands
+Workflow status      state, active task/run, activity, next action
+Knowledge            project-brain freshness, components, active coder agents, intake/ files indexed
+Framework structure  agents (flat: workflow/coders/specialists by name/frontmatter), skills, rules, templates, commands
 Git                  branch, ahead/behind, uncommitted files, last commit
 ```
 

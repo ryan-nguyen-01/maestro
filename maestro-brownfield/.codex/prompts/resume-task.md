@@ -1,5 +1,5 @@
 ---
-description: "maestro /resume-task — Resume a task from its current state without rediscovering context from scratch."
+description: "maestro /resume-task — Resume a task from its current state without rediscovering context from scratch. Works across adapters: the previous ..."
 argument-hint: "[request or args]"
 ---
 
@@ -8,7 +8,7 @@ You are running the maestro `/resume-task` workflow command inside Codex.
 Follow `.codex/AGENTS.md` (or `AGENTS.md`) routing and the framework rules. Route every
 request through the coordinator model; do not bypass approval gates, security/secret rules,
 or the task-analysis source-edit gate. If the maestro framework files
-(`.maestro/engine/`, `.maestro/registry/`, `.maestro/knowledge/`, `.maestro/work/`, `.maestro/runtime/`, `.claude/commands/resume-task.md`) are present, defer to them as the
+(`.claude/engine/`, `.maestro/registry/`, `.maestro/knowledge/`, `.maestro/work/`, `.maestro/runtime/`, `.claude/commands/resume-task.md`) are present, defer to them as the
 authoritative contract — this prompt is a portable mirror.
 
 User input for this command: $ARGUMENTS
@@ -20,7 +20,8 @@ User input for this command: $ARGUMENTS
 
 ## Purpose
 
-Resume a task from its current state without rediscovering context from scratch.
+Resume a task from its current state without rediscovering context from scratch. Works across
+adapters: the previous session may have run in a different tool (R-027).
 
 ## Responsible agent
 
@@ -33,11 +34,15 @@ coordinator
 01-project-brain-rules.md
 11-approval-gates.md
 12-artifact-contracts.md
+27-session-continuity-rules.md
 ```
 
 ## Workflow
 
 ```text
+0. Read .maestro/runtime/session-handoff.yaml (skip if absent) and resolve task_id from it when the
+   user did not name one. Reconcile against .maestro/runtime/workflow-state.yaml — the state file is
+   authoritative; correct the handoff and report the correction.
 1. Resolve task_id and task folder under .maestro/work/tasks/<task_id>/.
 2. Read task.yaml first; if missing, reconstruct only from artifacts in that same folder.
 3. Read task-updates.yaml when present for state/artifact history.
@@ -45,6 +50,8 @@ coordinator
 5. Check required artifact for the next transition.
 6. Route to the next command.
 7. If artifacts are missing, route to the responsible command to recreate them.
+8. Rewrite .maestro/runtime/session-handoff.yaml with the current adapter, resolved state,
+   next_command, next_owner_agent, and a minimal ordered read_next.
 ```
 
 ## Output format
@@ -56,4 +63,6 @@ next_command: "<command>"
 missing_artifacts: []
 blocked: false
 reason: null
+previous_adapter: "<claude|codex|other|none>"
+read_next: []
 ```

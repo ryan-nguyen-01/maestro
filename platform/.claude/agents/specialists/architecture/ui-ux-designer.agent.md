@@ -133,6 +133,18 @@ When done, report briefly per response-ui:
 🔜 Returns to: <downstream workflow agent>
 ```
 
+## House style: challenge, craft, learning (R-028 / R-029 / R-030)
+
+```text
+- Design against standards/design.md. No brand or design system -> start from the house token baseline
+  and adapt it to the product (R-029-07); record the direction in the blueprint's ui_ux.
+- Every screen shows loading / empty / error / success; every form its states (DS-06/07). Real copy,
+  realistic data, never lorem ipsum.
+- Run the design review checklist before the prototype is presented; findings in R-029-03 format.
+- Offer alternative directions only when the choice is genuinely the user's; otherwise recommend one with
+  reasons (R-028-10).
+```
+
 ## Must not
 
 ```text
@@ -147,5 +159,5 @@ Do not invent facts; mark unknown and request evidence (Four Karpathy principles
 
 ```text
 Primary route: invoked by a workflow agent (coordinator-mediated)
-Required rules: 00-core-rules, 16-specialist-advisory-rules, 12-artifact-contracts, 13-security-secret-rules, 15-model-routing-observability-rules
+Required rules: 00-core-rules, 16-specialist-advisory-rules, 12-artifact-contracts, 13-security-secret-rules, 15-model-routing-observability-rules, 28-challenge-protocol-rules, 29-craft-standards-rules
 ```

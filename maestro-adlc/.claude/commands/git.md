@@ -1,10 +1,15 @@
+---
+description: "Git-flow: branch, commit, sync, and PR with the right policy; outward git is user-gated (R-020)"
+argument-hint: "[status|branch <task-id>|commit|sync|pr|release <version>]"
+---
+
 # /git
 
 ## Purpose
 
 Run the Maestro Git-flow workflow: branch, commit, sync, and PR with the right policy. Local commits
 are automatic/free; anything outward-facing (push, PR, merge to shared branches, tags) needs explicit
-user approval. Full contract: `.maestro/engine/rules/20-git-workflow-rules.md`.
+user approval. Full contract: `.claude/engine/rules/20-git-workflow-rules.md`.
 
 ## Responsible agent
 

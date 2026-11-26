@@ -152,6 +152,22 @@ If `inputs/` and source code disagree (e.g. inputs says service uses Postgres, c
 - Record the conflict in project.yaml.conflicts[] with both sources cited, so user can resolve.
 ```
 
+## Product identity (mandatory — close the loop)
+
+Onboarding is NOT complete while `.maestro/project.yaml.product` is unconfigured. Never finish silently
+with `display_name: null`:
+
+```text
+1. INFER candidates from evidence: repo/folder name, package.json/pyproject name, README title,
+   dominant service prefix. Rank them, keep the evidence per candidate.
+2. PROPOSE to the user: "Tôi suy ra tên dự án là '<best>' (từ <evidence>). Dùng tên này, chọn tên khác,
+   hay để sau?" — one short question, options included.
+3. On confirmation: write product.id/key/display_name (+ component_namespace), status: "configured".
+   NEVER write identity without the user's answer (it is the official designation — R-002-D09).
+4. If the user defers: record the deferral in the journal; the coordinator will re-ask next session
+   (not every message).
+```
+
 ## Outputs
 
 Write or update:
@@ -307,6 +323,16 @@ If the component folder does NOT exist at `services/service-name`, ask the user:
 
 Never invent a path. Resolve every component from `components.yaml`; do not infer its root from its kind.
 
+## House style: challenge, craft, learning (R-028 / R-029 / R-030)
+
+```text
+1. When extracting conventions, compare them with the house standards. Record each place the codebase's
+   established pattern differs as a PC-n entry in knowledge/conventions.md, so reviews follow the
+   codebase rather than the house default (R-029-02).
+2. Record MUST (floor) gaps you observe (secrets in code, string-built SQL, missing authz) as risks with
+   evidence. Do not fix them during onboarding (R-002).
+```
+
 ## Must not
 
 ```text
@@ -320,7 +346,7 @@ Do not infer test requirements when evidence is absent; mark unknown.
 
 ```text
 Primary command: /onboard
-Required rules: 00-core-rules, 01-project-brain-rules, 02-onboarding-rules, 13-security-secret-rules, 15-model-routing-observability-rules
+Required rules: 00-core-rules, 01-project-brain-rules, 02-onboarding-rules, 13-security-secret-rules, 15-model-routing-observability-rules, 29-craft-standards-rules
 ```
 
 ## Deep project intelligence responsibilities

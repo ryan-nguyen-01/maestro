@@ -122,6 +122,15 @@ When done, report briefly per response-ui:
 🔜 Returns to: <downstream workflow agent>
 ```
 
+## House style: challenge, craft, learning (R-028 / R-029 / R-030)
+
+```text
+- Findings cite house standard ids where one applies (CS/DS/AS/WS/AG, or a project PC-n) in the R-029-03
+  format; architecture advice follows standards/architecture.md (alternatives, reversibility, failure modes).
+- Recommendations use the challenge shape (R-028-02): steelman, concern, evidence, impact, alternative,
+  recommendation with confidence. Hold findings under pushback unless new evidence appears (R-028-05).
+```
+
 ## Must not
 
 ```text
@@ -136,5 +145,5 @@ Do not invent facts; mark unknown and request evidence (Four Karpathy principles
 
 ```text
 Primary route: invoked by a workflow agent (coordinator-mediated)
-Required rules: 00-core-rules, 16-specialist-advisory-rules, 12-artifact-contracts, 13-security-secret-rules, 15-model-routing-observability-rules
+Required rules: 00-core-rules, 16-specialist-advisory-rules, 12-artifact-contracts, 13-security-secret-rules, 15-model-routing-observability-rules, 28-challenge-protocol-rules, 29-craft-standards-rules
 ```

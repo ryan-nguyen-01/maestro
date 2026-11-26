@@ -1,3 +1,8 @@
+---
+description: "Main entrypoint for any request: classify, route through the workflow, enforce gates"
+argument-hint: "[request]"
+---
+
 # /coord
 
 ## Purpose
@@ -23,7 +28,7 @@ coordinator
 ## Workflow
 
 ```text
-1. Read .maestro/engine/workflow.md.
+1. Read .claude/engine/workflow.md.
 2. Classify target_scope and detect explicit command intents.
 3. Check Project Knowledge and Agent Registry when needed for product-component work.
 4. Validate current state transition and required artifacts.

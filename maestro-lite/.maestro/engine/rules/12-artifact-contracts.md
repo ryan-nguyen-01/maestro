@@ -25,6 +25,8 @@ progress.yaml, verification.yaml, and continuation memory when needed. Direct ta
   qc-delivery-report.md
   bugs.yaml
   memory-updates.yaml
+  reviews/<gate>-<seq>.yaml      (craft review per gate: architecture, design, code — R-029-05)
+  retro.md                       (on DONE / cancel / hard-stop / rework — R-030-03)
 ```
 
 Framework maintenance may use lightweight evidence instead of the full task folder when all of these are true:

@@ -2,7 +2,7 @@
 
 Canonical slash command index for `maestro`.
 
-Detailed command contracts live in `.claude/commands/*.md`. NOTE: users rarely type commands — natural language is the primary interface and the coordinator maps intent to these flows (see CLAUDE.md §"Just talk"). This index exists mainly for agents (phase contracts) and power users.
+Detailed command contracts live in `.claude/commands/*.md`. NOTE: users rarely type commands — natural language is the primary interface and the coordinator maps intent to these flows (see AGENTS.md §"Just talk"). This index exists mainly for agents (phase contracts) and power users.
 
 These are `maestro` workflow commands, not guaranteed UI registrations for every AI tool. Claude Code may expose `.claude/commands/*.md` as slash commands; Codex currently treats `/` as its own built-in TUI menu and does not auto-list these project commands.
 
@@ -29,7 +29,7 @@ Use natural-language intents such as `coord: framework <request>` when you want 
 | `/ship` | Coordinator | Autonomous build-to-done (Safe Autopilot): run the full pipeline under a one-time grant, self-heal build/test/runtime errors, stop only on hard-stops, deliver a finished product (R-019). |
 | `/git` | Coordinator | Git-flow workflow: branch per task, milestone commits, sync, and PR. Outward git (push/PR/merge/tags) is user-gated (R-020). |
 | `/onboard` | Onboarding | Build or refresh Project Knowledge, component registry, test policy, and coder candidates. |
-| `/intake` | Onboarding | Triage user-dropped files (docs/, inputs/): classify, flag secret-risk/misplaced-source/stale docs, write docs/INDEX.md — non-destructive. |
+| `/intake` | Onboarding | Triage user-dropped files (docs/, docs/): classify, flag secret-risk/misplaced-source/stale docs, write docs/INDEX.md — non-destructive. |
 | `/create-coders` | Agent Factory | Generate scoped component coder agents after user approval. |
 | `/investigate` | Task Analysis | Read-only findings: current state (cited), options + tradeoffs, impact, unknowns. No edits, no task unless requested. |
 | `/analyze-task` | Task Analysis | Normalize HLD/LLD/ticket/text into `task-analysis.yaml`. |
@@ -38,6 +38,7 @@ Use natural-language intents such as `coord: framework <request>` when you want 
 | `/verify-dev` | Dev Verification | Evaluate Code Done, critical checks, scope, and test policy. |
 | `/handoff-qc` | QC Handoff | Create Dev-to-QC handoff after DEV_DONE. |
 | `/qc` | QC Runner | Run QC, record results, and classify blocker/non-blocker bugs. |
+| `/evals` | QC Runner | Run/inspect LLM eval suites; eval gate for AI behavior (run/status/gaps/add). |
 | `/bug` | Bug Router | Create or route blocker/non-blocker defects. |
 | `/sync-memory` | Memory Update | Persist durable project/component/workflow learnings. |
 | `/skills` | Coordinator | Maintain installed skills, `skills-lock.json`, and skill registry metadata. |
@@ -58,7 +59,7 @@ python3 scripts/architecture-health-check.py --strict --write-report
 
 ## Fast Maintenance
 
-Trivial framework maintenance may use the lightweight fast-track path from `.maestro/engine/workflow.md` §6.2. It can skip onboarding, generated coder selection, implementation-plan/service-assignments, and QC artifacts when the change does not affect approval gates, security rules, workflow state machine, generated coder scopes, destructive behavior, or application source under `services/`.
+Trivial framework maintenance may use the lightweight fast-track path from `.claude/engine/workflow.md` §6.2. It can skip onboarding, generated coder selection, implementation-plan/service-assignments, and QC artifacts when the change does not affect approval gates, security rules, workflow state machine, generated coder scopes, destructive behavior, or application source under `app/`.
 
 ## Maintenance Commands
 
@@ -98,8 +99,8 @@ Skill updates must go through `/skills`; do not update installed skill folders f
 
 ```text
 COMMAND.md                    Root command index
-.claude/commands/README.md    Internal command index
+.claude/engine/docs/command-index.md Internal command index
 .claude/commands/*.md         Per-command contracts
-.maestro/engine/workflow.md           Workflow states, transitions, gates
-.maestro/engine/rules/                Mandatory command policies
+.claude/engine/workflow.md           Workflow states, transitions, gates
+.claude/engine/rules/                Mandatory command policies
 ```

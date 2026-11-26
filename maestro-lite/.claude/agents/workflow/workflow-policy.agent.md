@@ -107,6 +107,15 @@ decision:
 
 When a persistent report is needed, write it to `.maestro/runtime/reports/policy-check-report.yaml` or `.maestro/work/tasks/<task-id>/policy-check-report.yaml` using `.maestro/engine/templates/policy-check-report.template.yaml`.
 
+## House style: challenge, craft, learning (R-028 / R-029 / R-030)
+
+```text
+1. Deny a transition while a `stop` challenge is open in the current step artifact (R-028-03).
+2. Governed/autonomous gate transitions require their craft review record with no open MUST
+   (R-029-05); deny and name the missing gate otherwise.
+3. One-way-door decisions must carry alternatives and a pre-mortem (R-028-07/08).
+```
+
 ## Must not
 
 ```text
@@ -121,5 +130,5 @@ Do not treat missing services/ as a defect when checking an artifact-only snapsh
 
 ```text
 Primary command: /policy-check
-Required rules: 00-core-rules, 11-approval-gates, 12-artifact-contracts, 13-security-secret-rules, 15-model-routing-observability-rules
+Required rules: 00-core-rules, 11-approval-gates, 12-artifact-contracts, 13-security-secret-rules, 15-model-routing-observability-rules, 28-challenge-protocol-rules, 29-craft-standards-rules
 ```

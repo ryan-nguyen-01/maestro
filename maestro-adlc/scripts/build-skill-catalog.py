@@ -8,7 +8,7 @@ discovery, so instead of moving folders this script taxonomises them:
   2. Classifies into ~12 domains (heuristic on name + description).
   3. Injects `category: <domain>` into the frontmatter (idempotent — skips if present).
   4. Writes machine index   -> .maestro/registry/skill-taxonomy.yaml
-  5. Writes human catalog    -> .maestro/engine/docs/skill-catalog.md  (quick-selection tables)
+  5. Writes human catalog    -> .claude/engine/docs/skill-catalog.md  (quick-selection tables)
 
 Usage:
   python3 scripts/build-skill-catalog.py            # write taxonomy + catalog + inject category
@@ -27,7 +27,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SKILLS = ROOT / ".claude" / "skills"
 TAXONOMY_YAML = ROOT / ".maestro" / "registry" / "skill-taxonomy.yaml"
 REGISTRY_YAML = ROOT / ".maestro" / "registry" / "skills.yaml"
-CATALOG_MD = ROOT / ".maestro" / "engine" / "docs" / "skill-catalog.md"
+CATALOG_MD = ROOT / ".claude" / "engine" / "docs" / "skill-catalog.md"
 REGISTRY_START = "# >>> generated skill catalog >>>"
 REGISTRY_END = "# <<< generated skill catalog <<<"
 

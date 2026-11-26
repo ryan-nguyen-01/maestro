@@ -11,10 +11,17 @@ maintenance template.
 | Template | Purpose | Methodology | Skills | Structure |
 |----------|---------|-------------|--------|-----------|
 | `maestro-sdlc/` | Classic software delivery (web/mobile/API): BA → design → UI/UX → code → QC | spec-driven-development | 231 | full delivery scaffolding (no enterprise governance) |
-| `maestro-adlc/` | AI products/agents with an eval gate before done | eval-driven-ai | 132 | delivery + observability/evals (no enterprise governance) |
+| `maestro-adlc/` † | **Agent** Development Lifecycle: build agents (mission·tools·memory·loop) with a behavior eval gate | eval-driven-ai | 164 | `agents/` (agent defs) + `evals/` (behavior eval gate) + `app/` (host app) + `tests/` — agent-native |
 | `maestro-enterprise/` | Agentic Enterprise: governance, compliance, audit, production agents | enterprise-agent-governance | 166 | full, including governance + audit + enterprise docs |
 | `maestro-lite/` | Small tools/prototypes: direct mode, mini-brief instead of full blueprint | risk-based-routing | 39 | minimal core (no scaffolding) |
-| `maestro-brownfield/` | EXISTING project maintenance: onboard deeply, execute precisely, **ask-don't-infer** | risk-based-routing | 231 | minimal core — never stamps structure onto an existing repo |
+| `maestro-brownfield/` † | EXISTING project maintenance: onboard deeply, execute precisely, **ask-don't-infer** | risk-based-routing | 227 | `source/` (existing code) + `intake/` (raw user material) — purpose-fit, never stamps structure onto a repo |
+| `maestro-kiro/` † | Lean **Kiro-native** workspace: `.kiro/` steering + specs + hooks; **ask → do → log**, full-stack Spring Boot · Node · Next · React | direct | 57 | pure `.kiro/` (steering/skills/specs/hooks) + `WORKLOG.md`; no `.maestro/`, no pipeline |
+
+† `maestro-adlc/`, `maestro-brownfield/`, and `maestro-kiro/` are **independent, hand-maintained**
+templates — they have no manifest here and are NOT built by `build-variant.py`. Their shapes
+(`agents/`+`evals/`+`app/`; `source/`+`intake/`; Kiro's pure-`.kiro/` steering+specs+hooks model) are
+purpose-fit and deliberately differ from the generated variants; edit those bundles directly. Only
+`sdlc`, `enterprise`, and `lite` are generated.
 
 ## How to use a template
 
@@ -24,15 +31,15 @@ cp -R maestro/maestro-sdlc my-app && cd my-app && claude     # or codex
 
 # Option B (brownfield) — copy the template, then move the existing code INTO it:
 cp -R maestro/maestro-brownfield ~/work/my-app-ws
-#   move your project's code inside (services/, apps/ — or keep its layout and register paths in
-#   .maestro/registry/components.yaml), then run claude + /onboard
+#   move your project's code into source/ and drop any specs/bug-reports/logs into intake/,
+#   then run claude + /onboard
 
 # Option C — or apply the contract INTO your existing repo without moving code:
 cd my-existing-app
 cp -R /path/to/maestro/maestro-brownfield/.maestro .
-cp -R /path/to/maestro/maestro-brownfield/.claude .            # skip if you keep your own .claude
+cp -R /path/to/maestro/maestro-brownfield/.claude .            # merge by hand if you keep your own .claude
 cp    /path/to/maestro/maestro-brownfield/CLAUDE.md .          # have CLAUDE.md? add one line instead:
-                                                               #   @.maestro/INSTRUCTIONS.md
+                                                               #   @.claude/INSTRUCTIONS.md
 claude   # then: /onboard
 ```
 

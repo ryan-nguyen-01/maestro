@@ -1,3 +1,8 @@
+---
+description: "Run implementation through Coder Leader and the assigned coders"
+argument-hint: "[task-id]"
+---
+
 # /dev
 
 ## Purpose

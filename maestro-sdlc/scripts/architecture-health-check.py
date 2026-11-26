@@ -30,10 +30,10 @@ REPORT_JSON = RUNTIME / "reports" / "architecture-health-report.json"
 REPORT_MD = RUNTIME / "reports" / "architecture-health-report.md"
 
 EXPECTED_COUNTS = {
-    "agents": 34,
-    "skills": 233,
-    "rules": 26,
-    "templates": 62,
+    "agents": 35,
+    "skills": 237,
+    "rules": 30,
+    "templates": 64,
     "commands": 21,
 }
 
@@ -41,7 +41,7 @@ EXPECTED_COUNTS = {
 # Generated service coders (coders/coder-<svc>.agent.md) are intentionally excluded so
 # this count stays stable in applied workspaces.
 BUILT_IN_CODERS = {"coder-infra", "coder-database", "coder-data"}
-EXPECTED_SPECIALIST_COUNT = 19
+EXPECTED_SPECIALIST_COUNT = 20
 SPECIALIST_CATEGORIES = {
     "architecture",
     "quality-security",
@@ -136,9 +136,21 @@ REQUIRED_PATHS = [
     "scripts/agent-activity.py",
     "scripts/agent-run.py",
     "scripts/architecture-health-check.py",
+    "scripts/selftest.py",
+    "scripts/behavior-eval.py",
     "docs/README.md",
     "deliverables/README.md",
     ".maestro/engine/contracts/handoff.schema.yaml",
+    ".maestro/engine/standards/README.md",
+    ".maestro/engine/standards/code.md",
+    ".maestro/engine/standards/design.md",
+    ".maestro/engine/standards/architecture.md",
+    ".maestro/engine/standards/writing.md",
+    ".maestro/engine/standards/agents.md",
+    ".maestro/engine/rules/28-challenge-protocol-rules.md",
+    ".maestro/engine/rules/29-craft-standards-rules.md",
+    ".maestro/engine/rules/30-learning-loop-rules.md",
+    ".maestro/engine/docs/operating-model.md",
     ".maestro/engine/contracts/result.schema.yaml",
     "apps/README.md",
     "services/README.md",
@@ -173,6 +185,7 @@ STALE_TEXT_PATTERNS = [
     re.compile(r"\b227\s+skills?\b", re.I),
     re.compile(r"\b215\s+technical\s+skills?\b", re.I),
     re.compile(r"\b15\s+workflow\s+rules?\b", re.I),
+    re.compile(r"\b27\s+workflow\s+rules?\b", re.I),
     re.compile(r"R-015-01\.\.18"),
     re.compile(r"workflow-policy-check\.py"),
 ]

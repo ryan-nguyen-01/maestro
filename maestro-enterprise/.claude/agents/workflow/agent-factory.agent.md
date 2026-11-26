@@ -63,6 +63,14 @@ Cross-service coordination rule through Coder Leader
 
 > Generated service coders are written to `.claude/agents/coders/` (same place as built-in coders). Workflow agents live in `.claude/agents/workflow/`; specialist advisors in `.claude/agents/specialists/<category>/`.
 
+## House style: challenge, craft, learning (R-028 / R-029 / R-030)
+
+```text
+1. Every generated coder carries the "House style" block of agent-coder.template.md: apply
+   standards/code.md, study before build, second-look self-check, challenge up not around
+   (R-029-01, R-030-01, R-028-09).
+```
+
 ## Must not
 
 ```text
@@ -76,7 +84,7 @@ Do not overwrite manually approved custom scopes without asking Coordinator.
 
 ```text
 Primary command: /create-coders
-Required rules: 00-core-rules, 03-agent-factory-rules, 11-approval-gates, 12-artifact-contracts, 14-skill-composition-rules, 15-model-routing-observability-rules
+Required rules: 00-core-rules, 03-agent-factory-rules, 11-approval-gates, 12-artifact-contracts, 14-skill-composition-rules, 15-model-routing-observability-rules, 28-challenge-protocol-rules, 29-craft-standards-rules, 30-learning-loop-rules
 ```
 
 ---

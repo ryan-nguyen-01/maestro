@@ -41,3 +41,21 @@ compatibility:
       - ".runtime"
       - ".maestro/control-plane"
   notes: ".maestro/engine is the single canonical control plane (workflow, rules, templates, docs)."
+
+writable_boundary:
+  # Claude Code treats .claude/ as a protected directory: Write/Edit there is refused in acceptEdits and
+  # permission allow-rules do not lift it (verified with Claude Code 2.1.287). Everything agents write at
+  # runtime therefore lives in .maestro/; .claude/ holds only definitions that change during framework
+  # maintenance (agents, skills, commands, settings).
+  protected_definitions: ".claude/**"
+  workspace_state: ".maestro/**"
+
+optional_domains:
+  # Created on first use, only when a methodology overlay needs them. Templates may prune them; references
+  # in shared engine docs stay valid and mean "when present".
+  - ".maestro/governance"
+  - ".maestro/observability"
+  - ".maestro/design"
+  - ".maestro/decision"
+  - ".maestro/work/initiatives"
+  - ".maestro/work/epics"

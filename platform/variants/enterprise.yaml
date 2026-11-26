@@ -24,4 +24,7 @@ profile: |
     .maestro/history/ + .maestro/observability/audit/.
   - Security/compliance advisories (security-auditor) are mandatory for externally exposed work.
   - Outward actions (deploy, data, identity) always user-approved; nothing silent.
+  - The Maestro Way as audit evidence: challenges, disagree-and-commit decisions (R-028-04), craft review
+    records (R-029-05), and retros (R-030) are retained in the audit trail; agents.md (AG) is mandatory
+    for every production agent.
   ```

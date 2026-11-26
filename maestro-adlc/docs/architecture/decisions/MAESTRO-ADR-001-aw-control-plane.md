@@ -1,12 +1,12 @@
 ---
 id: "MAESTRO-ADR-001"
-title: "Use .maestro as the single product-development control plane"
+title: "Use .claude as the single product-development control plane"
 status: accepted
 decided_at: "2026-06-06"
 supersedes: null
 ---
 
-# Use `.maestro` As The Single Control Plane
+# Use `.claude` As The Single Control Plane
 
 ## Context
 
@@ -17,7 +17,7 @@ conversation continuation, or multi-root component discovery.
 ## Decision
 
 Keep `.claude/` at repository root for native discovery. Consolidate tool-neutral product-development
-control data under `.maestro/`, separated by ownership domain. Keep official user-facing documents under `docs/`
+control data under `.claude/`, separated by ownership domain. Keep official user-facing documents under `docs/`
 and source components in peer roots.
 
 ## Consequences
