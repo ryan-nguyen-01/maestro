@@ -1,3 +1,8 @@
+---
+description: "Validate workflow transitions, approval gates, exceptions, and artifact snapshots"
+argument-hint: "[snapshot --root <path>]"
+---
+
 # /policy-check
 
 ## Purpose
@@ -106,7 +111,7 @@ task:
 When the user asks for a saved report, write YAML using:
 
 ```text
-.maestro/engine/templates/policy-check-report.template.yaml
+.claude/engine/templates/policy-check-report.template.yaml
 ```
 
 Default report paths:

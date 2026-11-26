@@ -15,9 +15,11 @@ Read service assignment
 Read component knowledge
 Confirm allowed write scope
 Read design assets (if UI task)
-Implement only assigned scope
-Reuse existing patterns
+Study before build when the API/library/area is unfamiliar (R-030-01)
+Implement only assigned scope, applying .maestro/engine/standards/code.md (R-029)
+Reuse existing patterns (project PC-n conventions win over house SHOULD items)
 Follow component test policy
+Run the code.md author self-check before handoff (R-028-09)
 Write coder-handoff-<component>.yaml and return to Coder Leader
 ```
 

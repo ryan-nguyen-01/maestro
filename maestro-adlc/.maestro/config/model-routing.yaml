@@ -7,11 +7,21 @@ purpose: "Tool-agnostic model routing policy for workflow agents. Profiles are s
 
 selection_policy:
   source_of_truth: ".maestro/config/model-routing.yaml"
-  rule_file: ".maestro/engine/rules/15-model-routing-observability-rules.md"
+  rule_file: ".claude/engine/rules/15-model-routing-observability-rules.md"
   prefer_profiles_over_hardcoded_models: true
   adapter_must_record_fallback: true
   do_not_fabricate_model_capability: true
   note: "Provider model names, access, pricing, and limits change. Treat model_id fields as defaults or aliases that a local adapter may override."
+
+# How each adapter applies this file. Profiles stay the source of truth; adapters only mirror them.
+adapter_binding:
+  claude:
+    mechanism: "Subagent frontmatter `model` + `effort` in .claude/agents/*.agent.md mirror provider_defaults.claude for the agent's profile."
+    aliases_note: "`opus` / `sonnet` / `haiku` are family aliases that Claude Code resolves to the newest model of that family (as of 2026-10: Opus 5.5, Sonnet 5.5, Haiku 4.5). Pin a full ID such as claude-opus-5-5 only via model_overrides."
+    override_path: "Apply model_overrides by passing the per-invocation `model` to the Agent tool; do not edit agent files."
+    effort_values: ["low", "medium", "high", "xhigh", "max"]
+  codex:
+    mechanism: "No per-agent frontmatter; the session model follows .codex/config.toml and provider_defaults.codex is applied by instruction."
 
 provider_defaults:
   claude:

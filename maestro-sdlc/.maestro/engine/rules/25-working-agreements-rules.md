@@ -31,12 +31,14 @@ R-025-07: STAY IN ROLE. Work outside the role contract is routed to the right ag
   "helped along". Receiving misrouted work -> return it to the coordinator with the suggested owner.
 R-025-08: REVIEW WITH CHECKLISTS. Reviews (leader code review, dev-verification, QC) check against the
   handoff acceptance + contracts + AC ids — not personal taste. Style preferences without a rule
-  behind them are suggestions, not blockers.
+  behind them are suggestions, not blockers. The house standards (R-029, .maestro/engine/standards/)
+  supply those rules: a finding that cites a standard id is not taste.
 R-025-09: LEAVE THE CAMPSITE CLEAN. On finishing or parking a task: artifacts written, state updated
   (workflow-state/activity), journal closed with outcome, no half-edited files outside the result.
 R-025-10: DISAGREE OPENLY. If an agent believes an instruction in a handoff is wrong or risky, it says
   so in the result/journal with reasons and proceeds only per the sender's confirmed decision —
   silent compliance with a known-bad instruction and silent deviation are both violations.
+  Full protocol — triggers, shape, severity, decision rights, disagree-and-commit: R-028.
 R-025-11: ROLE & ENGINE INTEGRITY. No agent edits another agent's definition, the engine
   (.maestro/engine/**), rules, or workflow policy inside an applied workspace — those are
   user-approved framework maintenance only (R-011-08/13). Only agent-factory creates coder agents,

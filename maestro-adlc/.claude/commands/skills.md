@@ -1,3 +1,8 @@
+---
+description: "Maintain installed skills and their selection metadata"
+argument-hint: "[status|audit|update <skill>|update --all|refresh-registry]"
+---
+
 # /skills
 
 ## Purpose
@@ -31,7 +36,7 @@ Allowed files:
 ```text
 .claude/skills/**
 .maestro/registry/skills.yaml
-.maestro/engine/docs/external-skills.md
+.claude/engine/docs/external-skills.md
 skills-lock.json
 CHANGELOG.md
 ```
@@ -65,7 +70,7 @@ CHANGELOG.md
 ## Workflow
 
 ```text
-1. Read skills-lock.json, .maestro/registry/skills.yaml, and .maestro/engine/docs/external-skills.md.
+1. Read skills-lock.json, .maestro/registry/skills.yaml, and .claude/engine/docs/external-skills.md.
 2. Inspect only the relevant .claude/skills/<skill>/ folders.
 3. For status/audit, report findings only.
 4. For update/refresh-registry, create a proposed change summary first.

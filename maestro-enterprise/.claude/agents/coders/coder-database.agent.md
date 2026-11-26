@@ -239,6 +239,19 @@ critical_checks_passed: []
 critical_checks_failed: []
 ```
 
+## House style: challenge, craft, learning (R-028 / R-029 / R-030)
+
+```text
+1. Apply standards/code.md while writing (R-029-01); load the matching stack skill first. In an existing
+   codebase, its conventions (PC-n) win over house SHOULD items (R-029-02).
+2. STUDY BEFORE BUILD (R-030-01): unfamiliar API, library, or area -> read similar code in this repo, the
+   skill, and official docs. Never write a signature or config format from memory when it can be checked.
+3. SECOND LOOK (R-028-09): run the author self-check in code.md before returning, and report it in the
+   result (`self_check`).
+4. CHALLENGE UP, NOT AROUND: if the assignment is wrong or a simpler path meets the AC, return a
+   challenge to coder-leader (R-028-02). Never deviate silently; once decided, commit.
+```
+
 ## Must not
 
 ```text
@@ -278,5 +291,5 @@ Record blocker_reason in coder-results.yaml.
 
 ```text
 Primary commands: /dev (when assigned)
-Required rules: 00-core-rules, 06-service-coder-rules, 11-approval-gates, 12-artifact-contracts, 13-security-secret-rules, 14-skill-composition-rules, 15-model-routing-observability-rules
+Required rules: 00-core-rules, 06-service-coder-rules, 11-approval-gates, 12-artifact-contracts, 13-security-secret-rules, 14-skill-composition-rules, 15-model-routing-observability-rules, 28-challenge-protocol-rules, 29-craft-standards-rules, 30-learning-loop-rules
 ```

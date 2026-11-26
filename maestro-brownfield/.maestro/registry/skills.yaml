@@ -2,7 +2,7 @@ version: 1
 updated_at: "2026-04-17"
 purpose: "Canonical skill address, capability, selection, and risk registry for all agents."
 status: "manual_registry_ready"
-docs_reference: ".maestro/engine/docs/external-skills.md"
+docs_reference: ".claude/engine/docs/external-skills.md"
 # NOTE: Read catalog first to locate a skill, then merge any hand-maintained policy in skills.<id>.
 # This file is the canonical source for runtime skill selection.
 # For install history, sources, and security audit → see docs_reference above.
@@ -14,7 +14,7 @@ selection_policy:
   task_evidence_required_for_contextual_skills: true
   risky_skill_requires_approval: true
   unavailable_skill_must_not_be_attached: true
-  docs_reference: ".maestro/engine/docs/external-skills.md"
+  docs_reference: ".claude/engine/docs/external-skills.md"
 
 risk_levels:
   low:

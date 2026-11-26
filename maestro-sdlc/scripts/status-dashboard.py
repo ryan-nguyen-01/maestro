@@ -474,9 +474,10 @@ def nested(data: dict[str, Any], *keys: str) -> Any:
     return cur
 
 
-def fmt(value: Any, default: str = "-") -> str:
+def fmt(value: Any, default: Any = "-") -> str:
     if value is None or value == "":
-        return default
+        # Callers pass another (possibly missing) field as the fallback; never return None.
+        return "-" if default is None or default == "" else str(default)
     return str(value)
 
 

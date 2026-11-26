@@ -5,7 +5,7 @@ Human-readable milestone summaries live here. Machine-readable workflow events a
 
 ## 2026-06-06
 
-- Established `.maestro/` as the product-development control plane.
+- Established `.claude/` as the product-development control plane.
 - Added peer product roots, official documentation domains, adaptive execution modes, layered memory,
   work decomposition, design/decision indexes, and cross-tool adapters.
 - Verified architecture health, generators, hooks, initialization idempotence, and sync hash guards.

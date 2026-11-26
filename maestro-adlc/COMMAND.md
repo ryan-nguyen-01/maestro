@@ -2,7 +2,7 @@
 
 Canonical slash command index for `maestro`.
 
-Detailed command contracts live in `.claude/commands/*.md`. NOTE: users rarely type commands — natural language is the primary interface and the coordinator maps intent to these flows (see CLAUDE.md §"Just talk"). This index exists mainly for agents (phase contracts) and power users.
+Detailed command contracts live in `.claude/commands/*.md`. NOTE: users rarely type commands — natural language is the primary interface and the coordinator maps intent to these flows (see AGENTS.md §"Just talk"). This index exists mainly for agents (phase contracts) and power users.
 
 These are `maestro` workflow commands, not guaranteed UI registrations for every AI tool. Claude Code may expose `.claude/commands/*.md` as slash commands; Codex currently treats `/` as its own built-in TUI menu and does not auto-list these project commands.
 
@@ -59,7 +59,7 @@ python3 scripts/architecture-health-check.py --strict --write-report
 
 ## Fast Maintenance
 
-Trivial framework maintenance may use the lightweight fast-track path from `.maestro/engine/workflow.md` §6.2. It can skip onboarding, generated coder selection, implementation-plan/service-assignments, and QC artifacts when the change does not affect approval gates, security rules, workflow state machine, generated coder scopes, destructive behavior, or application source under `app/`.
+Trivial framework maintenance may use the lightweight fast-track path from `.claude/engine/workflow.md` §6.2. It can skip onboarding, generated coder selection, implementation-plan/service-assignments, and QC artifacts when the change does not affect approval gates, security rules, workflow state machine, generated coder scopes, destructive behavior, or application source under `app/`.
 
 ## Maintenance Commands
 
@@ -99,8 +99,8 @@ Skill updates must go through `/skills`; do not update installed skill folders f
 
 ```text
 COMMAND.md                    Root command index
-.claude/commands/README.md    Internal command index
+.claude/engine/docs/command-index.md Internal command index
 .claude/commands/*.md         Per-command contracts
-.maestro/engine/workflow.md           Workflow states, transitions, gates
-.maestro/engine/rules/                Mandatory command policies
+.claude/engine/workflow.md           Workflow states, transitions, gates
+.claude/engine/rules/                Mandatory command policies
 ```

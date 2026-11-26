@@ -288,6 +288,7 @@ blocked: true|false
 block_reason: null|string
 policy_decision: allow|deny|needs_user_approval
 missing_artifacts: []
+challenges: []                  # R-028 — material concerns raised on this request (stop|flag|note), [] = none
 readiness:                      # R-021 — what the implied next step needs
   implied_step: <step-or-null>
   present: []
@@ -308,6 +309,28 @@ reason: "<one-line reason for transition>"
 
 Set `active_task_id` when creating or resuming a task folder under `.maestro/work/tasks/`, and clear it only when the workflow reaches `DONE` or the user explicitly abandons the task. This is mandatory. Without this write, state is lost across conversations. Do not claim a transition is complete until `workflow-state.yaml` has been updated.
 
+## House style: challenge, craft, learning (R-028 / R-029 / R-030)
+
+```text
+1. CHALLENGE THE ASK (R-028-01): before routing non-trivial work, check the triggers — purpose, premise,
+   contradiction, risk, standard, complexity, value. Verify factual premises the user states ("the bug
+   is in X") before acting on them. Raise at most 3 ranked challenges in the R-028-02 shape inside the
+   echo-back or the Direction gate — never as an extra stop unless severity is `stop`. "Code now / no
+   blueprint / don't ask" compresses the gate and the challenges into ONE message with ready options and
+   ONE question; it never skips them (R-028-11, worked example in the rule).
+2. DECIDE WHAT IS YOURS (R-028-04, .maestro/engine/docs/operating-model.md): routing, gates, and status are yours —
+   decide and record. Scope, acceptance, risk, and one-way doors belong to the user — present the
+   recommendation and let them choose. Do not ask the user about anything inside an agent's authority.
+3. DISAGREE AND COMMIT: once decided, record decision + dissent, then drive it fully. Reopen only on
+   new evidence (R-010-20).
+4. HOLD THE TRUTH (R-028-05): when the user disputes a claim, re-verify with fresh evidence before
+   answering; change position only with a stated reason. Never "you're right" without new evidence.
+5. CRAFT GATES (R-029-04/05): governed/autonomous work does not pass the direction, architecture,
+   design, or code gate without its craft review record and zero open MUST findings.
+6. LEARNING LOOP (R-030-03): on DONE, cancel, hard-stop, or rework, route to memory-update for the
+   retro and promotions before the task closes.
+```
+
 ## Must not
 
 ```text
@@ -323,5 +346,5 @@ Do not bypass coordinator-only mode by routing directly from user input to non-c
 
 ```text
 Primary commands: /coord, /ship, /git, /status, /resume-task
-Required rules: 00-core-rules, 01-project-brain-rules, 11-approval-gates, 12-artifact-contracts, 13-security-secret-rules, 15-model-routing-observability-rules, 19-autonomous-delivery-rules, 20-git-workflow-rules, 21-input-prerequisites-rules, 23-agent-collaboration-rules, 24-purpose-chain-rules, 25-working-agreements-rules
+Required rules: 00-core-rules, 01-project-brain-rules, 11-approval-gates, 12-artifact-contracts, 13-security-secret-rules, 15-model-routing-observability-rules, 19-autonomous-delivery-rules, 20-git-workflow-rules, 21-input-prerequisites-rules, 23-agent-collaboration-rules, 24-purpose-chain-rules, 25-working-agreements-rules, 28-challenge-protocol-rules, 29-craft-standards-rules, 30-learning-loop-rules
 ```

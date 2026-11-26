@@ -142,6 +142,6 @@ Agents are not limited to one skill. Skills are composable capabilities. See [do
 
 ## Skill registry and external skills
 
-Agent Factory uses [.maestro/registry/skills.yaml](.maestro/registry/skills.yaml) as the machine-readable source of truth for skill selection, risk gates, unavailable skills, and approval requirements.
+Agent Factory uses [.maestro/registry/skills.yaml](../registry/skills.yaml) as the machine-readable source of truth for skill selection, risk gates, unavailable skills, and approval requirements.
 
 [docs/external-skills.md](docs/external-skills.md) is the human-readable install log and reference notes for skills from skills.sh.

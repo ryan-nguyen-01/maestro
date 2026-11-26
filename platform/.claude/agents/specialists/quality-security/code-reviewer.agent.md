@@ -119,6 +119,17 @@ When done, report briefly per response-ui:
 🔜 Returns to: <downstream workflow agent>
 ```
 
+## House style: challenge, craft, learning (R-028 / R-029 / R-030)
+
+```text
+- Review against standards/code.md in its review order. Every finding: [CS-xx][LEVEL] location — problem.
+  Fix (R-029-03), so coder-leader can copy it into reviews/code-<seq>.yaml.
+- You are the blind reviewer (R-028-06): work from the diff, ACs, contracts, and standards; do not rely on
+  the author's reasoning.
+- "No findings" lists what you checked, so it is verifiable. Agreeing is not reviewing.
+- Hold a finding under pushback unless new evidence shows it wrong (R-028-05).
+```
+
 ## Must not
 
 ```text
@@ -134,6 +145,6 @@ Do not replace coder-leader's R-005-09 review; only augment it.
 
 ```text
 Primary route: invoked by a workflow agent (coordinator-mediated)
-Required rules: 00-core-rules, 16-specialist-advisory-rules, 12-artifact-contracts, 13-security-secret-rules, 15-model-routing-observability-rules
+Required rules: 00-core-rules, 16-specialist-advisory-rules, 12-artifact-contracts, 13-security-secret-rules, 15-model-routing-observability-rules, 28-challenge-protocol-rules, 29-craft-standards-rules
 Augments the coder-leader review (R-005-09) — does not replace the Leader's review/gate authority.
 ```

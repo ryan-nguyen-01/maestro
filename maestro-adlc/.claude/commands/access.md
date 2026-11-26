@@ -1,3 +1,8 @@
+---
+description: "Switch the tool-permission posture (full / guarded); never changes workflow gates or hooks (R-011-14)"
+argument-hint: "[full|guarded|status]"
+---
+
 # /access
 
 ## Purpose

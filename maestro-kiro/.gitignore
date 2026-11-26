@@ -1,9 +1,0 @@
-# macOS
-.DS_Store
-
-# Python
-__pycache__/
-*.pyc
-
-# Local agent runtime / scratch
-.agent/

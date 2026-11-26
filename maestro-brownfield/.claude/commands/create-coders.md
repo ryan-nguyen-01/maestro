@@ -51,6 +51,6 @@ Overbroad write scope
 
 ## Stack skill loading
 
-`/create-coders` must ask Agent Factory to load `.maestro/registry/skills.yaml` and map detected component stacks to active coder skills. `.maestro/engine/docs/external-skills.md` is supporting documentation, not the machine-readable source of truth. Do not create a generic coder with all skills attached. Each generated coder must include a compact selected-skill list and an explicit skipped-skill list.
+`/create-coders` must ask Agent Factory to load `.maestro/registry/skills.yaml` and map detected component stacks to active coder skills. `.claude/engine/docs/external-skills.md` is supporting documentation, not the machine-readable source of truth. Do not create a generic coder with all skills attached. Each generated coder must include a compact selected-skill list and an explicit skipped-skill list.
 
 Skills marked `requires_user_approval: true` must not be attached automatically.

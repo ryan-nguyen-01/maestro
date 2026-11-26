@@ -20,6 +20,8 @@ Every agent reads only the minimum files needed. Memory is the agent brain; serv
 11. .maestro/knowledge/test-policy.yaml when coding, verifying, or QC testing
 12. Relevant .maestro/knowledge/components/<component-id>.yaml files only for impacted components
 13. Relevant .maestro/work/tasks/<task-id> artifacts
+14. The house standard for the output being produced or reviewed (.maestro/engine/standards/<type>.md)
+    plus .maestro/knowledge/conventions.md — only the one(s) the current step needs (R-029)
 ```
 
 If `.maestro/knowledge/index.yaml` or `.maestro/knowledge/project.yaml` is missing, empty, or stale for product-component work, stop normal routing and run onboarding or `/sync-memory --refresh-index`. For framework maintenance, apply the scope exception below first.
@@ -666,6 +668,62 @@ status vocabulary (done-with-evidence / blocked-because-X / in-progress-remainin
 usable summary after bounded attempts; stay in role; review against checklists; leave the campsite
 clean; disagree openly instead of silent compliance or silent deviation.
 
+## 6.9. Challenge protocol (critical thinking and pushback)
+
+Maestro does not silently build what it believes is wrong, and it does not fold under pressure (R-028).
+Before committing to non-trivial work, each agent checks the challenge triggers — purpose, premise,
+contradiction, risk, standard, complexity, value — and raises at most three ranked challenges in a fixed
+shape: steelman, concern, evidence, impact, alternatives, recommendation, severity, decision owner.
+
+```text
+stop  security / data loss / irreversible / legal / contract or MUST-floor violation -> halt that path
+      until the owner decides; under autopilot this is a hard-stop (R-019-05)
+just-do-it  "code now / don't ask" compresses gates + challenges into ONE message with ready options
+      and ONE question; it never deletes them (R-028-11)
+flag  materially worse but the owner's call -> the owner decides at the NEXT existing gate; if the
+      challenger owns the decision it decides now and records why; autopilot follows the user's explicit
+      instruction, records the dissent, and surfaces it in the handover
+note  minor -> journal/review only
+```
+
+Decision rights (`.maestro/engine/docs/operating-model.md`) say who decides; everything else is decided by
+the agent that owns it, without asking. After a decision: disagree and commit — record decision and
+dissent, execute fully, reopen only on new evidence. Disputed claims are re-verified with fresh evidence
+before any reversal (no sycophantic reversal). Governed/autonomous reviews run blind, in a fresh context.
+One-way doors carry alternatives and a pre-mortem.
+
+## 6.10. Craft standards (The Maestro Way)
+
+Every artifact meets the house bar in `.maestro/engine/standards/` — code (CS), design (DS),
+architecture (AS), writing (WS), AI agents (AG) — with levels MUST (floor) / MUST / SHOULD / MAY and a
+fixed precedence: floor > approved project decisions > project conventions and codebase patterns >
+house defaults > taste (R-029). Review findings cite the standard id; a finding without one is taste.
+
+```text
+Direction gate   AS checklist on the architecture proposal; design review (DS) on the prototype before
+                 it is shown; house token baseline when the product has no brand (R-029-07)
+Architecture     AS checklist + pre-mortem for one-way doors
+Design -> code   no UI code before the prototype passed design review and was approved (DS-21)
+Code review      code.md in review order by Coder Leader; blind second review when governed
+Dev verification CRAFT-REVIEW critical check (R-007-19)
+QC               DS-04/06/07/13-18 re-checked on the built UI
+```
+
+Rigor follows risk: direct = author self-check of the MUST items touched; assisted = + role-owner review;
+governed/autonomous = craft review record per gate (`craft-review.template.yaml`) with an independent
+reviewer.
+
+## 6.11. Learning loop (study, retro, promotion)
+
+```text
+Before  study note for unfamiliar tech/areas (sources, constraints, house pattern) — R-030-01
+        pre-flight lessons: matching anti-patterns / PC-n / bug patterns -> critical checks — R-030-02
+After   retro.md on DONE / cancel / hard-stop / rework (governed, autonomous; assisted with rework) — R-030-03
+        promotion ladder: inbox -> pattern -> PC-n convention -> house standard proposal — R-030-04/05
+        a lesson counts only as a checkable prevention (test, lint, hook, template field, checklist id)
+        quality signals tracked honestly: first-pass MUST findings, rework loops, escaped bugs, challenges
+```
+
 ## 7. Coder Leader workflow
 
 This section applies to the standard product-component implementation pipeline. Framework-maintenance fast-track skips Coder Leader unless the task changes high-risk framework behavior.
@@ -803,6 +861,8 @@ Feedback triage flow:
 5. Promote validated fixes -> feedback/patterns.md
 6. Feed relevant patterns/anti-patterns into the next task-analysis context_plan and service-assignment context_pack
 7. Cite source artifact, canonical bug, and confidence in memory-updates.yaml
+8. Write the retro for qualifying tasks and climb the promotion ladder: pattern -> PC-n convention in
+   knowledge/conventions.md -> standard proposal in feedback/standard-proposals.md (R-030)
 ```
 
 ## 13.1. Git workflow (Git-flow)

@@ -19,8 +19,10 @@ decomposition, continuation across conversations, and future extraction into mul
 
 ## System Boundaries
 
-- `.claude/` is the Claude-native tool layer and stays at repository root.
-- `.maestro/` is the product-development control plane.
+- `.claude/` is the Claude-native tool layer and the write-protected half of the control plane
+  (agents, skills, commands, engine); it stays at repository root.
+- `.maestro/` is the writable half: identity, registries, knowledge, work, memory, runtime. Claude Code
+  refuses Write/Edit inside `.claude/` without per-call approval, so runtime state never lives there.
 - `docs/` stores official human-readable product artifacts.
 - `apps/`, `services/`, `packages/`, `infra/`, and `tests/` are peer source roots.
 - `inputs/` stores external source material that has not yet been distilled.
@@ -60,6 +62,6 @@ without replaying the full chat.
 
 ## Migration
 
-The old `.agent/` and `.runtime/` roots are removed. Framework source moves to `.maestro/engine/`; state and
-artifacts move to their owning `.maestro/` domains. All tool adapters, hooks, scripts, and documentation must use
+The old `.agent/` and `.runtime/` roots are removed. Framework source moves to `.claude/engine/`; state and
+artifacts move to their owning `.claude/` domains. All tool adapters, hooks, scripts, and documentation must use
 the new paths before the migration is complete.

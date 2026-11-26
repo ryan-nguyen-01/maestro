@@ -99,6 +99,9 @@ R-019-05: Autopilot MUST stop and ask the user for:
   R-011-08 / R-011-13  changing workflow policy, state-machine semantics, or workspace identity
   R-011-04 / R-011-05  skipping QC or downgrading a blocker bug (autopilot fixes blockers, never skips them)
   scope explosion: the work no longer matches the declared acceptance criteria
+  R-028-03  a challenge with severity `stop` (security, data loss, irreversible, legal, contract or
+            MUST-floor violation). Flag-level challenges never stop the run: follow the user's explicit
+            instruction, record the dissent, and surface it in the handover (R-019-12).
 R-019-06: When a hard-stop is hit, write the blocker + the exact decision needed to
   workflow-state.yaml and the task folder, then return needs_user_approval. Do not guess credentials,
   do not fake a deploy, do not weaken a gate to keep going.

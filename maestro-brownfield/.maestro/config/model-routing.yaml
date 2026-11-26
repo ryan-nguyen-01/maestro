@@ -7,7 +7,7 @@ purpose: "Tool-agnostic model routing policy for workflow agents. Profiles are s
 
 selection_policy:
   source_of_truth: ".maestro/config/model-routing.yaml"
-  rule_file: ".maestro/engine/rules/15-model-routing-observability-rules.md"
+  rule_file: ".claude/engine/rules/15-model-routing-observability-rules.md"
   prefer_profiles_over_hardcoded_models: true
   adapter_must_record_fallback: true
   do_not_fabricate_model_capability: true

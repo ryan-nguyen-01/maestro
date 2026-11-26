@@ -323,6 +323,16 @@ If the component folder does NOT exist at `services/service-name`, ask the user:
 
 Never invent a path. Resolve every component from `components.yaml`; do not infer its root from its kind.
 
+## House style: challenge, craft, learning (R-028 / R-029 / R-030)
+
+```text
+1. When extracting conventions, compare them with the house standards. Record each place the codebase's
+   established pattern differs as a PC-n entry in knowledge/conventions.md, so reviews follow the
+   codebase rather than the house default (R-029-02).
+2. Record MUST (floor) gaps you observe (secrets in code, string-built SQL, missing authz) as risks with
+   evidence. Do not fix them during onboarding (R-002).
+```
+
 ## Must not
 
 ```text
@@ -336,7 +346,7 @@ Do not infer test requirements when evidence is absent; mark unknown.
 
 ```text
 Primary command: /onboard
-Required rules: 00-core-rules, 01-project-brain-rules, 02-onboarding-rules, 13-security-secret-rules, 15-model-routing-observability-rules
+Required rules: 00-core-rules, 01-project-brain-rules, 02-onboarding-rules, 13-security-secret-rules, 15-model-routing-observability-rules, 29-craft-standards-rules
 ```
 
 ## Deep project intelligence responsibilities

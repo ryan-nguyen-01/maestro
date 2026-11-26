@@ -8,7 +8,7 @@ You are running the maestro `/policy-check` workflow command inside Codex.
 Follow `.codex/AGENTS.md` (or `AGENTS.md`) routing and the framework rules. Route every
 request through the coordinator model; do not bypass approval gates, security/secret rules,
 or the task-analysis source-edit gate. If the maestro framework files
-(`.maestro/engine/`, `.maestro/registry/`, `.maestro/knowledge/`, `.maestro/work/`, `.maestro/runtime/`, `.claude/commands/policy-check.md`) are present, defer to them as the
+(`.claude/engine/`, `.maestro/registry/`, `.maestro/knowledge/`, `.maestro/work/`, `.maestro/runtime/`, `.claude/commands/policy-check.md`) are present, defer to them as the
 authoritative contract — this prompt is a portable mirror.
 
 User input for this command: $ARGUMENTS
@@ -124,7 +124,7 @@ task:
 When the user asks for a saved report, write YAML using:
 
 ```text
-.maestro/engine/templates/policy-check-report.template.yaml
+.claude/engine/templates/policy-check-report.template.yaml
 ```
 
 Default report paths:

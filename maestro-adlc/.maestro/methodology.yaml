@@ -6,19 +6,19 @@ catalog:
     name: "Risk-Based Workflow Routing"
     legacy_aliases:
       - "adaptive"
-    document: ".maestro/engine/methodologies/risk-based-routing.md"
+    document: ".claude/engine/methodologies/risk-based-routing.md"
   spec-driven-development:
     name: "Spec-Driven Development"
     abbreviation: "SDD"
     legacy_aliases:
       - "adlc"
-    document: ".maestro/engine/methodologies/spec-driven-development.md"
+    document: ".claude/engine/methodologies/spec-driven-development.md"
   enterprise-agent-governance:
     name: "Enterprise Agent Governance"
     legacy_aliases:
       - "agentic-enterprise"
       - "ae"
-    document: ".maestro/engine/methodologies/enterprise-agent-governance.md"
+    document: ".claude/engine/methodologies/enterprise-agent-governance.md"
     operating_model:
       accountable_owner_required: true
       governance_policy_required_for_production_agents: true
@@ -45,10 +45,10 @@ catalog:
     name: "Eval-Driven AI Development"
     legacy_aliases:
       - "ai-native"
-    document: ".maestro/engine/methodologies/eval-driven-ai.md"
+    document: ".claude/engine/methodologies/eval-driven-ai.md"
 
-selection_matrix: ".maestro/engine/methodologies/selection-matrix.md"
-industry_alignment: ".maestro/engine/methodologies/industry-alignment.md"
+selection_matrix: ".claude/engine/methodologies/selection-matrix.md"
+industry_alignment: ".claude/engine/methodologies/industry-alignment.md"
 
 defaults:
   execution_mode: "assisted"
@@ -76,7 +76,7 @@ industry_patterns:
       - "official_deliverable_required"
   eval-driven-ai:
     maps_to:
-      - ".maestro/engine/methodologies/eval-driven-ai.md"
+      - ".claude/engine/methodologies/eval-driven-ai.md"
       - ".maestro/governance/enterprise-agent-governance/eval-suites/"
       - ".maestro/runtime/agent-activity.yaml"
     use_when:

@@ -476,7 +476,8 @@ def nested(data: dict[str, Any], *keys: str) -> Any:
 
 def fmt(value: Any, default: str = "-") -> str:
     if value is None or value == "":
-        return default
+        # `default` is often another lookup that can itself be missing (fresh/switched session).
+        return "-" if default is None or default == "" else str(default)
     return str(value)
 
 
@@ -709,7 +710,7 @@ def render_section(section: str, snapshot: dict[str, Any], show_models: bool) ->
             f"- run={fmt(snapshot.get('active_run_id'), 'none')}",
         ]
     if section == "verification":
-        return ["Verification", "- status dashboard data loaded from .maestro knowledge, registry, and runtime domains"]
+        return ["Verification", "- status dashboard data loaded from .claude knowledge, registry, and runtime domains"]
     return []
 
 
@@ -759,12 +760,13 @@ def render_overview(snapshot: dict[str, Any]) -> str:
 
     # framework structure counts
     ad = ROOT / ".claude" / "agents"
-    wf = len(list((ad / "workflow").glob("*.agent.md")))
-    sp = len(list((ad / "specialists").rglob("*.agent.md")))
-    cd = len(list((ad / "coders").glob("*.agent.md")))
+    agent_texts = {p.stem.replace(".agent", ""): p.read_text(encoding="utf-8", errors="ignore") for p in ad.glob("*.agent.md")}
+    sp = sum(1 for t in agent_texts.values() if re.search(r"^category:\s*", t, re.M))
+    cd = sum(1 for name in agent_texts if name.startswith("coder-") and name != "coder-leader")
+    wf = len(agent_texts) - sp - cd
     skills = len(list((ROOT / ".claude" / "skills").rglob("SKILL.md")))
-    rules = len([p for p in (ROOT / ".maestro" / "engine" / "rules").glob("*.md") if p.name != "README.md"])
-    templates = len([p for p in (ROOT / ".maestro" / "engine" / "templates").iterdir() if p.is_file()])
+    rules = len([p for p in (ROOT / ".claude" / "engine" / "rules").glob("*.md") if p.name != "README.md"])
+    templates = len([p for p in (ROOT / ".claude" / "engine" / "templates").iterdir() if p.is_file()])
     commands = len([p for p in (ROOT / ".claude" / "commands").glob("*.md") if p.name != "README.md"])
 
     def _docs(sub: str) -> int:

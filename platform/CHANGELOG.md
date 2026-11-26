@@ -10,6 +10,33 @@ Format: `## [version] - YYYY-MM-DD`
 
 ### Added
 
+- **The Maestro Way (house style)** - Added `.maestro/engine/standards/` with checkable house
+  standards for code (CS), UI/UX design (DS, incl. a default "calm, precise, content-first" token
+  baseline), architecture (AS), writing (WS), and AI agents (AG), with MUST (floor) / MUST / SHOULD /
+  MAY levels and an explicit precedence (floor > project decisions > project conventions > house > taste).
+- **R-028 Challenge protocol** - Triggers (purpose, premise, contradiction, risk, standard, complexity,
+  value), a fixed challenge shape (steelman, evidence, alternatives, recommendation), stop/flag/note
+  severity wired into autopilot hard-stops, decision rights, disagree-and-commit, no sycophantic
+  reversal, blind independent review, pre-mortem and alternatives for one-way doors, author second look.
+- **R-029 Craft standards** and **R-030 Learning loop** - Standards as the review bar with craft gates
+  and `craft-review.template.yaml` records (new Dev Verification critical check R-007-19); study before
+  build, pre-flight lessons, `retro.template.md`, promotion ladder up to
+  `memory/project/feedback/standard-proposals.md`, prevention over resolution, honest quality signals.
+- **Operating model** - `.maestro/engine/docs/operating-model.md`: Maestro as a company (org chart,
+  decision-rights matrix, rituals with evidence, escalation ladder). Every agent gained a role-specific
+  "House style" section; templates gained `challenges` / `pre_mortem` / `study` fields.
+
+- **Self-tests** - `scripts/selftest.py` (broken links, references to missing control-plane domains,
+  hook behavior incl. regression cases, script smoke) runs in every template and after every variant
+  build; `scripts/behavior-eval.py` runs headless Claude on a throwaway copy with writes disabled and
+  grades three Maestro Way behaviors (over-engineering pushback, false premise, holding the truth).
+- **Priority order + R-028-11** - One explicit precedence (safety > mandatory gates > challenges > the
+  user's decisions > autonomy > speed) replaces two conflicting "highest priority" labels. "Code now /
+  don't ask" compresses gates and challenges into one message with ready options and one question; it
+  never skips them. Found by behavior testing: the agent had started coding a 6-service design for a
+  one-user todo app because the user said "don't ask".
+- **Manifest `writable_boundary` + `optional_domains`** - documents where agents may write and which
+  domains are created on first use, so pruned templates have no dangling references.
 - **Product workspace control plane** - Consolidated framework behavior under `.maestro/` with explicit
   config, registry, knowledge, work, design, decision, memory, history, and local runtime domains.
   Added `docs/`, `apps/`, `services/`, `packages/`, `infra/`, and `tests/` as peer product roots.
@@ -47,6 +74,15 @@ Format: `## [version] - YYYY-MM-DD`
   entrypoints, model routing, response UI, plugin drift, skill catalog drift, and deterministic
   control-plane assumptions.
 
+### Changed
+
+- **maestro-adlc / maestro-brownfield: workspace state moved out of `.claude/`** - Claude Code refuses
+  Write/Edit inside `.claude/` without per-call approval and allow-rules do not lift it (verified on
+  2.1.287), so runtime state there stalled every workflow write. `.claude/` now holds definitions
+  (agents, skills, commands, engine, settings, manifest); `.maestro/` holds identity, config, registries,
+  knowledge, work, memory, history, runtime — the same state location as every generated template.
+- **Variant build** drops index lines (list items / table rows) that link into pruned folders.
+
 ### Removed
 
 - **Workspace mode command** - Removed the command-based switch/repair flow. Product identity now
@@ -56,6 +92,14 @@ Format: `## [version] - YYYY-MM-DD`
 
 ### Fixed
 
+- `scope-guard.py` gated framework/state writes whose path contained a source token
+  (`.maestro/work/tasks/<id>/tests/…`, `.claude/skills/<x>/lib/…`) and classified tokens in the ABSOLUTE
+  path, so a checkout under e.g. `~/src/` gated every file. It now classifies the project-relative path
+  and never gates `.maestro/`, `.claude/`, `.codex/`, `scripts/`, `docs/`, `deliverables/`.
+- Broken links: engine README → skill registry, agent catalog → specialists catalog, platform README →
+  templates/LICENSE, AGENTS.md → runtime files that only exist at runtime.
+- `status-dashboard.py` compact render crashed when both a value and its fallback field were missing,
+  which failed `architecture-health-check.py --strict` on a fresh workspace.
 - **Current count drift** - Synchronized docs and health-check expectations to 33 agents, 237 skills,
   27 rules, 62 templates, and 22 commands.
 - **Runtime semantics** - Reframed `.maestro/runtime/` as local-only active state, telemetry, cache, and

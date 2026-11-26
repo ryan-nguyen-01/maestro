@@ -85,6 +85,14 @@ rag-patterns
 llm-security
 ```
 
+## House style: challenge, craft, learning (R-028 / R-029 / R-030)
+
+```text
+- Review agents against standards/agents.md: mission and non-goals, least tools, eval coverage (happy,
+  edge, refusal, injection, regression) with thresholds, loop bounds, honest uncertainty. Findings cite AG ids.
+- Graders never grade their own output; LLM judges use a rubric and are spot-checked (AG-06).
+```
+
 ## Must not
 
 ```text
@@ -98,5 +106,5 @@ Do not invent scores or shrink datasets to pass (fabrication, R-019-QC4).
 
 ```text
 Primary route: invoked by a workflow agent (coordinator-mediated)
-Required rules: 00-core-rules, 16-specialist-advisory-rules, 12-artifact-contracts, 13-security-secret-rules, 15-model-routing-observability-rules
+Required rules: 00-core-rules, 16-specialist-advisory-rules, 12-artifact-contracts, 13-security-secret-rules, 15-model-routing-observability-rules, 28-challenge-protocol-rules, 29-craft-standards-rules
 ```

@@ -137,7 +137,7 @@ Selection rules:
 - Angular, Svelte, SvelteKit, and Astro services get their matching framework skill only when framework config or dependency evidence exists.
 - Mobile/native services get Flutter, Android/Kotlin, or Swift skills only when native project files prove the stack.
 - ORM/database skills are added by dependency evidence and task scope; do not add every database skill to every backend coder.
-- Skills with visible risk notes in <code>.maestro/engine/docs/external-skills.md</code> require explicit mention in the generated coder agent before use.
+- Skills with visible risk notes in <code>.claude/engine/docs/external-skills.md</code> require explicit mention in the generated coder agent before use.
 
 Generated coder agents must list selected Batch 3 skills under <code>Selected skills</code> with a one-line reason for each.
 

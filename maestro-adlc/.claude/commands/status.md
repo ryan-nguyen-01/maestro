@@ -1,3 +1,8 @@
+---
+description: "Workflow state, execution mode, brain freshness, model routing, and live agent activity"
+argument-hint: "[compact|concise|dashboard|models]"
+---
+
 # /status
 
 ## Purpose

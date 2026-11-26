@@ -1,3 +1,8 @@
+---
+description: "Persist durable project, component, agent, bug, and workflow knowledge"
+argument-hint: "[task-id | --refresh-index | --scan --components <ids> | --files <paths>]"
+---
+
 # /sync-memory
 
 ## Purpose

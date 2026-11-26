@@ -62,6 +62,8 @@ ui_ux:                        # REQUIRED when the product has a UI — user appr
       file: "docs/experience/user-flows/{{flow}}.md"
       steps: "{{ENTRY -> ACTION -> RESULT}}"
   design_direction:          # implemented in docs/experience/wireframes/styles.css and reused by the build
+    source: "{{house-baseline|brand-guide|existing-design-system}}"   # no brand => start from design.md house baseline (R-029-07)
+    design_review_ref: "{{reviews/design-01.yaml}}"                  # DS checklist passed BEFORE presenting (R-029-04)
     style: "{{LOOK_AND_FEEL}}"
     color_tokens: "{{PALETTE}}"
     typography: "{{FONTS_SCALE}}"
@@ -76,7 +78,15 @@ assumptions:
 risks_and_tradeoffs:
   - "{{RISK_OR_TRADEOFF}}"
 
-open_questions:             # must be resolved with the user before approval if they change scope/behavior
+pre_mortem:                  # R-028-07 — "six months later this failed; why?" Top 3, for the one-way doors above
+  - failure: "{{HOW_IT_FAILED}}"
+    mitigation_or_signal: "{{MITIGATION_OR_EARLY_WARNING}}"
+
+challenges: []               # R-028-02 — concerns about the user's idea/request raised BEFORE approval
+                             # (steelman, concern, evidence, impact, alternatives, recommendation,
+                             #  severity, decision_owner: user, disposition, rationale). Empty = none found.
+
+open_questions:            # must be resolved with the user before approval if they change scope/behavior
   - "{{QUESTION_OR_NONE}}"
 
 # Approval (R-019-0a): the user reviews this blueprint and approves, or requests changes.

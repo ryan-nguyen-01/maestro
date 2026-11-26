@@ -37,9 +37,9 @@ cp -R maestro/maestro-brownfield ~/work/my-app-ws
 # Option C — or apply the contract INTO your existing repo without moving code:
 cd my-existing-app
 cp -R /path/to/maestro/maestro-brownfield/.maestro .
-cp -R /path/to/maestro/maestro-brownfield/.claude .            # skip if you keep your own .claude
+cp -R /path/to/maestro/maestro-brownfield/.claude .            # merge by hand if you keep your own .claude
 cp    /path/to/maestro/maestro-brownfield/CLAUDE.md .          # have CLAUDE.md? add one line instead:
-                                                               #   @.maestro/INSTRUCTIONS.md
+                                                               #   @.claude/INSTRUCTIONS.md
 claude   # then: /onboard
 ```
 

@@ -1,7 +1,7 @@
 # Product Documentation
 
 `docs/` contains the official product artifacts read by users and agents. `.maestro/registry/artifacts.yaml`
-is the routing index; `.maestro/` must not duplicate the authoritative document body.
+is the routing index; `.claude/` must not duplicate the authoritative document body.
 
 Traceability flows from product intent to operations:
 
@@ -11,8 +11,8 @@ Methodology -> Vision -> PRD -> Feature -> User Story / Use Case -> User Flow
        -> Release -> Runbook / Observability
 ```
 
-Methodology playbooks live under `.maestro/engine/methodologies/`. They define when the workspace
+Methodology playbooks live under `.claude/engine/methodologies/`. They define when the workspace
 should run fast, when it should become document-led, and when enterprise governance is required.
-`.maestro/engine/methodologies/industry-alignment.md` maps those local playbooks to current
+`.claude/engine/methodologies/industry-alignment.md` maps those local playbooks to current
 production-agent patterns such as durable workflows, human-in-the-loop, eval-driven AI, artifacts,
 plugins, hooks, and enterprise autonomy.

@@ -1,3 +1,8 @@
+---
+description: "Create or route a blocker / non-blocker defect"
+argument-hint: "[bug description or QC case id]"
+---
+
 # /bug
 
 ## Purpose

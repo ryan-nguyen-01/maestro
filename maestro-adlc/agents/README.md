@@ -14,7 +14,7 @@ agents/
     README.md
 ```
 
-Author each agent from the engine templates (`.maestro/engine/templates/`):
+Author each agent from the engine templates (`.claude/engine/templates/`):
 
 - `agent-mission.template.md`           → `agent.md` mission/goals/non-goals/termination
 - `agent-definition.template.md`        → persona, skills, tools, knowledge, memory bounds, model routing

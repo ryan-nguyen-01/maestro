@@ -8,7 +8,7 @@ Codex reads `AGENTS.md` instruction files. It does not treat `.claude/commands/*
 
 When working in Codex:
 
-- Read `.codex/AGENTS.md`, root `AGENTS.md`, `CLAUDE.md`, `COMMAND.md`, and `.maestro/engine/workflow.md`.
+- Read `.codex/AGENTS.md`, root `AGENTS.md` (single source of shared policy), `COMMAND.md`, and `.claude/engine/workflow.md`.
 - Route natural-language work through the Coordinator semantics from `/coord`.
 - Use `.claude/commands/*.md` as workflow contracts, not as Codex TUI command registrations.
 - Use Codex built-in slash commands only for Codex controls such as `/model`, `/review`, `/plan`, `/status`, `/skills`, `/hooks`, `/mcp`, `/apps`, and `/plugins`.

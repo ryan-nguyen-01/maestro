@@ -1,0 +1,40 @@
+name: Architecture Health Check
+
+# Deterministic CI safety net for the maestro control plane itself (framework files, not the
+# maintained project's own source under source/ — that project brings its own CI).
+# Mirrors what `python3 scripts/architecture-health-check.py --strict` already checks locally;
+# this just makes sure nobody forgets to run it before merging.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Byte-compile every framework script (fails fast on syntax errors)
+        run: python3 -m py_compile scripts/*.py scripts/hooks/*.py
+
+      - name: Architecture health check (--strict)
+        run: python3 scripts/architecture-health-check.py --strict --write-report
+
+      - name: Upload health report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: architecture-health-report
+          path: |
+            .maestro/runtime/reports/architecture-health-report.json
+            .maestro/runtime/reports/architecture-health-report.md
+          if-no-files-found: ignore

@@ -1,3 +1,8 @@
+---
+description: "Triage files dropped into docs/: classify, flag secrets or misplaced code, index; never moves files without approval"
+argument-hint: "[path]"
+---
+
 # /intake
 
 ## Purpose

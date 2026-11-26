@@ -17,7 +17,7 @@ Usage:
     python3 scripts/build-codex-prompts.py --check     # verify in sync, no writes
 
 Note: like the Claude plugin, these prompts deliver the command *entrypoints*. The full stateful
-workflow (project knowledge, registry, work, and runtime under .maestro/) still requires the maestro repo + AGENTS.md.
+workflow (project knowledge, registry, work, and runtime under .claude/) still requires the maestro repo + AGENTS.md.
 """
 
 from __future__ import annotations
@@ -32,6 +32,15 @@ OUT = ROOT / ".codex" / "prompts"
 
 # Commands that are Claude-plugin-specific and do NOT work as Codex prompts.
 EXCLUDE = {"access"}
+
+
+def strip_frontmatter(text: str) -> str:
+    """Drop the Claude Code YAML frontmatter; Codex prompts carry their own."""
+    if text.startswith("---\n"):
+        end = text.find("\n---\n", 4)
+        if end != -1:
+            return text[end + 5:].lstrip("\n")
+    return text
 
 
 def purpose_of(text: str) -> str:
@@ -58,7 +67,7 @@ def render_prompt(name: str, command_text: str) -> str:
         f"Follow `.codex/AGENTS.md` (or `AGENTS.md`) routing and the framework rules. Route every\n"
         f"request through the coordinator model; do not bypass approval gates, security/secret rules,\n"
         f"or the task-analysis source-edit gate. If the maestro framework files\n"
-        f"(`.maestro/engine/`, `.maestro/registry/`, `.maestro/knowledge/`, `.maestro/work/`, `.maestro/runtime/`, "
+        f"(`.claude/engine/`, `.maestro/registry/`, `.maestro/knowledge/`, `.maestro/work/`, `.maestro/runtime/`, "
         f"`.claude/commands/{name}.md`) are present, defer to them as the\n"
         f"authoritative contract — this prompt is a portable mirror.\n\n"
         f"User input for this command: $ARGUMENTS\n\n"
@@ -79,7 +88,7 @@ def main() -> int:
     artifacts: dict[Path, str] = {}
     for src in sources:
         name = src.stem
-        artifacts[OUT / f"{name}.md"] = render_prompt(name, src.read_text(encoding="utf-8"))
+        artifacts[OUT / f"{name}.md"] = render_prompt(name, strip_frontmatter(src.read_text(encoding="utf-8")))
 
     readme = (
         "# Codex Prompts (generated)\n\n"

@@ -238,6 +238,24 @@ def build(manifest_path: Path) -> None:
             if mm:
                 n += 1
                 kept[i] = re.sub(r"^\d+\. ", f"{n}. ", l)
+        # index lines (list items / table rows) that link INTO a pruned folder are dropped, so a
+        # right-sized template never ships a dangling link. Prose lines are left for the selftest to flag.
+        pruned_dirs = [(out / d).resolve() for g in pruned_groups for d in STRUCTURE_GROUPS[g]["dirs"]]
+        link_re = re.compile(r"\]\(([^)\s#]+)")
+        for md in out.rglob("*.md"):
+            rel_parts = md.relative_to(out).parts
+            if "skills" in rel_parts or "marketplace" in rel_parts:
+                continue
+            mlines = md.read_text(encoding="utf-8").splitlines(keepends=True)
+            keep_lines = []
+            for ml in mlines:
+                if ml.lstrip().startswith(("- ", "* ", "| ")):
+                    targets = [(md.parent / x).resolve() for x in link_re.findall(ml) if not x.startswith(("http", "mailto:"))]
+                    if any(any(tg == pd or pd in tg.parents for pd in pruned_dirs) for tg in targets):
+                        continue
+                keep_lines.append(ml)
+            if len(keep_lines) != len(mlines):
+                md.write_text("".join(keep_lines), encoding="utf-8")
         itxt = "".join(kept)
         if "component-roots" not in selected:
             itxt = itxt.replace(
@@ -520,6 +538,10 @@ def build(manifest_path: Path) -> None:
     print(f"   health-check:\n{tail}\n")
     if res.returncode != 0:
         print(f"   WARNING: health-check failed for {m['name']}")
+    st = subprocess.run([sys.executable, "scripts/selftest.py"], cwd=out, capture_output=True, text=True)
+    print("   " + "\n   ".join(st.stdout.strip().splitlines()[:8]))
+    if st.returncode != 0:
+        print(f"   WARNING: selftest failed for {m['name']}")
 
 
 def main() -> int:

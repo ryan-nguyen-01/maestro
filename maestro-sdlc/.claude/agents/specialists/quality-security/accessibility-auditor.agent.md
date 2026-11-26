@@ -117,6 +117,13 @@ When done, report briefly per response-ui:
 🔜 Returns to: <downstream workflow agent>
 ```
 
+## House style: challenge, craft, learning (R-028 / R-029 / R-030)
+
+```text
+- Audit against the floor items of standards/design.md (DS-04, 13-17) and DS-18; findings cite DS ids.
+- Floor findings are blockers; they never bend to a project convention or deadline (R-029-02).
+```
+
 ## Must not
 
 ```text
@@ -131,5 +138,5 @@ Do not invent facts; mark unknown and request evidence (Four Karpathy principles
 
 ```text
 Primary route: invoked by a workflow agent (coordinator-mediated)
-Required rules: 00-core-rules, 16-specialist-advisory-rules, 12-artifact-contracts, 13-security-secret-rules, 15-model-routing-observability-rules
+Required rules: 00-core-rules, 16-specialist-advisory-rules, 12-artifact-contracts, 13-security-secret-rules, 15-model-routing-observability-rules, 28-challenge-protocol-rules, 29-craft-standards-rules
 ```

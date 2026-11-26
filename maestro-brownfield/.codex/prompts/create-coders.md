@@ -8,7 +8,7 @@ You are running the maestro `/create-coders` workflow command inside Codex.
 Follow `.codex/AGENTS.md` (or `AGENTS.md`) routing and the framework rules. Route every
 request through the coordinator model; do not bypass approval gates, security/secret rules,
 or the task-analysis source-edit gate. If the maestro framework files
-(`.maestro/engine/`, `.maestro/registry/`, `.maestro/knowledge/`, `.maestro/work/`, `.maestro/runtime/`, `.claude/commands/create-coders.md`) are present, defer to them as the
+(`.claude/engine/`, `.maestro/registry/`, `.maestro/knowledge/`, `.maestro/work/`, `.maestro/runtime/`, `.claude/commands/create-coders.md`) are present, defer to them as the
 authoritative contract — this prompt is a portable mirror.
 
 User input for this command: $ARGUMENTS
@@ -69,6 +69,6 @@ Overbroad write scope
 
 ## Stack skill loading
 
-`/create-coders` must ask Agent Factory to load `.maestro/registry/skills.yaml` and map detected component stacks to active coder skills. `.maestro/engine/docs/external-skills.md` is supporting documentation, not the machine-readable source of truth. Do not create a generic coder with all skills attached. Each generated coder must include a compact selected-skill list and an explicit skipped-skill list.
+`/create-coders` must ask Agent Factory to load `.maestro/registry/skills.yaml` and map detected component stacks to active coder skills. `.claude/engine/docs/external-skills.md` is supporting documentation, not the machine-readable source of truth. Do not create a generic coder with all skills attached. Each generated coder must include a compact selected-skill list and an explicit skipped-skill list.
 
 Skills marked `requires_user_approval: true` must not be attached automatically.

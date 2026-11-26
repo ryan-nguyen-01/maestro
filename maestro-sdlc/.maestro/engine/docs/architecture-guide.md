@@ -238,8 +238,9 @@ See also: [folder-guide.md](folder-guide.md) for detailed folder descriptions.
 ```text
 .maestro/engine/
 ├── workflow.md      ← End-to-end workflow policy
-├── rules/           ← 27 workflow rules (constraints and governance)
-├── templates/       ← 51 artifact templates
+├── rules/           ← 30 workflow rules (constraints and governance)
+├── standards/       ← The Maestro Way: house standards (code, design, architecture, writing, agents)
+├── templates/       ← 64 artifact templates
 └── docs/            ← Documentation and visual diagrams
 
 .maestro/runtime/

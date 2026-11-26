@@ -1,3 +1,8 @@
+---
+description: "Create the mandatory Dev-to-QC handoff after DEV_DONE"
+argument-hint: "[task-id]"
+---
+
 # /handoff-qc
 
 ## Purpose

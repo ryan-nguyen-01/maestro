@@ -11,7 +11,7 @@ then run `claude` (or `codex`) in this folder and JUST DESCRIBE what you want in
 intent to the right flow. Power-user shortcuts exist in COMMAND.md if you want them.
 
 Entry points: `CLAUDE.md` (Claude) - `AGENTS.md` (Codex) - `COMMAND.md` (commands)
-- `.maestro/INSTRUCTIONS.md` (workflow brain).
+- `.claude/INSTRUCTIONS.md` (workflow brain).
 
 A self-contained workspace — edit it directly (see VARIANT.yaml). The folder tree is fit to
 maintenance work: code in `source/`, raw user material in `intake/`.

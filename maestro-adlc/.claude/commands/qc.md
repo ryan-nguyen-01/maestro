@@ -1,3 +1,8 @@
+---
+description: "Run QC from the handoff and classify bugs; stop on blockers"
+argument-hint: "[task-id]"
+---
+
 # /qc
 
 ## Purpose

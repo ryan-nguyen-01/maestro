@@ -8,7 +8,7 @@ purpose: "Small routing index so agents can decide which knowledge files to open
 
 read_policy:
   startup:
-    - ".maestro/engine/workflow.md"
+    - ".claude/engine/workflow.md"
     - ".maestro/runtime/workflow-state.yaml"
     - ".maestro/knowledge/index.yaml"
   then_read_only_if_relevant:
@@ -108,9 +108,9 @@ policy_context:
     transition:
       read:
         - ".maestro/runtime/workflow-state.yaml"
-        - ".maestro/engine/workflow.md"
-        - ".maestro/engine/rules/11-approval-gates.md"
-        - ".maestro/engine/rules/12-artifact-contracts.md"
+        - ".claude/engine/workflow.md"
+        - ".claude/engine/rules/11-approval-gates.md"
+        - ".claude/engine/rules/12-artifact-contracts.md"
     workspace:
       read:
         - ".maestro/runtime/workflow-state.yaml"
@@ -143,7 +143,7 @@ policy_context:
         - ".maestro/work/tasks/<task-id>/dev-verification.yaml"
         - ".maestro/work/tasks/<task-id>/qc-test-results.yaml"
       rule: "Open only artifacts required by task state and task.yaml manifest."
-  output_template: ".maestro/engine/templates/policy-check-report.template.yaml"
+  output_template: ".claude/engine/templates/policy-check-report.template.yaml"
 
 documents:
   - path: ".maestro/knowledge/project.yaml"

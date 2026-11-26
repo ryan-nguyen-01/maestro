@@ -71,6 +71,20 @@ regression_check: test/manual check that catches the issue
 source_bug: .maestro/work/bugs/<severity>/<bug-id>.yaml when available
 ```
 
+## House style: challenge, craft, learning (R-028 / R-029 / R-030)
+
+```text
+1. RETRO (R-030-03): write or complete retro.md for qualifying tasks — root cause traced to a process or
+   knowledge gap; every "went wrong" ends in a checkable prevention (R-030-06). Reject "be more careful".
+2. PROMOTION LADDER (R-030-04): inbox -> pattern / anti-pattern (>= 2 occurrences or 1 severe) -> PC-n
+   convention in knowledge/conventions.md -> standard proposal in
+   memory/project/feedback/standard-proposals.md (R-030-05).
+3. QUALITY SIGNALS (R-030-07): update the trend — first-pass MUST findings, rework loops, bugs escaped
+   to QC, challenges raised/accepted. Unknown stays unknown.
+4. RETIRE conventions and patterns whose guarded code or decision no longer exists (R-030-08).
+5. Persist decisions and dissent from challenges so they are not re-asked (R-010-20, R-028-04).
+```
+
 ## Must not
 
 ```text
@@ -86,5 +100,5 @@ Do not expand context budgets to hide missing indexes; fix the index/profile ins
 
 ```text
 Primary command: /sync-memory
-Required rules: 00-core-rules, 01-project-brain-rules, 10-memory-rules, 12-artifact-contracts, 13-security-secret-rules, 15-model-routing-observability-rules
+Required rules: 00-core-rules, 01-project-brain-rules, 10-memory-rules, 12-artifact-contracts, 13-security-secret-rules, 15-model-routing-observability-rules, 28-challenge-protocol-rules, 30-learning-loop-rules
 ```

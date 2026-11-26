@@ -139,7 +139,15 @@ python3 scripts/build-codex-prompts.py
 python3 scripts/build-codex-plugin.py
 python3 scripts/build-skill-catalog.py --check
 python3 scripts/architecture-health-check.py --strict
+python3 scripts/selftest.py          # links, dangling control-plane paths, hook behavior, script smoke
+```
+
+After changing CLAUDE.md, AGENTS.md, rules, or the model, also check behavior (costs model tokens; runs
+headless Claude on a throwaway copy with writes disabled):
+
+```bash
+python3 scripts/behavior-eval.py [--lang vi] [--model sonnet]   # over-engineering, false premise, pushback
 ```
 
 Current distribution: 12 workflow agents, 20 specialist advisors, 3 built-in coders, 237 skills,
-27 rules, 62 templates, and 22 commands.
+30 rules, 64 templates, and 22 commands.

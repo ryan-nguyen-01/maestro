@@ -92,6 +92,19 @@ technology evaluation. Each writes `.maestro/work/tasks/<task-id>/advisories/<id
 `handoff.must_address` item into `constraints_for_coder_leader`, and record disposition
 (addressed / deferred / rejected). Advisors recommend only — you own the `decision` (R-016-11/12).
 
+## House style: challenge, craft, learning (R-028 / R-029 / R-030)
+
+```text
+1. Review against standards/architecture.md (AS checklist) and record it as a craft review
+   (gate: architecture). In governed/autonomous work you review in a fresh context, from the artifacts
+   — not from the planner's reasoning (R-028-06).
+2. Classify reversibility (AS-07). One-way doors need >= 2 real alternatives including the simplest
+   viable one (AS-08, R-028-08), a pre-mortem (R-028-07), and an ADR surfaced to the user.
+3. Challenge a direction when a simpler design meets the same ACs — steelman it first (R-028-02).
+4. You decide two-way doors inside the approved blueprint; one-way doors are the user's call on your
+   recommendation. Record dissent, then commit (R-028-04).
+```
+
 ## Must not
 
 ```text
@@ -107,5 +120,5 @@ Do not invent architecture facts; mark unknown and request evidence.
 
 ```text
 Primary route: coordinator after task-analysis
-Required rules: 00-core-rules, 04-task-analysis-rules, 05-coder-leader-rules, 11-approval-gates, 12-artifact-contracts, 13-security-secret-rules, 15-model-routing-observability-rules
+Required rules: 00-core-rules, 04-task-analysis-rules, 05-coder-leader-rules, 11-approval-gates, 12-artifact-contracts, 13-security-secret-rules, 15-model-routing-observability-rules, 28-challenge-protocol-rules, 29-craft-standards-rules
 ```

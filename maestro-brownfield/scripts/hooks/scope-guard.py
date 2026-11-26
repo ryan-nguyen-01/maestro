@@ -5,7 +5,7 @@ Ports .cursor/hooks/check-task-analysis.sh to the Claude Code adapter. Turns the
 prompt-based scope rule (R-006) into a hard guardrail:
 
   - Only gates likely APPLICATION source (services/**, src/**, app/**, tests/**, ...).
-    Framework files (.maestro/engine/**, .claude/**, scripts/**, docs) are NOT gated, so
+    Framework and control-plane files (.maestro/**, .claude/**, scripts/**, docs) are NOT gated, so
     framework maintenance is unaffected.
   - direct mode allows fast user-driven development without workflow artifacts.
   - assisted mode requires a task manifest but not the governed artifact pipeline.
@@ -50,8 +50,17 @@ FAST_TRACK_INTENTS = {
 }
 
 
-def is_source_path(file_path: str) -> bool:
-    parts = file_path.replace("\\", "/").split("/")
+# Framework/control-plane roots are never gated, even when they contain a source token
+# (.maestro/work/tasks/<id>/tests/, .claude/skills/<x>/lib/, ...).
+FRAMEWORK_ROOTS = (".maestro", ".claude", ".codex", "scripts", "docs", "deliverables")
+
+
+def is_source_path(rel_path: str) -> bool:
+    """Classify a PROJECT-RELATIVE path. Paths outside the project are not gated here, and tokens in
+    the absolute prefix (e.g. a checkout under ~/src/) never count."""
+    parts = rel_path.replace("\\", "/").split("/")
+    if not parts or parts[0] in ("", "..") or parts[0] in FRAMEWORK_ROOTS:
+        return False
     if any(tok in parts for tok in VENDOR_TOKENS):
         return False
     return any(tok in parts for tok in SOURCE_DIR_TOKENS)
@@ -172,11 +181,10 @@ def main() -> int:
     file_path = _lib.field(payload, "file_path")
     if not file_path:
         return 0
-    if not is_source_path(file_path):
-        return 0  # framework / non-app files are not gated
-
     root = _lib.project_dir(payload)
     rel = _lib.rel_path(file_path, root)
+    if not is_source_path(rel):
+        return 0  # framework / control-plane / out-of-project files are not gated
 
     state = read_text(root / ".maestro/runtime/workflow-state.yaml")
     execution_mode = yaml_scalar(state, "active_execution_mode")

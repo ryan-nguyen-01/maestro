@@ -1,6 +1,6 @@
 # maestro
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../LICENSE)
 [![Agents](https://img.shields.io/badge/Agents-33-blue)](#agents)
 [![Skills](https://img.shields.io/badge/Skills-231-green)](#skills)
 [![Stars](https://img.shields.io/github/stars/ryan-nguyen-01/maestro?style=social)](https://github.com/ryan-nguyen-01/maestro)
@@ -40,11 +40,11 @@ source code). Copy one anywhere, drop your service code inside, run `claude` (or
 
 | Folder | Purpose | Skills |
 | --- | --- | --- |
-| [`maestro-sdlc/`](maestro-sdlc/) | Software delivery end-to-end: BA → design → UI/UX → code → QC | 231 |
-| [`maestro-adlc/`](maestro-adlc/) | AI products/agents with an eval gate | 132 |
-| [`maestro-enterprise/`](maestro-enterprise/) | Governed/production agents: compliance, audit | 166 |
-| [`maestro-lite/`](maestro-lite/) | Small tools/prototypes, minimal ceremony | 39 |
-| [`maestro-brownfield/`](maestro-brownfield/) | Existing project maintenance — ask-don't-infer | 231 |
+| [`maestro-sdlc/`](../maestro-sdlc/) | Software delivery end-to-end: BA → design → UI/UX → code → QC | 231 |
+| [`maestro-adlc/`](../maestro-adlc/) | AI products/agents with an eval gate | 132 |
+| [`maestro-enterprise/`](../maestro-enterprise/) | Governed/production agents: compliance, audit | 166 |
+| [`maestro-lite/`](../maestro-lite/) | Small tools/prototypes, minimal ceremony | 39 |
+| [`maestro-brownfield/`](../maestro-brownfield/) | Existing project maintenance — ask-don't-infer | 231 |
 
 ```bash
 cp -R maestro/maestro-adlc ~/work/my-ai-app   # copy the template anywhere
@@ -425,7 +425,7 @@ Example requests:
 
 ## License
 
-MIT License. See [LICENSE](LICENSE).
+MIT License. See [LICENSE](../LICENSE).
 
 This is an open framework. You may use it in commercial projects, fork it for a team, add private
 skills or agents, and contribute improvements through pull requests.

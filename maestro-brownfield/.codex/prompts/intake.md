@@ -1,5 +1,5 @@
 ---
-description: "maestro /intake — Triage whatever the user dropped into the intake folders (`intake/`) so messy input never sile..."
+description: "maestro /intake — Triage whatever the user dropped into the intake folders (`intake/`) so messy input never silently poisons the worksp..."
 argument-hint: "[request or args]"
 ---
 
@@ -8,7 +8,7 @@ You are running the maestro `/intake` workflow command inside Codex.
 Follow `.codex/AGENTS.md` (or `AGENTS.md`) routing and the framework rules. Route every
 request through the coordinator model; do not bypass approval gates, security/secret rules,
 or the task-analysis source-edit gate. If the maestro framework files
-(`.maestro/engine/`, `.maestro/registry/`, `.maestro/knowledge/`, `.maestro/work/`, `.maestro/runtime/`, `.claude/commands/intake.md`) are present, defer to them as the
+(`.claude/engine/`, `.maestro/registry/`, `.maestro/knowledge/`, `.maestro/work/`, `.maestro/runtime/`, `.claude/commands/intake.md`) are present, defer to them as the
 authoritative contract — this prompt is a portable mirror.
 
 User input for this command: $ARGUMENTS

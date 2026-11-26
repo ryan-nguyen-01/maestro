@@ -182,6 +182,28 @@ assumptions:
 
 unknowns: []
 
+study:                              # R-030-01 — required when tech/area is unfamiliar or confidence < high
+  required: false
+  note_ref: ""                      # journal.md#study — sources, constraints, chosen house pattern
+preflight_lessons: []               # R-030-02 — anti-pattern / PC-n / bug-pattern ids pulled into critical checks
+standards_in_scope: []              # R-029 — e.g. [code.md, design.md, conventions.md]
+
+challenges:                         # R-028 — material concerns about the request/inputs; [] = none found
+  - id: "CH-01"
+    target: "user-request|input-doc|blueprint|design|architecture|plan"
+    trigger: "purpose|premise|contradiction|risk|standard|complexity|value"
+    steelman: ""
+    concern: ""
+    evidence: ""
+    impact: ""
+    alternatives: []
+    recommendation: ""
+    confidence: "high|medium|low"
+    severity: "stop|flag|note"
+    decision_owner: "user|solution-architect|coder-leader|ui-ux-designer|coordinator"
+    disposition: "open|accepted|rejected|superseded"
+    rationale: ""                   # decision + dissent (disagree-and-commit, R-028-04)
+
 requires_user_clarification: false
 clarifying_questions: []
 

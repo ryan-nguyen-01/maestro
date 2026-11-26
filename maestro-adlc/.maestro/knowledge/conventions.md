@@ -4,7 +4,7 @@ Status: needs onboarding.
 
 Onboarding should populate coding, testing, API, logging, error-handling, and folder conventions discovered from the repository.
 
-Default folder architecture: the Code Layout Standard (feature-based + layered) at `.maestro/engine/docs/code-layout.md`. Use it for greenfield components; when an existing repo already differs, record the repo's actual layout here and follow that.
+Default folder architecture: the Code Layout Standard (feature-based + layered) at `.claude/engine/docs/code-layout.md`. Use it for greenfield components; when an existing repo already differs, record the repo's actual layout here and follow that.
 
 ## Deep coding conventions
 

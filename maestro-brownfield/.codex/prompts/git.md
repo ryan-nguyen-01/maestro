@@ -8,7 +8,7 @@ You are running the maestro `/git` workflow command inside Codex.
 Follow `.codex/AGENTS.md` (or `AGENTS.md`) routing and the framework rules. Route every
 request through the coordinator model; do not bypass approval gates, security/secret rules,
 or the task-analysis source-edit gate. If the maestro framework files
-(`.maestro/engine/`, `.maestro/registry/`, `.maestro/knowledge/`, `.maestro/work/`, `.maestro/runtime/`, `.claude/commands/git.md`) are present, defer to them as the
+(`.claude/engine/`, `.maestro/registry/`, `.maestro/knowledge/`, `.maestro/work/`, `.maestro/runtime/`, `.claude/commands/git.md`) are present, defer to them as the
 authoritative contract — this prompt is a portable mirror.
 
 User input for this command: $ARGUMENTS
@@ -22,7 +22,7 @@ User input for this command: $ARGUMENTS
 
 Run the Maestro Git-flow workflow: branch, commit, sync, and PR with the right policy. Local commits
 are automatic/free; anything outward-facing (push, PR, merge to shared branches, tags) needs explicit
-user approval. Full contract: `.maestro/engine/rules/20-git-workflow-rules.md`.
+user approval. Full contract: `.claude/engine/rules/20-git-workflow-rules.md`.
 
 ## Responsible agent
 
@@ -52,8 +52,6 @@ coordinator
 3. Commit at milestones with conventional messages; no Co-Authored-By trailer unless git.commit_attribution: true; never commit secrets.
 4. STOP and ask the user before any outward-facing action (push, PR, merge, tag, force push, history
    rewrite) — these are gated (R-020-10); destructive ones are also blocked by the destructive-guard hook.
-5. For autopilot runs, git stays local-only automatic: branch + milestone commits; push/PR/merge wait
-   for the user (R-020-12/13).
 ```
 
 ## Required rules

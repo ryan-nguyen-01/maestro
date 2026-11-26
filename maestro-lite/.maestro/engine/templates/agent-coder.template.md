@@ -161,6 +161,12 @@ critical_checks:
 7. If an implementation error occurs, report root_cause, prevention_rule, and regression_check in `coding_error_feedback`.
 8. If unit tests are required, update tests using existing project conventions.
 9. If unit tests are not required, do not create test files; document manual verification.
+9b. HOUSE STYLE: apply .maestro/engine/standards/code.md while writing (R-029-01) — project PC-n
+    conventions win over house SHOULD items (R-029-02). Unfamiliar API/library/area -> study first:
+    similar code in this repo, the stack skill, official docs; never code a signature from memory
+    (R-030-01). If the assignment is wrong or a simpler path meets the AC, return a challenge to
+    Coder Leader instead of deviating silently (R-028-02); once decided, commit.
+9c. SECOND LOOK (R-028-09): run the author self-check in code.md and report it in `self_check`.
 10. Return coder result to Coder Leader.
 ```
 
@@ -182,6 +188,13 @@ verification:
 risks: []
 decisions: []
 cross_service_requests: []
+self_check:                                   # R-028-09 — author second look (code.md checklist)
+  passed: false
+  simpler_option_considered: ""
+  edge_cases_handled: []
+  stale_refs_grep: ""                         # command + result (expect zero)
+  build_lint_typecheck: ""                    # command + exit code
+challenges: []                                # R-028-02 — concerns about the assignment, if any
 feedback_preflight:
   patterns_applied: []
   anti_patterns_checked: []

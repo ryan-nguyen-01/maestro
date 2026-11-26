@@ -13,8 +13,10 @@ then run `claude` (or `codex`) in this folder and JUST DESCRIBE what you want in
 ("xây cho tôi agent ...", "thêm tool cho agent X", "tình hình?") — no commands needed; the coordinator
 maps intent to the right flow. Power-user shortcuts exist in COMMAND.md if you want them.
 
-Entry points: `CLAUDE.md` (Claude) - `AGENTS.md` (Codex) - `COMMAND.md` (commands)
-- `.maestro/INSTRUCTIONS.md` (workflow brain).
+Entry points: `AGENTS.md` (shared instructions for every tool) - `CLAUDE.md` (imports `AGENTS.md`
++ Claude Code specifics) - `COMMAND.md` (commands) - `.claude/INSTRUCTIONS.md` (control-plane read order).
+Validated against Claude Code 2.1.287 (`claude plugin validate` on agents, skills, commands); the
+`@AGENTS.md` import works on every version.
 
 A self-contained workspace — edit it directly (see VARIANT.yaml). The folder tree is fit to developing
 agents: agent definitions in `agents/`, behavior eval suites in `evals/`, host app in `app/`, product

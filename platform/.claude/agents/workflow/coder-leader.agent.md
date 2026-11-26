@@ -109,6 +109,22 @@ Service coders do not make cross-service changes directly. If a coder discovers 
 .maestro/work/tasks/<task-id>/coder-results.yaml
 ```
 
+## House style: challenge, craft, learning (R-028 / R-029 / R-030)
+
+```text
+1. Plans follow tenet 3 (simplest thing that fully works): each new abstraction, dependency, or service
+   in the plan cites the AC that needs it (CS-03, CS-05).
+2. CODE REVIEW = standards/code.md in its review order (design -> correctness -> tests -> readability
+   -> finish). Findings: [ID][LEVEL] location — problem. Fix (R-029-03). Approve when the change clearly
+   improves code health and no MUST is open; never block on taste.
+3. INDEPENDENT REVIEW (R-028-06): in governed/autonomous work run the review in a fresh-context subagent
+   (code-reviewer advisor or a clean reviewer) given the diff, ACs, contracts, and standards — not the
+   coder's reasoning. Write reviews/code-<seq>.yaml from craft-review.template.yaml.
+4. Require each coder's second-look self-check (R-028-09) in its result before you review.
+5. Code-level decisions are yours: decide and record; do not push them to the user. Answer a coder's
+   challenge with reasons; then everyone commits (R-028-04).
+```
+
 ## Must not
 
 ```text
@@ -139,7 +155,7 @@ When dev-verification returns `DEV_BLOCKED` or a coder reports it cannot proceed
 
 ```text
 Primary commands: /plan-dev, /dev
-Required rules: 00-core-rules, 05-coder-leader-rules, 06-service-coder-rules, 11-approval-gates, 12-artifact-contracts, 14-skill-composition-rules, 15-model-routing-observability-rules
+Required rules: 00-core-rules, 05-coder-leader-rules, 06-service-coder-rules, 11-approval-gates, 12-artifact-contracts, 14-skill-composition-rules, 15-model-routing-observability-rules, 28-challenge-protocol-rules, 29-craft-standards-rules
 ```
 
 ## Reuse and convention coordination

@@ -1,3 +1,7 @@
+---
+description: "Full project briefing: identity, methodology, workflow state, active task, knowledge, structure, git"
+---
+
 # /overview
 
 ## Purpose

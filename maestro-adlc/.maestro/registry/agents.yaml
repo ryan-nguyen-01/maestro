@@ -12,7 +12,7 @@ agents:
     status: "active"
     service_id: "_infra"
     service_name: "Infrastructure (cross-cutting)"
-    agent_file: ".claude/agents/coders/coder-infra.agent.md"
+    agent_file: ".claude/agents/coder-infra.agent.md"
     scope_file: null
     approval:
       required: false
@@ -66,8 +66,6 @@ agents:
         - "**/*.pem"
         - "**/*.key"
         - ".claude/**"
-        - ".maestro/engine/**"
-        - ".maestro/**"
         - ".codex/**"
         - "docs/**"
       requires_leader_approval:
@@ -93,7 +91,7 @@ agents:
     status: "active"
     service_id: "_database"
     service_name: "Database (cross-cutting)"
-    agent_file: ".claude/agents/coders/coder-database.agent.md"
+    agent_file: ".claude/agents/coder-database.agent.md"
     scope_file: null
     approval:
       required: false
@@ -156,8 +154,6 @@ agents:
         - "**/*.pem"
         - "**/*.key"
         - ".claude/**"
-        - ".maestro/engine/**"
-        - ".maestro/**"
         - ".codex/**"
         - "docs/**"
       requires_leader_approval:
@@ -182,7 +178,7 @@ agents:
     status: "active"
     service_id: "_data"
     service_name: "Data Generation (cross-cutting)"
-    agent_file: ".claude/agents/coders/coder-data.agent.md"
+    agent_file: ".claude/agents/coder-data.agent.md"
     scope_file: null
     approval:
       required: false
@@ -233,7 +229,6 @@ agents:
         - "**/*.pem"
         - "**/*.key"
         - ".claude/**"
-        - ".maestro/**"
         - ".codex/**"
         - "docs/**"
       requires_leader_approval:

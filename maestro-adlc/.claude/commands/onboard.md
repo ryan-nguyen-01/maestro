@@ -1,3 +1,8 @@
+---
+description: "Create or refresh Project Knowledge and component coding contracts"
+argument-hint: "[component path | --refresh <component> | --files <paths>]"
+---
+
 # /onboard
 
 ## Purpose

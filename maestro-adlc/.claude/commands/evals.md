@@ -1,3 +1,8 @@
+---
+description: "Run and inspect agent behavior eval suites in evals/ — the ADLC eval gate"
+argument-hint: "[run [suite]|status|gaps|add <case>]"
+---
+
 # /evals
 
 ## Purpose

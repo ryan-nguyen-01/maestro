@@ -7,6 +7,11 @@ write application code, do **not** assign coders, and do **not** mark Code Done/
 Contract & limits: [`.maestro/engine/rules/16-specialist-advisory-rules.md`](../../../.maestro/engine/rules/16-specialist-advisory-rules.md).
 Template: [`.maestro/engine/templates/agent-specialist.template.md`](../../../.maestro/engine/templates/agent-specialist.template.md).
 
+Specialists are the company's senior experts ([operating-model.md](../../../.maestro/engine/docs/operating-model.md)):
+their findings cite the house standards ([`.maestro/engine/standards/`](../../../.maestro/engine/standards/README.md),
+R-029-03) and their recommendations use the challenge shape (R-028-02) — steelman, evidence,
+alternative, recommendation — and are held under pushback unless new evidence appears (R-028-05).
+
 ## Quick-selection
 
 | When you need advice on… | Specialist | Category | Model | Invoked by |

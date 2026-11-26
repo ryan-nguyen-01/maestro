@@ -21,14 +21,14 @@ project_profile:
   confidence: "high"
   evidence:
     - "AGENTS.md"
-    - ".maestro/engine/workflow.md"
+    - ".claude/engine/workflow.md"
     - ".claude/agents/"
   source_layout:
     service_roots: []
     app_roots: []
     package_roots: []
     shared_code_roots:
-      - ".maestro/engine"
+      - ".claude/engine"
       - ".claude"
       - ".codex"
       - ".github"
@@ -44,7 +44,7 @@ project_profile:
     - "AGENTS.md"
     - "CLAUDE.md"
     - "COMMAND.md"
-    - ".maestro/engine/workflow.md"
+    - ".claude/engine/workflow.md"
     - ".maestro/runtime/workflow-state.yaml"
   boundary_strategy: "workspace-control-plane"
   onboarding_scan_profile: "signature-first"
@@ -74,7 +74,7 @@ context_economy:
     service_coder_files: 20
     verification_files: 12
   always_read:
-    - ".maestro/engine/workflow.md"
+    - ".claude/engine/workflow.md"
     - ".maestro/runtime/workflow-state.yaml"
     - ".maestro/knowledge/index.yaml"
   read_order:
@@ -112,7 +112,7 @@ freshness:
     - "Shared knowledge lives under .maestro/knowledge, work evidence under .maestro/work, and local execution state under .maestro/runtime."
     - "Run /onboard or /sync-memory --refresh-index after adding real component projects."
   partial_rescan_targets:
-    - ".maestro/engine"
+    - ".claude/engine"
     - ".maestro/knowledge"
     - ".maestro/registry"
     - ".claude/agents"
@@ -125,8 +125,8 @@ freshness:
     - "services"
     - "inputs"
     - ".claude/agents"
-    - ".maestro/engine/rules"
-    - ".maestro/engine/templates"
+    - ".claude/engine/rules"
+    - ".claude/engine/templates"
   last_drift_check_at: ""
   last_drift_check_result: "unknown"
 
@@ -154,7 +154,7 @@ service_boundaries:
   catalog: ".maestro/registry/components.yaml"
   agent_registry: ".maestro/registry/agents.yaml"
   test_policy: ".maestro/knowledge/test-policy.yaml"
-  rule: "Product code lives in the component path registered in .maestro/registry/components.yaml. Shared control-plane data lives under .maestro; local execution state lives under .maestro/runtime."
+  rule: "Product code lives in the component path registered in .maestro/registry/components.yaml. Shared control-plane data lives under .claude; local execution state lives under .maestro/runtime."
 
 policies:
   workflow: "end-to-end"
@@ -184,11 +184,11 @@ deep_project_intelligence:
   status: "partial"
   reusable_assets:
     utilities:
-      - path: ".maestro/engine/templates/agent-coder.template.md"
+      - path: ".claude/engine/templates/agent-coder.template.md"
         note: "Generated coder contract template."
-      - path: ".maestro/engine/templates/task-analysis.template.yaml"
+      - path: ".claude/engine/templates/task-analysis.template.yaml"
         note: "Task analysis artifact template."
-      - path: ".maestro/engine/templates/dev-verification.template.yaml"
+      - path: ".claude/engine/templates/dev-verification.template.yaml"
         note: "Dev verification artifact template."
     shared_components: []
     base_classes: []
@@ -211,7 +211,7 @@ deep_project_intelligence:
       - ".maestro/work stores shared work decomposition and delivery evidence."
       - ".maestro/runtime and .maestro/memory/sessions are local-only."
       - "apps, services, packages, infra, and tests contain product implementation."
-      - ".claude/agents, .claude/skills, .maestro/engine/rules, .maestro/engine/templates, and .claude/commands are static workflow definitions."
+      - ".claude/agents, .claude/skills, .claude/engine/rules, .claude/engine/templates, and .claude/commands are static workflow definitions."
     naming_rules:
       - "Agent files use *.agent.md."
       - "Rules use nn-name.md."
@@ -235,7 +235,7 @@ deep_project_intelligence:
       description: "Coordinator detects missing or stale project knowledge, runs onboarding, writes memory and component contracts, then requests approval for coder generation."
       entrypoints:
         - ".claude/commands/onboard.md"
-        - ".claude/agents/workflow/onboarding.agent.md"
+        - ".claude/agents/onboarding.agent.md"
       services:
         - "maestro"
       steps:
@@ -252,14 +252,14 @@ deep_project_intelligence:
       events_emitted: []
       events_consumed: []
       reusable_assets:
-        - ".maestro/engine/templates/project.template.yaml"
-        - ".maestro/engine/templates/component.template.yaml"
+        - ".claude/engine/templates/project.template.yaml"
+        - ".claude/engine/templates/component.template.yaml"
       critical_checks:
         - "Do not store secrets."
         - "Do not invent component paths."
       evidence:
         - "README.md"
-        - ".maestro/engine/workflow.md"
+        - ".claude/engine/workflow.md"
       confidence: "high"
     - id: "flow-task-execution"
       name: "Task execution flow"
@@ -281,27 +281,27 @@ deep_project_intelligence:
       events_emitted: []
       events_consumed: []
       reusable_assets:
-        - ".maestro/engine/templates/task-analysis.template.yaml"
-        - ".maestro/engine/templates/dev-verification.template.yaml"
-        - ".maestro/engine/templates/qc-test-result.template.yaml"
+        - ".claude/engine/templates/task-analysis.template.yaml"
+        - ".claude/engine/templates/dev-verification.template.yaml"
+        - ".claude/engine/templates/qc-test-result.template.yaml"
       critical_checks:
         - "No coding before task-analysis.yaml."
         - "No QC before qc-handoff.md."
       evidence:
         - "README.md"
-        - ".maestro/engine/README.md"
+        - ".claude/engine/README.md"
       confidence: "high"
   reuse_rules:
-    - rule: "Use .maestro/engine/templates for workflow artifacts before creating new formats."
+    - rule: "Use .claude/engine/templates for workflow artifacts before creating new formats."
       existing_asset: "Artifact templates"
-      existing_path: ".maestro/engine/templates"
+      existing_path: ".claude/engine/templates"
       applies_to:
         - "task artifacts"
         - "workflow handoffs"
       must_reuse: true
       evidence:
         - "README.md"
-        - ".maestro/engine/README.md"
+        - ".claude/engine/README.md"
       confidence: "high"
   anti_patterns:
     - rule: "Do not create coder agents without user approval."
@@ -310,20 +310,20 @@ deep_project_intelligence:
         - "Creating coder-*.agent.md directly"
       safer_alternative: "Use /create-coders after Coordinator approval."
       evidence:
-        - ".maestro/engine/workflow.md"
-        - ".maestro/engine/rules/11-approval-gates.md"
+        - ".claude/engine/workflow.md"
+        - ".claude/engine/rules/11-approval-gates.md"
       confidence: "high"
   evidence_index:
     - topic: "Folder semantics and workflow overview"
       paths:
         - "README.md"
         - "GUIDELINES.md"
-        - ".maestro/engine/docs/folder-guide.md"
+        - ".claude/engine/docs/folder-guide.md"
       reason: "Defines memory, component, state, and task artifact boundaries."
       confidence: "high"
     - topic: "Workflow policy and agent responsibilities"
       paths:
-        - ".maestro/engine/workflow.md"
+        - ".claude/engine/workflow.md"
         - ".claude/agents/*.agent.md"
       reason: "Defines coordinator-driven workflow and agent roles."
       confidence: "high"

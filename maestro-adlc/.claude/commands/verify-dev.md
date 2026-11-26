@@ -1,3 +1,8 @@
+---
+description: "Evaluate whether the implementation qualifies as Code Done (>=80% + critical checks)"
+argument-hint: "[task-id]"
+---
+
 # /verify-dev
 
 ## Purpose

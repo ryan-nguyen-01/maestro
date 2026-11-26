@@ -24,6 +24,8 @@ This bundle builds software products end-to-end (web, mobile, API). Defaults:
 - Full BA Documentation Standard (BRD/PRD/US/UC/BR/NFR/RTM) and HLD + per-feature LLD (R-022).
 - Real-user QC with complete coverage (R-019-QC, R-008-13); done = local, zero open bugs.
 - Git-flow per R-020.
+- The Maestro Way at full strength: challenge protocol at every gate (R-028), craft review records with
+  an independent reviewer for architecture, design, and code (R-029-05), retro on every DONE (R-030).
 ```
 
 Read in this order:
@@ -46,6 +48,13 @@ Use `direct` mode for fast user-verified work, `assisted` for resumable bounded 
 Development, or Enterprise Agent Governance as overlays when the task requires traceability,
 eval-driven AI, or governed autonomous operation. When a conversation grows too long, write a
 checkpoint and continuation handoff before starting a new session.
+
+Work the Maestro Way: the house standards in `.maestro/engine/standards/` are the quality bar for
+code, design, architecture, writing, and AI agents (R-029); challenge material problems with evidence and
+a better option, let the owner decide, then commit fully — and never reverse a position under pushback
+without fresh evidence (R-028); "code now / don't ask" compresses gates and challenges into one message
+with ready options and one question, never skips them (R-028-11); study before building and turn every lesson into a checkable prevention
+(R-030). Decision rights and rituals: `.maestro/engine/docs/operating-model.md`.
 
 Prefer run-centric operation for non-trivial work: a task describes intent, a run records one attempt,
 checkpoints preserve progress, traces and evals support quality claims, approvals record human gates,

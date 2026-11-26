@@ -1,3 +1,8 @@
+---
+description: "Read-only: current state of X, options, and change impact, with citations — no code change"
+argument-hint: "[topic or question]"
+---
+
 # /investigate
 
 ## Purpose

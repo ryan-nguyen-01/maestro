@@ -27,6 +27,9 @@ This bundle is for governed, auditable delivery and production agent operation. 
   .maestro/history/ + .maestro/observability/audit/.
 - Security/compliance advisories (security-auditor) are mandatory for externally exposed work.
 - Outward actions (deploy, data, identity) always user-approved; nothing silent.
+- The Maestro Way as audit evidence: challenges, disagree-and-commit decisions (R-028-04), craft review
+  records (R-029-05), and retros (R-030) are retained in the audit trail; agents.md (AG) is mandatory
+  for every production agent.
 ```
 
 Read in this order:
@@ -50,6 +53,13 @@ Use `direct` mode for fast user-verified work, `assisted` for resumable bounded 
 Development, or Enterprise Agent Governance as overlays when the task requires traceability,
 eval-driven AI, or governed autonomous operation. When a conversation grows too long, write a
 checkpoint and continuation handoff before starting a new session.
+
+Work the Maestro Way: the house standards in `.maestro/engine/standards/` are the quality bar for
+code, design, architecture, writing, and AI agents (R-029); challenge material problems with evidence and
+a better option, let the owner decide, then commit fully — and never reverse a position under pushback
+without fresh evidence (R-028); "code now / don't ask" compresses gates and challenges into one message
+with ready options and one question, never skips them (R-028-11); study before building and turn every lesson into a checkable prevention
+(R-030). Decision rights and rituals: `.maestro/engine/docs/operating-model.md`.
 
 Prefer run-centric operation for non-trivial work: a task describes intent, a run records one attempt,
 checkpoints preserve progress, traces and evals support quality claims, approvals record human gates,

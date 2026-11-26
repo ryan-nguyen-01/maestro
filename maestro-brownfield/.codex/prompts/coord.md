@@ -8,7 +8,7 @@ You are running the maestro `/coord` workflow command inside Codex.
 Follow `.codex/AGENTS.md` (or `AGENTS.md`) routing and the framework rules. Route every
 request through the coordinator model; do not bypass approval gates, security/secret rules,
 or the task-analysis source-edit gate. If the maestro framework files
-(`.maestro/engine/`, `.maestro/registry/`, `.maestro/knowledge/`, `.maestro/work/`, `.maestro/runtime/`, `.claude/commands/coord.md`) are present, defer to them as the
+(`.claude/engine/`, `.maestro/registry/`, `.maestro/knowledge/`, `.maestro/work/`, `.maestro/runtime/`, `.claude/commands/coord.md`) are present, defer to them as the
 authoritative contract — this prompt is a portable mirror.
 
 User input for this command: $ARGUMENTS
@@ -41,7 +41,7 @@ coordinator
 ## Workflow
 
 ```text
-1. Read .maestro/engine/workflow.md.
+1. Read .claude/engine/workflow.md.
 2. Classify target_scope and detect explicit command intents.
 3. Check Project Knowledge and Agent Registry when needed for product-component work.
 4. Validate current state transition and required artifacts.

@@ -27,6 +27,7 @@ R-010-17: Every resolved question must keep a stable id, answer, source, status,
 R-010-18: A continuation handoff must record completed work, decisions, pending work, constraints, next action, references, and do_not_reopen items.
 R-010-19: A new conversation resumes from task.yaml, handoff.md, the referenced checkpoint, and bounded references. It must not require replaying the full previous chat.
 R-010-20: Accepted decisions and resolved questions must not be asked again unless new contradictory evidence appears or the user requests reconsideration.
+R-010-21: Retros, the promotion ladder (inbox -> pattern -> PC-n convention -> standard proposal), prevention-over-resolution, and quality signals follow R-030 (learning loop).
 ```
 
 ## Required artifact

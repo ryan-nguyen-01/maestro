@@ -7,7 +7,7 @@ inside the plugin. To avoid bloating git, the copy is gitignored — `.claude/sk
 single source of truth; users run this generator before installing.
 
 Everything lives under `.codex/marketplace/` (grouped with the other Codex adapter files) so the
-repo root stays clean and there is no `.agents/` vs `.maestro/engine/` name collision:
+repo root stays clean and there is no `.agents/` vs `.claude/engine/` name collision:
 
   .codex/marketplace/.agents/plugins/marketplace.json            (Codex marketplace manifest)
   .codex/marketplace/plugins/maestro/.codex-plugin/plugin.json
